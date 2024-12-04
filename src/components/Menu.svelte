@@ -39,6 +39,7 @@
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1rem; /* Generous padding */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow on the right */
   }
 
   .logo-container {

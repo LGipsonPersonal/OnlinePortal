@@ -75,24 +75,27 @@
 </table>
 
 <style>
-  .project-table {
-    width: 94%;
-    border-collapse: collapse;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.875rem; /* Modern, smaller text size */
-    background-color: #fff; /* White background */
-    border-radius: 8px; /* Rounded corners for a modern look */
-    overflow: hidden; /* Ensure rounded corners affect content */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
-  }
+.project-table {
+  width: 94%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  background-color: #fff;
+  border-radius: 4px; /* Rounded corners */
+  overflow: hidden; /* Ensure rounded corners affect content */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
 
-  .project-table th, 
-  .project-table td {
-    border: 1px solid #e5e7eb; /* Subtle border for cells */
-    padding: 0.75rem 1rem; /* Consistent padding */
-    text-align: center;
-    color: #374151; /* Neutral gray text for readability */
-  }
+.project-table th, 
+.project-table td {
+  border: 1px solid #e5e7eb; /* Subtle border for cells */
+  padding: 0.75rem 1rem;
+  text-align: center;
+  color: #374151;
+}
+
+
 
   .project-table thead th {
     background-color: #f9fafb; /* Light gray background */

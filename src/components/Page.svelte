@@ -40,6 +40,7 @@ const images = [
   left: 0;
   width: 100vw; /* Full viewport width */
   height: 100vh; /* Full viewport height */
+  background-color: #3d3d3d
 }
 .main-page{
   width: 100%;

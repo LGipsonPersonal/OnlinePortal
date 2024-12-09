@@ -1,26 +1,54 @@
 <script>
+  import {slide} from 'svelte/transition'
   let { choice = $bindable(), tabs } = $props();
-  $inspect(choice);
+  let openSubmenuIndex = $state(null); // Tracks which submenu is open
+
+  // Toggle submenu visibility
+  function toggleSubmenu(index) {
+    openSubmenuIndex = openSubmenuIndex === index ? null : index;
+  }
 </script>
 
 <div class="sidebar">
   <div class="logo-container">
-    <img src="./svelte.svg" alt="Logo" class="sidebar-logo">
+    <img src="./svelte.svg" alt="Logo" class="sidebar-logo" />
     <span class="logo-text">Portal</span>
   </div>
   <div class="sidebar-text-container">
-    {#each tabs as tab, i (tab)}
-    <button
-      onclick={() => {
-        choice = i + 1;
-      }}
-      class="tab-button">
-      <i class="fas fa-calendar-days icon"></i>
-      {tab}
-    </button>
+    {#each tabs as tab, i (tab.key)}
+    <div class="tab-item">
+      <div class="tab-content">
+        <button
+          class="tab-button"
+          onclick={() => {
+            choice = i + 1;
+          }}>
+          <i class="fas fa-calendar-days icon"></i>
+          {tab.name}
+        </button>
+        <button
+          class="submenu-toggle"
+          onclick={() => toggleSubmenu(i)}>
+          {#if openSubmenuIndex === i}
+            <i class="fas fa-chevron-up"></i>
+          {:else}
+            <i class="fas fa-chevron-down"></i>
+          {/if}
+        </button>
+      </div>
+      {#if openSubmenuIndex === i}
+      <div transition:slide class="sidebar-submenu">
+        {#each { length: 2 } as _, j}
+        <div class="sidebar-submenu-item">Submenu {j + 1}</div>
+        {/each}
+      </div>
+      {/if}
+    </div>
     {/each}
   </div>
 </div>
+
+
 
 <style>
   /* General Reset */
@@ -30,16 +58,15 @@
     box-sizing: border-box;
   }
 
-
   .sidebar {
     height: 100%;
     width: 15rem; /* Sidebar width */
-    background-color: #1a1a1a; /* Dark background */
+    background-color: var(--accent-color-two); /* Dark background */
     border-right: 1px solid #333; /* Subtle border */
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1rem; /* Generous padding */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Subtle shadow on the right */
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
   }
 
   .logo-container {
@@ -52,7 +79,7 @@
   .sidebar-logo {
     max-width: 40px;
     height: auto;
-    padding-left: .4rem;
+    padding-left: 0.4rem;
   }
 
   .logo-text {
@@ -69,13 +96,25 @@
     gap: 0.5rem; /* Tighter spacing between buttons */
   }
 
+  .tab-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ensure full width */
+  }
+
+  .tab-content {
+    display: flex;
+    align-items: center; /* Align tab button and toggle button */
+    justify-content: space-between; /* Space between tab button and toggle button */
+    width: 100%;
+  }
+
   .tab-button {
     display: flex;
     align-items: center;
-    justify-content: start;
     gap: 0.5rem; /* Space between icon and text */
-    width: 100%;
-    padding: 0.4rem 0.6rem; /* Reduced padding for a smaller button */
+    flex-grow: 1; /* Take up remaining space */
+    padding: 0.4rem 0.6rem; /* Padding for the button */
     border: none;
     border-radius: 0.4rem; /* Subtly rounded corners */
     background-color: transparent;
@@ -91,14 +130,59 @@
     color: #fff; /* Highlighted text color */
   }
 
+  .submenu-toggle {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    padding: 0.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+
+  .submenu-toggle:hover {
+    color: #fff;
+  }
   .tab-button:focus {
     outline: none;
     background-color: #444;
     color: #fff;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
   }
 
-  .icon {
-    font-size: 0.9rem; /* Slightly smaller icon size */
-  }
+/* No changes required for these styles */
+.sidebar-submenu {
+  display: flex; /* Visible only when rendered */
+  flex-direction: column;
+  gap: 0.4rem; /* Space between submenu items */
+  width: 100%; /* Match parent width */
+  padding: 0.5rem 0;
+}
+
+.sidebar-submenu-item {
+  padding: 0.4rem 0.6rem; /* Padding for a smaller, tighter button */
+  border-radius: 0.3rem;
+  background-color: transparent; /* Transparent background */
+  color: #aaa; /* Subtle text color */
+  font-size: 0.8rem; /* Smaller font size */
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.sidebar-submenu-item:hover {
+  background-color: #444; /* Highlight background */
+  color: #fff; /* Highlighted text color */
+}
+
+.sidebar-submenu-item:active {
+  background-color: #555; /* Slightly darker on active */
+}
+
 </style>
+
+
+
 

@@ -81,70 +81,71 @@
   border-spacing: 0;
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
-  background-color: #fff;
+  background-color: var(--accent-color-two);/* Dark background */
   border-radius: 4px; /* Rounded corners */
   overflow: hidden; /* Ensure rounded corners affect content */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6); /* Subtle shadow */
 }
 
 .project-table th, 
 .project-table td {
-  border: 1px solid #e5e7eb; /* Subtle border for cells */
+  border: 1px solid #2e2e2e; /* Subtle dark border for cells */
   padding: 0.75rem 1rem;
   text-align: center;
-  color: #374151;
+  color: #d4d4d4; /* Light gray text */
 }
 
+.project-table thead th {
+  background-color: var(--accent-color-one); /* Slightly lighter gray for headers */
+  color: #ffffff; /* White text for headers */
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
 
+.project-table tbody tr:hover {
+  background-color: #333333; /* Slightly lighter gray for row hover */
+}
 
-  .project-table thead th {
-    background-color: #f9fafb; /* Light gray background */
-    color: #111827; /* Darker text for headers */
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-  }
+.project-table tbody tr:last-child td {
+  font-weight: 600;
+  background-color: var(--accent-color-one); /* Same as header background for totals */
+  color: #ffffff; /* White text for totals */
+}
 
-  .project-table tbody tr:hover {
-    background-color: #f3f4f6; /* Subtle hover effect for rows */
-  }
+.project-table input {
+  width: 3rem; /* Compact input fields */
+  padding: 0.5rem;
+  border: 1px solid #3a3a3a; /* Dark border for input fields */
+  border-radius: 4px;
+  font-size: 0.875rem;
+  text-align: center;
+  background-color: var(--accent-color-two);/* Match table background */
+  color: #e0e0e0; /* Light text for inputs */
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-  .project-table tbody tr:last-child td {
-    font-weight: 600;
-    background-color: #f9fafb; /* Same as header background for totals */
-    color: #111827; /* Make totals more prominent */
-  }
+.project-table input:focus {
+  border-color: #4f46e5; /* Purple border on focus */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3); /* Focus ring */
+}
 
-  .project-table input {
-    width: 3rem; /* Compact input fields */
-    padding: 0.5rem;
-    border: 1px solid #d1d5db; /* Subtle border */
-    border-radius: 4px;
-    font-size: 0.875rem;
-    text-align: center;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
+.project-table select {
+  padding: 0.5rem;
+  border: 1px solid #3a3a3a; /* Dark border for select */
+  border-radius: 4px;
+  font-size: 0.875rem;
+  background-color: #272727; /* Slightly lighter background */
+  color: #d4d4d4; /* Light text */
+  outline: none;
+  cursor: pointer;
+}
 
-  .project-table input:focus {
-    border-color: #3b82f6; /* Blue border on focus */
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Focus ring */
-  }
+.project-table select:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
 
-  .project-table select {
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    background-color: #fff;
-    color: #374151;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .project-table select:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
-  }
 </style>
 

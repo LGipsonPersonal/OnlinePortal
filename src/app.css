@@ -1,0 +1,9 @@
+
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+:root {
+    --main-bg-color: #1a1a1a;
+    --accent-color-one: #0c0c0c;
+    --accent-color-two:#121212;
+    --highlight-color-one:#4f46e5;
+}

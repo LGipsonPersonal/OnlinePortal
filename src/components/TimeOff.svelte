@@ -1,6 +1,18 @@
 <div class="request-time-off">
     <h2 class="form-title">Request Time Off</h2>
     <form>
+        <!-- PTO Information Row -->
+        <div class="pto-info-row">
+            <div class="pto-info">
+                <label for="available-vacation">Vacation Time</label>
+                <p id="available-vacation">40 hours</p>
+            </div>
+            <div class="pto-info">
+                <label for="available-sick">Sick Time</label>
+                <p id="available-sick">20 hours</p>
+            </div>
+        </div>
+        
         <div class="form-row">
             <div class="form-group">
                 <label for="start-date">Start Date</label>
@@ -25,12 +37,15 @@
             <input type="number" id="amount" name="amount" min="0" step="0.5" required>
         </div>
         <div class="form-group">
-            <label for="note">Note</label>
+            <label for="note">Note (optional)</label>
             <textarea id="note" name="note" rows="4" placeholder="Add extra information..."></textarea>
         </div>
+        <label for="password">Password</label>
+        <input type="password" class="password-field form-group" id="password"/>
         <button type="submit" class="submit-button">Submit</button>
     </form>
 </div>
+
 
 <style>
 /* Parent container */
@@ -40,11 +55,19 @@
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     width: 100%;
+    margin: 12px;
+
+    max-height: 870px;
     max-width: 600px;
-    margin: auto;
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     box-sizing: border-box; /* Ensures all child elements respect padding */ 
+}
+
+.help-text{
+    position: relative;
+    font-size: 0.83em;
+    bottom: -10px;
 }
 
 /* Title styling */
@@ -52,6 +75,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
+    margin-top: 0.3rem;
     text-align: center;
     color: #ffffff;
     border-bottom: 1px solid #1e1e1e;
@@ -62,7 +86,7 @@
 .request-time-off .form-row {
     display: flex;
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+
 }
 
 /* Form groups */
@@ -78,6 +102,7 @@
     font-weight: 500;
     color: #9e9e9e;
     margin-bottom: 0.5rem;
+    text-wrap: nowrap;
 }
 
 /* Inputs, select, and textarea */
@@ -132,7 +157,36 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
+.request-time-off .pto-info-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
 
+.request-time-off .pto-info {
+    flex: 1;
+    text-align: center;
+    background-color: #2a2a2a;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #3a3a3a;
+    color: #e0e0e0;
+}
+
+.request-time-off .pto-info label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #9e9e9e;
+}
+
+.request-time-off .pto-info p {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+}
 /* Submit button hover effect */
 .request-time-off .submit-button:hover {
     background-color: #4338ca;
@@ -144,6 +198,9 @@
     .request-time-off .form-row {
         flex-direction: column;
         gap: 1rem;
+    }
+    .request-time-off{
+        max-height: 971px;
     }
 }
 </style>

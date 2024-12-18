@@ -1,6 +1,6 @@
 <script>
     let { 
-        currentTabs, // Array of Obj / [{name: 'home', key: '0'}]
+        currentTabs, // Array of Obj / [{name: 'home', key: '0', subtabs: [name: 'x', key: '0-0']}]
      } = $props()
 
 </script>
@@ -24,7 +24,6 @@
     padding: 1rem;
     color: #e0e0e0;
     font-size: 0.875rem;
-    margin-bottom: 1.5rem;
     border-bottom: 1px solid #333; /* Subtle border */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 

@@ -19,13 +19,19 @@
     <div class="tab-item">
       <div class="tab-content">
         <button
-          class="tab-button"
+          class="tab-button {choice === tab.key ? 'selected-tab' : ''}"
           onclick={() => {
-            choice = i + 1;
+            if(tab.subtabs.length === 0) {
+              choice = tab.key;
+            }
+            else{
+              toggleSubmenu(i)
+            }
           }}>
-          <i class="fas fa-calendar-days icon"></i>
+          <i class="{tab.icon} icon"></i>
           {tab.name}
         </button>
+        {#if tab.subtabs.length !== 0}
         <button
           class="submenu-toggle"
           onclick={() => toggleSubmenu(i)}>
@@ -35,11 +41,12 @@
             <i class="fas fa-chevron-down"></i>
           {/if}
         </button>
+        {/if}
       </div>
       {#if openSubmenuIndex === i}
       <div transition:slide class="sidebar-submenu">
-        {#each { length: 2 } as _, j}
-        <div class="sidebar-submenu-item">Submenu {j + 1}</div>
+        {#each tab.subtabs as subTab, j}
+        <div onclick={() => {choice = subTab.key}} class="sidebar-submenu-item {choice === tab.key ? 'selected-tab' : ''}">{subTab.name}</div>
         {/each}
       </div>
       {/if}
@@ -108,7 +115,9 @@
     justify-content: space-between; /* Space between tab button and toggle button */
     width: 100%;
   }
-
+  .icon{
+    width:16px;
+  }
   .tab-button {
     display: flex;
     align-items: center;
@@ -145,7 +154,7 @@
   .submenu-toggle:hover {
     color: #fff;
   }
-  .tab-button:focus {
+  .selected-tab{
     outline: none;
     background-color: #444;
     color: #fff;
@@ -159,7 +168,7 @@
   flex-direction: column;
   gap: 0.4rem; /* Space between submenu items */
   width: 100%; /* Match parent width */
-  padding: 0.5rem 0;
+  padding: 0.4rem 0.2rem;
 }
 
 .sidebar-submenu-item {

@@ -5,42 +5,44 @@
   import Carousel from "./Carousel.svelte";
   import TimeOff from "./TimeOff.svelte";
   import Breadcrumbs from "./Breadcrumbs.svelte";
+  import UploadDocs from "./UploadDocs.svelte";
   let tabs = [
     {
       name: "Home",
       key: '0',
+      icon: 'fas fa-home',
       subtabs: [
-        { name: "Dashboard", key: "0-0" },
-        { name: "Notifications", key: "0-1" },
+
       ],
     },
     {
       name: "Time Sheet",
       key: '1',
+      icon: 'fas fa-calendar-days',
       subtabs: [
-        { name: "Weekly View", key: "1-0" },
-        { name: "Monthly View", key: "1-1" },
+
       ],
     },
     {
       name: "Request Time Off",
       key: '2',
+      icon: 'fas fa-calendar-times',
       subtabs: [
-        { name: "Submit Request", key: "2-0" },
-        { name: "Request History", key: "2-1" },
+
       ],
     },
     {
       name: "My Profile",
       key: '3',
+      icon: 'fas fa-user-alt',
       subtabs: [
-        { name: "Edit Profile", key: "3-0" },
-        { name: "Change Password", key: "3-1" },
+
       ],
     },
     {
       name: "Documents",
       key: '4',
+      icon: 'fas fa-file-alt',
       subtabs: [
         { name: "Upload Document", key: "4-0" },
         { name: "View Documents", key: "4-1" },
@@ -48,9 +50,36 @@
     },
   ];
 
-  let choice = $state(1);
+  let choice = $state('0');
 
-  let currentTabs = $derived([tabs[choice - 1]]);
+  let currentTabs = $derived.by(() => {
+  if (!choice.includes('-')) {
+    // Default behavior: Return the matching tab
+    return [tabs.find(tab => tab.key === choice)];
+  } else {
+    // Extract digits before and after '-' in choice
+    const [tabKey, subtabIndex] = choice.split('-');
+    
+    // Find the matching tab using the key
+    const selectedTab = tabs.find(tab => tab.key === tabKey);
+    
+    // Ensure the tab and its subtabs exist
+    if (selectedTab && selectedTab.subtabs?.[subtabIndex]) {
+      return [selectedTab, selectedTab.subtabs[+subtabIndex]];
+    }
+    
+    // Return empty array if no match is found
+    return [];
+  }
+});
+
+let docs = [
+  {name: 'Resume.pdf', status: 'Pending', due_date: '2024-06-20', submitted_date: '-', action: 'Upload'},
+  {name: 'CoverLetter.docx', status: 'Uploaded', due_date: '2024-06-18', submitted_date: '2024-06-18', action: 'Retry'},
+  {name: 'Portfolio.pdf', status: 'Failed', due_date: '2024-06-19', submitted_date: '2024-06-19', action: 'Retry'},
+]
+  
+$inspect(choice)
 
   const images = [
     "https://placehold.co/1600x900?text=Image+1",
@@ -63,13 +92,15 @@
   <Menu bind:choice {tabs}></Menu>
   <div class="main-page">
     <Breadcrumbs {currentTabs}></Breadcrumbs>
-    {#if choice === 1}
+    {#if choice === tabs[0].key}
       <Carousel {images}></Carousel>
-    {:else if choice === 2}
+    {:else if choice === tabs[1].key}
       <Header userName="Luke Gipson"></Header>
       <TimeTable></TimeTable>
-    {:else if choice === 3}
+    {:else if choice === tabs[2].key}
       <TimeOff></TimeOff>
+    {:else if choice === tabs[4].subtabs[0].key}
+      <UploadDocs {docs}></UploadDocs>
     {/if}
   </div>
 </div>

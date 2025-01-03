@@ -1,11 +1,25 @@
+
 <script>
-  import {slide} from 'svelte/transition'
-  let { choice = $bindable(), tabs } = $props();
+  import { getContext } from 'svelte';
+  import { slide } from 'svelte/transition'
+  let { choice, tabs } = $props();
   let openSubmenuIndex = $state(null); // Tracks which submenu is open
+  let MainPage = getContext('MainPage') // communication channel to main app component
 
   // Toggle submenu visibility
+  /**
+     * @param {number} index
+  */
   function toggleSubmenu(index) {
     openSubmenuIndex = openSubmenuIndex === index ? null : index;
+  }
+
+  /**
+     * @param {string} key
+  */
+  function selectChoice(key) {
+    choice = key
+    MainPage.updateChoice(choice)
   }
 </script>
 
@@ -17,24 +31,25 @@
   <div class="sidebar-text-container">
     {#each tabs as tab, i (tab.key)}
     <div class="tab-item">
-      <div class="tab-content">
+      <div class="tab-content-wrapper">
         <button
           class="tab-button {choice === tab.key ? 'selected-tab' : ''}"
           onclick={() => {
-            if(tab.subtabs.length === 0) {
-              choice = tab.key;
+            if (tab.subtabs.length === 0) {
+              selectChoice(tab.key);
+            } else {
+              toggleSubmenu(i);
             }
-            else{
-              toggleSubmenu(i)
-            }
-          }}>
+          }}
+        >
           <i class="{tab.icon} icon"></i>
           {tab.name}
         </button>
         {#if tab.subtabs.length !== 0}
         <button
           class="submenu-toggle"
-          onclick={() => toggleSubmenu(i)}>
+          onclick={() => toggleSubmenu(i)}
+        >
           {#if openSubmenuIndex === i}
             <i class="fas fa-chevron-up"></i>
           {:else}
@@ -46,7 +61,14 @@
       {#if openSubmenuIndex === i}
       <div transition:slide class="sidebar-submenu">
         {#each tab.subtabs as subTab, j}
-        <div onclick={() => {choice = subTab.key}} class="sidebar-submenu-item {choice === tab.key ? 'selected-tab' : ''}">{subTab.name}</div>
+        <div
+          onclick={() => {
+            selectChoice(subTab.key);
+          }}
+          class="sidebar-submenu-item {choice === tab.key ? 'selected-tab' : ''}"
+        >
+          {subTab.name}
+        </div>
         {/each}
       </div>
       {/if}
@@ -54,6 +76,7 @@
     {/each}
   </div>
 </div>
+
 
 
 
@@ -151,9 +174,7 @@
     transition: color 0.2s;
   }
 
-  .submenu-toggle:hover {
-    color: #fff;
-  }
+
   .selected-tab{
     outline: none;
     background-color: #444;
@@ -181,14 +202,40 @@
   transition: background-color 0.2s, color 0.2s;
 }
 
-.sidebar-submenu-item:hover {
-  background-color: #444; /* Highlight background */
-  color: #fff; /* Highlighted text color */
-}
 
 .sidebar-submenu-item:active {
   background-color: #555; /* Slightly darker on active */
 }
+
+/* here */
+.tab-content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.1rem; /* Adjust padding as needed */
+  border-radius: 0.4rem; /* Match the button styles */
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tab-content-wrapper:hover {
+  background-color: #333; /* Highlight background */
+}
+
+.tab-content-wrapper .tab-button,
+.tab-content-wrapper .submenu-toggle {
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.tab-content-wrapper:hover .tab-button,
+.tab-content-wrapper:hover .submenu-toggle {
+  color: #fff; /* Highlight text color on hover */
+}
+
+
 
 </style>
 

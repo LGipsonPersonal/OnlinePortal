@@ -1,0 +1,155 @@
+<script>
+  let { requests } = $props();
+</script>
+  
+  <div class="timeoff-container">
+    <div class="timeoff-header">
+      <div class="timeoff-column">Request Date</div>
+      <div class="timeoff-column">Start Date</div>
+      <div class="timeoff-column">End Date</div>
+      <div class="timeoff-column">Duration</div>
+      <div class="timeoff-column">Status</div>
+      <div class="timeoff-column">Supervisor's Note</div>
+      <div class="timeoff-column">Action</div>
+    </div>
+    {#each requests as request, i (request.id)}
+      <div class="timeoff-row {request.status.toLowerCase()}">
+        <div class="timeoff-request-date">{request.request_date}</div>
+        <div class="timeoff-start-date">{request.start_date}</div>
+        <div class="timeoff-end-date">{request.end_date}</div>
+        <div class="timeoff-duration">{request.duration}</div>
+        <div class="timeoff-status">{request.status}</div>
+        <div class="timeoff-supervisor-note">{request.supervisor_note}</div>
+        <div class="timeoff-action">
+          {#if request.action === 'Cancel'}
+            <button class="cancel-button">Cancel</button>
+          {:else}
+            <span>{request.action}</span>
+          {/if}
+        </div>
+      </div>
+    {/each}
+  </div>
+  
+  <style>
+  .timeoff-container {
+    width: 94%;
+    margin: 2rem auto;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    background-color: var(--accent-color-two);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+  }
+  
+  .timeoff-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr; /* Added 1fr for Duration */
+    background-color: var(--accent-color-one);
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 1rem;
+    border-bottom: 1px solid #2e2e2e;
+  }
+  
+  .timeoff-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .timeoff-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr; /* Added 1fr for Duration */
+    padding: 1rem;
+    border-bottom: 1px solid #2e2e2e;
+    background-color: #2a2a2a;
+    color: #d4d4d4;
+  }
+  
+  .timeoff-row:hover {
+    background-color: #333333;
+  }
+  
+  .timeoff-row:last-child {
+    border-bottom: none;
+  }
+  
+  .timeoff-request-date,
+  .timeoff-start-date,
+  .timeoff-end-date,
+  .timeoff-duration, /* Add spacing for Duration */
+  .timeoff-status,
+  .timeoff-supervisor-note,
+  .timeoff-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+  }
+  
+  .timeoff-status {
+    text-transform: capitalize;
+    font-weight: 600;
+  }
+  
+  .cancel-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    background-color: #3b3b3b;
+    border: 1px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  
+  .cancel-button:hover {
+    background-color: #4a4a4a;
+    border-color: #555;
+  }
+  
+  .cancel-button:disabled {
+    background-color: #555;
+    color: #888;
+    cursor: not-allowed;
+  }
+  
+  .cancel-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+  }
+  
+  /* Status-specific styles */
+  .timeoff-row.pending .timeoff-status {
+    color: #eab308; /* Yellow for pending */
+  }
+  
+  .timeoff-row.approved .timeoff-status {
+    color: #16a34a; /* Green for approved */
+  }
+  
+  .timeoff-row.denied .timeoff-status {
+    color: #dc2626; /* Red for denied */
+  }
+  
+  @media (max-width: 768px) {
+    .timeoff-container {
+      font-size: 0.75rem;
+    }
+  
+    .timeoff-header,
+    .timeoff-row {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* Collapse columns for smaller screens */
+    }
+    .cancel-button {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+  </style>
+  

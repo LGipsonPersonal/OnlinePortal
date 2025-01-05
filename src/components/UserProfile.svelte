@@ -1,3 +1,7 @@
+<script>
+    let { profile } = $props()
+</script>
+
 <div class="user-profile">
     <div class="profile-header">
         <h2>User Profile</h2>
@@ -11,7 +15,7 @@
 
     <div class="profile-section">
         <label for="username">Username:</label>
-        <input type="text" id="username" value="johndoe" readonly>
+        <input type="text" id="username" value="johndoe">
         <button class="btn change-password">Change Password</button>
     </div>
 

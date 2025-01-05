@@ -38,63 +38,51 @@
             <p class="timestamp">3 days ago</p>
         </div>
     </div>
-    <div class="announcement" onclick={() => handleAnnouncementClick(3)}>
-        <div class="avatar-container">
-            <div class="avatar">
-                <img src="avatar3.png" alt="User Avatar">
-            </div>
-        </div>
-        <div class="announcement-content">
-            <p class="title">Carol posted an announcement: "Weekly Update"</p>
-            <p class="description">Here is your weekly company update...</p>
-            <p class="timestamp">3 days ago</p>
-        </div>
-    </div>
 </div>
 
 <style>
     .announcement-board {
-        width: 100%; /* Set to occupy full available width */
-        max-width: 600px; /* Restrict maximum width */
-        padding: 20px;
-        border: 1px solid #333;
-        border-radius: 8px;
-        background-color: #1e1e1e;
-        color: #e0e0e0;
+        background: var(--accent-color-two);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        width: 100%;
+        margin: 12px auto;
+        max-width: 600px;
+        border: 1px solid #1e1e1e;
+        color: #d1d1d1;
     }
 
     .board-title {
-        font-size: 24px;
-        font-weight: bold;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        margin-top: 0.3rem;
         text-align: center;
         color: #ffffff;
-        margin-bottom: 20px;
+        border-bottom: 1px solid #1e1e1e;
+        padding-bottom: 1rem;
     }
 
     .announcement {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 15px;
-        border-bottom: 1px solid #444;
+        padding: 1rem;
+        background-color: #2a2a2a;
+        border-radius: 8px;
+        border: 1px solid #3a3a3a;
+        margin-bottom: 1rem;
+        transition: background-color 0.3s, transform 0.2s;
         cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .announcement:last-child {
-        border-bottom: none;
     }
 
     .announcement:hover {
-        background-color: #333;
+        background-color: #3a3a3a;
+        transform: scale(1.02);
     }
 
     .avatar-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-right: 20px;
-        flex-shrink: 0;
+        margin-right: 1rem;
     }
 
     .avatar {
@@ -103,7 +91,6 @@
         border-radius: 50%;
         overflow: hidden;
         border: 2px solid #444;
-        margin-top: 5px;
     }
 
     .avatar img {
@@ -114,25 +101,23 @@
 
     .announcement-content {
         flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
     }
 
     .title {
-        font-size: 16px;
-        font-weight: bold;
-        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem;
         color: #ffffff;
     }
 
     .description {
-        font-size: 14px;
+        font-size: 0.9rem;
+        margin: 0 0 0.5rem;
         color: #ccc;
     }
 
     .timestamp {
-        font-size: 14px;
+        font-size: 0.8rem;
         color: #aaa;
     }
 </style>

@@ -1,56 +1,155 @@
-<script>
-</script>
-
-<div class="container">
-    <h2>Work Hours Tracker</h2>
+<div class="work-hours-tracker">
+    <h2 class="form-title">Work Hours Tracker</h2>
     <form id="hoursForm">
         <div class="form-group">
             <label for="project">Project Name</label>
-            <input type="text" id="project" name="project" placeholder="Enter project name" required>
+            <select id="project" name="project" required>
+                <option value="" disabled selected>Select a project</option>
+                <option value="project1">Project 1</option>
+                <option value="project2">Project 2</option>
+                <option value="project3">Project 3</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="hours">Hours Worked (1-8)</label>
             <input type="number" id="hours" name="hours" min="1" max="8" required>
         </div>
-        <button type="submit">Add Hours</button>
+        <button type="submit" class="submit-button">Add Hours</button>
     </form>
-    <div id="output" style="margin-top: 20px;"></div>
+    <div id="output"></div>
 </div>
 
+
 <style>
-    .container {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Universal box-sizing fix */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.work-hours-tracker select {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Focus state for dropdown */
+.work-hours-tracker select:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
+}
+
+
+/* Parent container */
+.work-hours-tracker {
+    background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    margin: 12px;
+    height: fit-content;
+    max-width: 400px;
+    border: 1px solid #1e1e1e;
+    color: #d1d1d1;
+    box-sizing: border-box;
+}
+
+/* Title styling */
+.work-hours-tracker .form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    margin-top: 0.3rem;
+    text-align: center;
+    color: #ffffff;
+    border-bottom: 1px solid #1e1e1e;
+    padding-bottom: 1rem;
+}
+
+/* Form groups */
+.work-hours-tracker .form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Labels */
+.work-hours-tracker label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #9e9e9e;
+    margin-bottom: 0.5rem;
+}
+
+/* Inputs */
+.work-hours-tracker input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Focus state for inputs */
+.work-hours-tracker input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
+}
+
+/* Output area */
+.work-hours-tracker #output {
+    margin-top: 1rem;
+    max-height: 8rem;
+    overflow-y: auto;
+    border-top: 1px solid #3a3a3a;
+    padding-top: 1rem;
+    color: #e0e0e0;
+    font-size: 0.875rem;
+}
+
+
+/* Submit button */
+.work-hours-tracker .submit-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #4f46e5;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Submit button hover effect */
+.work-hours-tracker .submit-button:hover {
+    background-color: #4338ca;
+    transform: scale(1.02);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .work-hours-tracker {
+        max-height: 600px;
     }
-    .form-group {
-        margin-bottom: 15px;
-    }
-    label {
-        display: block;
-        margin-bottom: 5px;
-    }
-    input[type="text"], input[type="number"] {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    button {
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-    button:disabled {
-        background-color: #ccc;
-        cursor: not-allowed;
-    }
+}
+
 </style>
 
+<script>
+    // Placeholder script for Svelte functionality if needed
+</script>

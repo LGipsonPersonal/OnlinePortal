@@ -7,3 +7,30 @@
     --accent-color-two:#121212;
     --highlight-color-one:#4f46e5;
 }
+
+.caution-button {
+    background-color: #eab308 !important; /* Yellow warning color */
+    color: #1e1e1e; /* Dark text for contrast */
+  }
+  
+  .caution-button:hover {
+    background-color: #facc15; /* Brighter yellow on hover */
+  }
+  
+  .caution-button:active {
+    background-color: #d97706 !important;/* Slightly darker orange on click */
+    box-shadow: none; /* Remove glow when pressed */
+  }
+  
+  /* Subtle Pulsing Animation */
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(234, 179, 8, 0.7);
+    }
+    100% {
+      box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+    }
+  }

@@ -54,10 +54,10 @@
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    width: 100%;
     margin: 12px;
     max-height: 870px;
-    max-width: 600px;
+    min-width: 600px;
+    height: 97%;
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     box-sizing: border-box; /* Ensures all child elements respect padding */ 
@@ -198,8 +198,6 @@
         flex-direction: column;
         gap: 1rem;
     }
-    .request-time-off{
-        max-height: 971px;
-    }
+
 }
 </style>

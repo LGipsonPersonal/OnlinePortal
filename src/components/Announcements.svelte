@@ -48,6 +48,7 @@
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         width: 100%;
         margin: 12px auto;
+        height: 89%;
         max-width: 600px;
         border: 1px solid #1e1e1e;
         color: #d1d1d1;

@@ -13,6 +13,8 @@
   import ViewDocuments from "./ViewDocuments.svelte";
   import Announcements from "./Announcements.svelte";
   import QuickTime from "./widgets/QuickTime.svelte";
+  // @ts-ignore
+  import { tabs, requests, docs, images, profile } from "$assets/store.js";
 
   setContext('MainPage', { updateChoice})
 
@@ -28,50 +30,7 @@
     choice = event.state.choice
   }
 
-  let tabs = [
-    {
-      name: "Home",
-      key: '0',
-      icon: 'fas fa-home',
-      subtabs: [
-
-      ],
-    },
-    {
-      name: "Time Sheet",
-      key: '1',
-      icon: 'fas fa-calendar-days',
-      subtabs: [
-
-      ],
-    },
-    {
-      name: "Request Time Off",
-      key: '2',
-      icon: 'fas fa-calendar-times',
-      subtabs: [
-
-      ],
-    },
-    {
-      name: "Documents",
-      key: '3',
-      icon: 'fas fa-file-alt',
-      subtabs: [
-        { name: "Upload Document", key: "3-0" },
-        { name: "View Documents", key: "3-1" },
-      ],
-    },
-    {
-      name: "My Profile",
-      key: '4',
-      icon: 'fas fa-user-alt',
-      subtabs: [
-
-      ],
-    },
-  ];
-
+ 
   let choice = $state('0');
   history.pushState( {choice}, '', `/${choice}`)
 
@@ -96,42 +55,6 @@
   }
 });
 
- let requests = [
-  {
-    id: 1, 
-    request_date: '05/04/2024', 
-    start_date: '06/04/2024', 
-    end_date: '06/04/2024', 
-    duration: '4 hours', 
-    status: 'Pending', 
-    supervisor_note: '-', 
-    action: 'Cancel'
-  },
-  {
-    id: 2, 
-    request_date: '05/04/2024', 
-    start_date: '06/04/2024', 
-    end_date: '06/04/2024', 
-    duration: '4 hours', 
-    status: 'Denied', 
-    supervisor_note: 'Insufficient coverage.', 
-    action: 'Retry'
- }
-]
-
-let docs = [
-  {name: 'Resume.pdf', status: 'Pending', due_date: '2024-06-20', submitted_date: '-', action: 'Upload'},
-  {name: 'CoverLetter.docx', status: 'Uploaded', due_date: '2024-06-18', submitted_date: '2024-06-18', action: 'Retry'},
-  {name: 'Portfolio.pdf', status: 'Failed', due_date: '2024-06-19', submitted_date: '2024-06-19', action: 'Retry'},
-]
-  
-$inspect(currentTabs)
-
-  const images = [
-    "https://placehold.co/1600x900?text=Image+1",
-    "https://placehold.co/1600x900?text=Image+2",
-    "https://placehold.co/1600x900?text=Image+3",
-  ];
 </script>
 
 <div class="fullscreen">
@@ -142,10 +65,9 @@ $inspect(currentTabs)
       <div class="homePage">
           <Announcements></Announcements>
           <!--<Carousel {images}></Carousel>-->
-          <QuickTime></QuickTime>
+          <QuickTime totalHoursThisWeek={1}></QuickTime>
       </div>
     {:else if choice === tabs[1].key}
-      <Header userName="Luke Gipson"></Header>
       <TimeTable></TimeTable>
     {:else if choice === tabs[2].key}
       <div class="time-off-page">
@@ -157,7 +79,7 @@ $inspect(currentTabs)
       {:else if choice === tabs[3].subtabs[1].key}
         <ViewDocuments></ViewDocuments>
       {:else if choice === tabs[4].key}
-        <UserProfile></UserProfile>
+        <UserProfile {profile}></UserProfile>
     {/if}
   </div>
 </div>
@@ -176,14 +98,17 @@ $inspect(currentTabs)
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
   }
 
   .time-off-page{
     display: flex;
     overflow: auto;
     align-items: flex-start;
+    height: 100%;
   }
   .homePage{
     display: flex;
+    height: 100%;
   }
 </style>

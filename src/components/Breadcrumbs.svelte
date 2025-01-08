@@ -21,6 +21,7 @@
 /* Breadcrumbs container */
 .breadcrumbs {
     background-color: var(--accent-color-two); /* Dark background*/
+    position: sticky;
     padding: 1rem;
     color: #e0e0e0;
     font-size: 0.875rem;

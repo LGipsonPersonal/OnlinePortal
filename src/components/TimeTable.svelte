@@ -1,17 +1,16 @@
 <script>
   const DAYS_IN_WEEK = 7;
+  const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  let weekDays = ['Monday', 'Tuesday', 'Wednesday','Thursday', 'Friday', 'Saturday', 'Sunday']
-
-  // 5 X 7 array meant to house the input time data
-  let tableData = $state(
-    Array.from({ length: 5 }, () =>
+   // 5 X 7 array meant to house the input time data
+   let tableData = $state(
+    Array.from({ length: 6 }, () =>
       Array.from({ length: 7 }, () => "")
     )
   );
 
   // Form an Array of the Time data totals
-  let calculateColumnTotals = $derived.by(() => {
+  let columnTotals = $derived.by(() => {
     return Array.from({ length: DAYS_IN_WEEK }, (_, colIndex) =>
       tableData.reduce((sum, row) => sum + (parseFloat(row[colIndex]) || 0), 0)
     );
@@ -19,30 +18,85 @@
   )
 
   // @ts-ignore
-  let tableTotal = $derived(calculateColumnTotals.reduce((sum, value) => sum + (parseFloat(value) || 0), 0))
+  let tableTotal = $derived(columnTotals.reduce((sum, value) => sum + (parseFloat(value) || 0), 0))
 
   let rowTotals = $derived.by(() => {
     return tableData.map(row =>
       row.reduce((sum, value) => sum + (parseFloat(value) || 0), 0)
     );
   })
+  let currentDate = new Date();
+  let weekStart = $state(null)
+  let weekEnd = $state(null);
+
+  const updateWeekRange = () => {
+    const dayOfWeek = currentDate.getDay();
+    const startOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    weekStart = new Date(currentDate);
+    weekStart.setDate(currentDate.getDate() - startOffset);
+    weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+  };
+
+  const formatDate = (date) => {
+    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  };
+
+  const previousWeek = () => {
+    currentDate.setDate(currentDate.getDate() - 7);
+    updateWeekRange();
+  };
+
+  const nextWeek = () => {
+    currentDate.setDate(currentDate.getDate() + 7);
+    updateWeekRange();
+  };
+  let selectedDate = ''
+  const submitTimesheet = () => {
+    console.log('Timesheet submitted:', tableData);
+  };
+
+  function handleDateChange() {
+    
+  }
+
+  updateWeekRange();
+
 </script>
 
 <div class="project-table-container">
   <h2 class="form-title">Time Sheet</h2>
+  <div class="controls">
+    <button class="arrow-button" onclick={previousWeek}>
+      <i class="fas fa-arrow-left"></i> Previous Week
+    </button>
+    <input 
+      class="calendar-input" 
+      type="date" 
+      value={selectedDate} 
+      onchange={handleDateChange} 
+      aria-label="Select Date" 
+    />
+    <button class="arrow-button" onclick={nextWeek}>
+      Next Week <i class="fas fa-arrow-right"></i>
+    </button>
+  </div>
+  <p class="date-range">{formatDate(weekStart)} - {formatDate(weekEnd)}</p>
+
   <table class="project-table">
     <thead>
       <tr>
         <th>Projects</th>
         <th>Tasks</th>
-        {#each { length: 7 } as _, i}
-          <th>{weekDays[i]}</th>
+        {#each weekDays as day}
+          <th>{day}</th>
         {/each}
         <th>Totals</th>
       </tr>
     </thead>
     <tbody>
-      {#each { length: 5 } as _, rowIndex}
+      {#each { length: 6 } as _, rowIndex}
+      {#if rowIndex !== 5}
         <tr>
           <td>Project {rowIndex + 1}</td>
           <td>
@@ -56,7 +110,7 @@
           {#each { length: DAYS_IN_WEEK } as _, colIndex}
             <td>
               <input
-                bind:value="{tableData[rowIndex][colIndex]}"
+                bind:value={tableData[rowIndex][colIndex]}
                 type="number"
                 placeholder="0"
                 min="0"
@@ -66,38 +120,159 @@
           {/each}
           <td>{rowTotals[rowIndex]}</td>
         </tr>
+        {:else}
+        <!-- leave row -->
+        <tr>
+          <td>Leave</td>
+          <td>
+            <select>
+              <option value="task1">Paid Leave</option>
+              <option value="task2">Unpaid</option>
+            </select>
+          </td>
+          {#each { length: DAYS_IN_WEEK } as _, colIndex}
+            <td>
+              <input
+                bind:value={tableData[rowIndex][colIndex]}
+                type="number"
+                placeholder="0"
+                min="0"
+                max="24"
+              />
+            </td>
+          {/each}
+          <td>{rowTotals[rowIndex]}</td>
+        </tr>
+        {/if}
       {/each}
       <tr class="total-row">
         <td colspan="2"><strong>Totals</strong></td>
-        {#each calculateColumnTotals as total}
+        {#each columnTotals as total}
           <td>{total}</td>
         {/each}
         <td>{tableTotal}</td>
       </tr>
     </tbody>
   </table>
+  <div class="submit-container">
+    <button class="submit-button" onclick={submitTimesheet}>Submit Timesheet</button>
+  </div>
 </div>
+
 
 <style>
 /* Container */
 .project-table-container {
   background: var(--accent-color-two);
   padding: 2rem;
+  padding-top: 0.4rem;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-  margin: 12px auto;
+  margin: 2rem auto; /* Adds vertical space and centers horizontally */
   color: #d1d1d1;
+  width: 95%; /* Takes up most of the available space */
+  box-sizing: border-box; /* Includes padding in width calculation */
 }
+
 
 /* Title */
 .project-table-container .form-title {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-align: center;
   color: #ffffff;
   border-bottom: 1px solid #1e1e1e;
   padding-bottom: 1rem;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.calendar-input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  font-size: 0.875rem;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.calendar-input:hover {
+  background-color: #272727;
+}
+
+.calendar-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+.calendar-input::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Ensures the calendar icon matches the light text style */
+  cursor: pointer;
+}
+/* Submit Button Container */
+.submit-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem; /* Adds space between the table and button */
+}
+
+/* Submit Button */
+.submit-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #4f46e5;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #3b36d5;
+  transform: translateY(-2px);
+}
+
+.submit-button:active {
+  background-color: #2a259a;
+  transform: translateY(0);
+}
+
+.arrow-button, .submit-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #272727;
+  color: #ffffff;
+  font-size: 0.875rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arrow-button:hover, .submit-button:hover {
+  background-color: #4f46e5;
+}
+
+.date-range {
+  text-align: center;
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
 }
 
 /* Table */
@@ -145,23 +320,6 @@
 }
 
 .project-table input:focus {
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
-}
-
-/* Select Fields */
-.project-table select {
-  padding: 0.5rem;
-  border: 1px solid #3a3a3a;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  background-color: #272727;
-  color: #d4d4d4;
-  outline: none;
-  cursor: pointer;
-}
-
-.project-table select:focus {
   border-color: #4f46e5;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
 }

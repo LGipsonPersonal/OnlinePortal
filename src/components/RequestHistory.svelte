@@ -34,7 +34,8 @@
   <style>
   .timeoff-container {
     width: 94%;
-    margin: 2rem auto;
+    margin-top: 1rem;
+    margin-right: 1rem;
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
     background-color: var(--accent-color-two);

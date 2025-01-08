@@ -1,5 +1,16 @@
+<script>
+    let { totalHoursThisWeek = 0 } = $props(); // Accessing props using rune syntax
+</script>
+
 <div class="work-hours-tracker">
     <h2 class="form-title">Work Hours Tracker</h2>
+
+    <!-- Display total hours worked this week -->
+    <div class="hours-summary">
+        <strong>Total Hours Worked This Week:</strong>
+        <span>{totalHoursThisWeek} hours</span>
+    </div>
+
     <form id="hoursForm">
         <div class="form-group">
             <label for="project">Project Name</label>
@@ -16,8 +27,10 @@
         </div>
         <button type="submit" class="submit-button">Add Hours</button>
     </form>
+
     <div id="output"></div>
 </div>
+
 
 
 <style>
@@ -140,6 +153,16 @@
     background-color: #4338ca;
     transform: scale(1.02);
 }
+/* Add some styling for the hours summary */
+.work-hours-tracker .hours-summary {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: #3a3a3a;
+    color: #e0e0e0;
+    border-radius: 6px;
+    text-align: center;
+}
 
 /* Responsive styling */
 @media (max-width: 768px) {
@@ -150,6 +173,3 @@
 
 </style>
 
-<script>
-    // Placeholder script for Svelte functionality if needed
-</script>

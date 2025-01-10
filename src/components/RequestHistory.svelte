@@ -4,12 +4,12 @@
   
   <div class="timeoff-container">
     <div class="timeoff-header">
-      <div class="timeoff-column">Request Date</div>
-      <div class="timeoff-column">Start Date</div>
+      <div class="timeoff-column req-date">Request Date</div>
+      <div class="timeoff-column start-date">Start Date</div>
       <div class="timeoff-column">End Date</div>
-      <div class="timeoff-column">Duration</div>
-      <div class="timeoff-column">Status</div>
-      <div class="timeoff-column">Supervisor's Note</div>
+      <div class="timeoff-column duration">Duration</div>
+      <div class="timeoff-column status">Status</div>
+      <div class="timeoff-column note">Supervisor's Note</div>
       <div class="timeoff-column">Action</div>
     </div>
     {#each requests as request, i (request.id)}
@@ -31,126 +31,163 @@
     {/each}
   </div>
   
+
   <style>
-  .timeoff-container {
-    width: 94%;
-    margin-top: 1rem;
-    margin-right: 1rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.875rem;
-    background-color: var(--accent-color-two);
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
-  }
-  
-  .timeoff-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr; /* Added 1fr for Duration */
-    background-color: var(--accent-color-one);
-    color: #ffffff;
-    font-weight: 600;
-    text-transform: uppercase;
-    padding: 1rem;
-    border-bottom: 1px solid #2e2e2e;
-  }
-  
-  .timeoff-column {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .timeoff-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr; /* Added 1fr for Duration */
-    padding: 1rem;
-    border-bottom: 1px solid #2e2e2e;
-    background-color: #2a2a2a;
-    color: #d4d4d4;
-  }
-  
-  .timeoff-row:hover {
-    background-color: #333333;
-  }
-  
-  .timeoff-row:last-child {
-    border-bottom: none;
-  }
-  
-  .timeoff-request-date,
-  .timeoff-start-date,
-  .timeoff-end-date,
-  .timeoff-duration, /* Add spacing for Duration */
-  .timeoff-status,
-  .timeoff-supervisor-note,
-  .timeoff-action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-  }
-  
-  .timeoff-status {
-    text-transform: capitalize;
-    font-weight: 600;
-  }
-  
-  .cancel-button {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #f0f0f0;
-    background-color: #3b3b3b;
-    border: 1px solid #444;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-  }
-  
-  .cancel-button:hover {
-    background-color: #4a4a4a;
-    border-color: #555;
-  }
-  
-  .cancel-button:disabled {
-    background-color: #555;
-    color: #888;
-    cursor: not-allowed;
-  }
-  
-  .cancel-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
-  }
-  
-  /* Status-specific styles */
-  .timeoff-row.pending .timeoff-status {
-    color: #eab308; /* Yellow for pending */
-  }
-  
-  .timeoff-row.approved .timeoff-status {
-    color: #16a34a; /* Green for approved */
-  }
-  
-  .timeoff-row.denied .timeoff-status {
-    color: #dc2626; /* Red for denied */
-  }
-  
-  @media (max-width: 768px) {
     .timeoff-container {
-      font-size: 0.75rem;
+      overflow: hidden;
+      width:90%;
+      max-width: 1200px;
+      height: 97%;
+      max-height: 870px;
+      margin: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      background-color: var(--accent-color-two);
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
     }
   
-    .timeoff-header,
-    .timeoff-row {
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* Collapse columns for smaller screens */
+    .timeoff-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
+      background-color: var(--accent-color-one);
+      color: #ffffff;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 1rem;
+      border-bottom: 1px solid #2e2e2e;
     }
+  
+    .timeoff-column {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+    }
+  
+    .timeoff-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
+      padding: 1rem;
+      border-bottom: 1px solid #2e2e2e;
+      background-color: #2a2a2a;
+      color: #d4d4d4;
+    }
+  
+    .timeoff-row:hover {
+      background-color: #333333;
+    }
+  
+    .timeoff-row:last-child {
+      border-bottom: none;
+    }
+  
+    .timeoff-request-date,
+    .timeoff-start-date,
+    .timeoff-end-date,
+    .timeoff-duration,
+    .timeoff-status,
+    .timeoff-supervisor-note,
+    .timeoff-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+    }
+  
+    .timeoff-status {
+      text-transform: capitalize;
+      font-weight: 600;
+    }
+  
     .cancel-button {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.5rem;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #f0f0f0;
+      background-color: #3b3b3b;
+      border: 1px solid #444;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+  
+    .cancel-button:hover {
+      background-color: #4a4a4a;
+      border-color: #555;
+    }
+  
+    .cancel-button:disabled {
+      background-color: #555;
+      color: #888;
+      cursor: not-allowed;
+    }
+  
+    .cancel-button:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+    }
+  
+    /* Status-specific styles */
+    .timeoff-row.pending .timeoff-status {
+      color: #eab308; /* Yellow for pending */
+    }
+  
+    .timeoff-row.approved .timeoff-status {
+      color: #16a34a; /* Green for approved */
+    }
+  
+    .timeoff-row.denied .timeoff-status {
+      color: #dc2626; /* Red for denied */
+    }
+  
+    @media (max-width: 1550px) {
+      .timeoff-container {
+        font-size: 0.75rem;
+      }
+  
+      .timeoff-header {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* Collapse columns */
+      }
+  
+      .timeoff-row {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* Collapse columns */
+      }
+  
+      .timeoff-duration,
+      .duration,
+      .note,
+      .timeoff-supervisor-note {
+        display: none; /* Hide on smaller screens */
+      }
+  
+      .cancel-button {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+    @media (max-width: 1300px) { 
+      .timeoff-request-date, .req-date {
+        display: none;
+      }
+      .timeoff-request-date,
+    .timeoff-start-date,
+    .timeoff-end-date,
+    .timeoff-duration,
+    .timeoff-status,
+    .timeoff-supervisor-note,
+    .timeoff-action {
+
+      padding: 0.5rem 0.4rem;
     }
   }
+  @media (max-width: 1150px) {
+    .timeoff-container {
+      display: none;
+    }
+   }
   </style>
+  
   

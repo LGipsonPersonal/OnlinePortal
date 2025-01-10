@@ -83,84 +83,126 @@
   </div>
   <p class="date-range">{formatDate(weekStart)} - {formatDate(weekEnd)}</p>
 
-  <table class="project-table">
-    <thead>
-      <tr>
-        <th>Projects</th>
-        <th>Tasks</th>
-        {#each weekDays as day}
-          <th>{day}</th>
-        {/each}
-        <th>Totals</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each { length: 6 } as _, rowIndex}
-      {#if rowIndex !== 5}
+  <div class="table-wrapper">
+    <table class="project-table">
+      <thead>
         <tr>
-          <td>Project {rowIndex + 1}</td>
-          <td>
-            <select>
-              <option value="task1">Task 1</option>
-              <option value="task2">Task 2</option>
-              <option value="task3">Task 3</option>
-              <option value="task4">Task 4</option>
-            </select>
-          </td>
-          {#each { length: DAYS_IN_WEEK } as _, colIndex}
-            <td>
-              <input
-                bind:value={tableData[rowIndex][colIndex]}
-                type="number"
-                placeholder="0"
-                min="0"
-                max="24"
-              />
-            </td>
+          <th>Projects</th>
+          <th>Tasks</th>
+          {#each weekDays as day}
+            <th>{day}</th>
           {/each}
-          <td>{rowTotals[rowIndex]}</td>
+          <th>Totals</th>
         </tr>
+      </thead>
+      <tbody>
+        {#each { length: 6 } as _, rowIndex}
+        {#if rowIndex !== 5}
+          <tr>
+            <td>Project {rowIndex + 1}</td>
+            <td>
+              <select>
+                <option value="task1">Task 1</option>
+                <option value="task2">Task 2</option>
+                <option value="task3">Task 3</option>
+                <option value="task4">Task 4</option>
+              </select>
+            </td>
+            {#each { length: DAYS_IN_WEEK } as _, colIndex}
+              <td>
+                <input
+                  bind:value={tableData[rowIndex][colIndex]}
+                  type="number"
+                  placeholder="0"
+                  min="0"
+                  max="24"
+                />
+              </td>
+            {/each}
+            <td>{rowTotals[rowIndex]}</td>
+          </tr>
         {:else}
-        <!-- leave row -->
-        <tr>
-          <td>Leave</td>
-          <td>
-            <select>
-              <option value="task1">Paid Leave</option>
-              <option value="task2">Unpaid</option>
-            </select>
-          </td>
-          {#each { length: DAYS_IN_WEEK } as _, colIndex}
+          <tr>
+            <td>Leave</td>
             <td>
-              <input
-                bind:value={tableData[rowIndex][colIndex]}
-                type="number"
-                placeholder="0"
-                min="0"
-                max="24"
-              />
+              <select>
+                <option value="task1">Paid Leave</option>
+                <option value="task2">Unpaid</option>
+              </select>
             </td>
-          {/each}
-          <td>{rowTotals[rowIndex]}</td>
-        </tr>
+            {#each { length: DAYS_IN_WEEK } as _, colIndex}
+              <td>
+                <input
+                  bind:value={tableData[rowIndex][colIndex]}
+                  type="number"
+                  placeholder="0"
+                  min="0"
+                  max="24"
+                />
+              </td>
+            {/each}
+            <td>{rowTotals[rowIndex]}</td>
+          </tr>
         {/if}
-      {/each}
-      <tr class="total-row">
-        <td colspan="2"><strong>Totals</strong></td>
-        {#each columnTotals as total}
-          <td>{total}</td>
         {/each}
-        <td>{tableTotal}</td>
-      </tr>
-    </tbody>
-  </table>
+        <tr class="total-row">
+          <td colspan="2"><strong>Totals</strong></td>
+          {#each columnTotals as total}
+            <td>{total}</td>
+          {/each}
+          <td>{tableTotal}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <div class="submit-container">
     <button class="submit-button" onclick={submitTimesheet}>Submit Timesheet</button>
   </div>
 </div>
 
-
 <style>
+/* Wrapper for Table to Enable Horizontal Scrolling */
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .arrow-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .calendar-input {
+    width: 100%;
+  }
+
+  .project-table input {
+    width: 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-title {
+    font-size: 1.2rem;
+  }
+
+  .project-table th, .project-table td {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}
+
 /* Container */
 .project-table-container {
   background: var(--accent-color-two);

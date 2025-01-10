@@ -2,9 +2,7 @@
 <script>
   import Menu from "./Menu.svelte";
   import { setContext } from "svelte";
-  import Header from "./header.svelte";
-  import TimeTable from "./TimeTable.svelte";
-  import Carousel from "./Carousel.svelte";
+  import TimeTable from "./TimeTable.svelte";;
   import TimeOff from "./TimeOff.svelte";
   import Breadcrumbs from "./Breadcrumbs.svelte";
   import UploadDocs from "./UploadDocs.svelte";
@@ -103,7 +101,6 @@
 
   .time-off-page{
     display: flex;
-    overflow: auto;
     align-items: flex-start;
     height: 100%;
   }

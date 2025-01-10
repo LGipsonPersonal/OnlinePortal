@@ -1,39 +1,83 @@
 <script>
+    import { onMount } from "svelte";
+
     let { profile } = $props();
+    let editingField = $state(null);
+    let showPassword = $state(false);
+
+    function enableEdit(field) {
+        editingField = field;
+    }
+
+    function saveEdit(field, value) {
+        profile[field] = value;
+        editingField = null;
+    }
+
+    onMount(() => {
+        const script = document.createElement("script");
+        script.src = "https://kit.fontawesome.com/a076d05399.js";
+        script.crossOrigin = "anonymous";
+        document.head.appendChild(script);
+    });
 </script>
 
 <div class="user-profile">
     <h2 class="profile-title">User Profile</h2>
-    
+
     <div class="profile-section profile-image">
-        <img src="default-profile.png" alt="User Profile Image" class="profile-pic">
-        <button class="btn upload-image">Upload Image</button>
+        <img src="default-profile.png" alt="User Profile" class="profile-pic">
+        <label class="icon-edit">
+            <input type="file" class="hidden" accept="image/*">
+            <i class="fas fa-edit"></i>
+        </label>
     </div>
 
     <div class="profile-section">
-        <label for="username">Username</label>
-        <input type="text" id="username" value={profile.username} readonly>
-        <button class="btn change-password">Change Password</button>
+        <div class="editable-row">
+            <i class="fas fa-edit" onclick={() => enableEdit("username")}></i>
+            <p>
+                <strong>Username:</strong> {profile.username}
+            </p>
+        </div>
+    </div>
+
+    <div class="profile-section">
+        <div class="editable-row">
+            <i class="fas fa-edit" onclick={() => enableEdit("password")}></i>
+            <p>
+                <strong>Password:</strong> ••••••••
+            </p>
+        </div>
     </div>
 
     <div class="profile-section">
         <h3>Personal Info</h3>
-        <p><strong>Job:</strong> {profile.jobTitle}</p>
-        <p><strong>Address:</strong> {profile.address}</p>
-        <p><strong>Phone:</strong> {profile.phone}</p>
-        <p><strong>Email:</strong> {profile.workEmail}</p>
+        {#each ["jobTitle", "address", "phone", "workEmail"] as field}
+            <div class="editable-row">
+                <i class="fas fa-edit" onclick={() => enableEdit(field)}></i>
+                <p>
+                    <strong>{field}:</strong> {profile[field]}
+                </p>
+            </div>
+        {/each}
     </div>
 
     <div class="profile-section team-info">
         <h3>Emergency Contact</h3>
-        <p><strong>Name:</strong> {profile.emergencyContact.name}</p>
-        <p><strong>Phone:</strong> {profile.emergencyContact.phone}</p>
+        {#each ["name", "phone"] as field}
+            <div class="editable-row">
+                <i class="fas fa-edit" onclick={() => enableEdit(`emergencyContact.${field}`)}></i>
+                <p>
+                    <strong>{field}:</strong> {profile.emergencyContact[field]}
+                </p>
+            </div>
+        {/each}
     </div>
 
     <div class="profile-section">
         <p><strong>Team:</strong> {profile.team}</p>
     </div>
-    
 </div>
 
 <style>
@@ -75,20 +119,6 @@
     margin-bottom: 0.3rem;
 }
 
-.profile-section input[type="text"] {
-    width: 100%;
-    max-width: 100%;
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    border: 1px solid #2a2a2a;
-    border-radius: 4px;
-    color: #e0e0e0;
-    background-color: #1e1e1e;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
-    box-sizing: border-box; /* Ensures it stays within bounds */
-}
-
-
 .profile-pic {
     display: block;
     width: 80px;
@@ -99,38 +129,66 @@
     border: 1px solid #2a2a2a;
 }
 
-.btn {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
-    color: #ffffff;
-    background-color: #4f46e5;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.btn:hover {
-    background-color: #4338ca;
-    transform: scale(1.02);
-}
-
-.upload-image {
-    display: block;
-    margin: 0.5rem auto;
-}
-
-.change-password {
-    margin-top: 0.5rem;
-}
-
 p {
     font-size: 0.9rem;
     color: #d1d1d1;
+    margin: 0;
 }
 
 p strong {
     color: #ffffff;
+}
+
+.hidden {
+    display: none;
+}
+
+.icon-edit {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.icon-edit i {
+    font-size: 1.2rem;
+    background: #4f46e5;
+    border-radius: 50%;
+    padding: 0.4rem;
+    transition: background-color 0.3s;
+}
+
+.icon-edit i:hover {
+    background: #4338ca;
+}
+
+.editable-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: #d1d1d1;
+}
+
+.editable-row:hover {
+    color: #ffffff;
+}
+
+.editable-row i {
+    font-size: 1rem;
+    color: #4f46e5;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.editable-row i:hover {
+    color: #4338ca;
+}
+
+.editable-row p {
+    font-size: 0.9rem;
+    margin: 0;
 }
 </style>

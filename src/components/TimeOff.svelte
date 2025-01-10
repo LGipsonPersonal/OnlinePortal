@@ -63,12 +63,6 @@
     box-sizing: border-box; /* Ensures all child elements respect padding */ 
 }
 
-.help-text{
-    position: relative;
-    font-size: 0.83em;
-    bottom: -10px;
-}
-
 /* Title styling */
 .request-time-off .form-title {
     font-size: 1.5rem;
@@ -193,11 +187,20 @@
 }
 
 /* Responsive styling: stack fields on small screens */
-@media (max-width: 768px) {
+/* Responsive styling: Small screens */
+@media (max-width: 760px) {
+    .request-time-off {
+        padding: 1.5rem;
+        min-width:auto;
+    }
+
+    .request-time-off .pto-info-row {
+        display: none;
+    }
+
     .request-time-off .form-row {
         flex-direction: column;
         gap: 1rem;
     }
-
 }
 </style>

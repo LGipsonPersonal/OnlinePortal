@@ -76,7 +76,7 @@ export const tabs = [
       "https://placehold.co/1600x900?text=Image+3",
     ];
 
-    export const profile = {
+    export let profile = $state({
         username: "johndoe",
         jobTitle: "Software Developer",
         address: "123 Main Street, Springfield, IL",
@@ -89,6 +89,6 @@ export const tabs = [
             relationship: "Spouse"
         },
         team: "Frontend Development"
-    };
+    });
     
     

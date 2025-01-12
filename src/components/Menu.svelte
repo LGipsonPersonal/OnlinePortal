@@ -65,7 +65,7 @@
           onclick={() => {
             selectChoice(subTab.key);
           }}
-          class="sidebar-submenu-item {choice === tab.key ? 'selected-tab' : ''}"
+          class="sidebar-submenu-item {choice === subTab.key ? 'selected-tab' : ''}"
         >
           {subTab.name}
         </div>

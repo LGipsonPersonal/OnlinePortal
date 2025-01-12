@@ -12,7 +12,7 @@
   import Announcements from "./Announcements.svelte";
   import QuickTime from "./widgets/QuickTime.svelte";
   // @ts-ignore
-  import { tabs, requests, docs, images, profile } from "$assets/store.js";
+  import { tabs, requests, docs, images } from "$assets/store.svelte.js";
 
   setContext('MainPage', { updateChoice})
 
@@ -77,7 +77,7 @@
       {:else if choice === tabs[3].subtabs[1].key}
         <ViewDocuments></ViewDocuments>
       {:else if choice === tabs[4].key}
-        <UserProfile {profile}></UserProfile>
+        <UserProfile></UserProfile>
     {/if}
   </div>
 </div>

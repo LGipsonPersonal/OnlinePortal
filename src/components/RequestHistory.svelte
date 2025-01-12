@@ -34,10 +34,9 @@
 
   <style>
     .timeoff-container {
-      overflow: hidden;
       width:90%;
       max-width: 1200px;
-      height: 97%;
+      height: 96%;
       max-height: 870px;
       margin: 1rem;
       font-family: 'Inter', sans-serif;

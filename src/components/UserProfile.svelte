@@ -1,25 +1,15 @@
 <script>
-    import { onMount } from "svelte";
+    // @ts-ignore
+    import { profile } from "$assets/store.svelte.js";
+    import { camelCaseToWords, titleCase } from "$assets/utils.js";
+    let editing = $state(false); // Reactive editing mode toggle
 
-    let { profile } = $props();
-    let editingField = $state(null);
-    let showPassword = $state(false);
-
-    function enableEdit(field) {
-        editingField = field;
+    function toggleEdit() {
+        editing = !editing;
     }
-
-    function saveEdit(field, value) {
-        profile[field] = value;
-        editingField = null;
+    function formatTitles(str) {
+        return (titleCase(camelCaseToWords(str)))
     }
-
-    onMount(() => {
-        const script = document.createElement("script");
-        script.src = "https://kit.fontawesome.com/a076d05399.js";
-        script.crossOrigin = "anonymous";
-        document.head.appendChild(script);
-    });
 </script>
 
 <div class="user-profile">
@@ -27,37 +17,71 @@
 
     <div class="profile-section profile-image">
         <img src="default-profile.png" alt="User Profile" class="profile-pic">
-        <label class="icon-edit">
-            <input type="file" class="hidden" accept="image/*">
-            <i class="fas fa-edit"></i>
-        </label>
+        {#if editing}
+            <label class="icon-edit">
+                <input type="file" class="hidden" accept="image/*">
+                <i class="fas fa-edit"></i>
+            </label>
+        {/if}
     </div>
+
+    <button class="edit-profile-button" onclick={toggleEdit}>
+        <i class="fas fa-edit"></i>
+        {editing ? "Save Changes" : "Edit Profile"}
+    </button>
 
     <div class="profile-section">
         <div class="editable-row">
-            <i class="fas fa-edit" onclick={() => enableEdit("username")}></i>
             <p>
-                <strong>Username:</strong> {profile.username}
+                <strong>Username:</strong>
+                {#if editing}
+                    <input 
+                        type="text" 
+                        bind:value={profile.username} 
+                    />
+                {:else}
+                    {profile.username}
+                {/if}
             </p>
         </div>
     </div>
 
     <div class="profile-section">
         <div class="editable-row">
-            <i class="fas fa-edit" onclick={() => enableEdit("password")}></i>
             <p>
-                <strong>Password:</strong> ••••••••
+                <strong>Password:</strong>
+                {#if editing}
+                    <input 
+                        type="password" 
+                        bind:value={profile.password}
+                    />
+                {:else}
+                    ••••••••
+                {/if}
             </p>
         </div>
     </div>
 
     <div class="profile-section">
         <h3>Personal Info</h3>
-        {#each ["jobTitle", "address", "phone", "workEmail"] as field}
+        <div class="editable-row">
+            <p>
+                <strong>Job Title:</strong>
+                    {profile.jobTitle}
+            </p>
+        </div>
+        {#each ["address", "phone", "workEmail"] as field}
             <div class="editable-row">
-                <i class="fas fa-edit" onclick={() => enableEdit(field)}></i>
                 <p>
-                    <strong>{field}:</strong> {profile[field]}
+                    <strong>{formatTitles(field)}:</strong>
+                    {#if editing}
+                        <input 
+                            type="text" 
+                            bind:value={profile[field]} 
+                        />
+                    {:else}
+                        {profile[field]}
+                    {/if}
                 </p>
             </div>
         {/each}
@@ -67,9 +91,16 @@
         <h3>Emergency Contact</h3>
         {#each ["name", "phone"] as field}
             <div class="editable-row">
-                <i class="fas fa-edit" onclick={() => enableEdit(`emergencyContact.${field}`)}></i>
                 <p>
-                    <strong>{field}:</strong> {profile.emergencyContact[field]}
+                    <strong>{field}:</strong>
+                    {#if editing}
+                        <input 
+                            type="text" 
+                            bind:value={profile.emergencyContact[field]} 
+                        />
+                    {:else}
+                        {profile.emergencyContact[field]}
+                    {/if}
                 </p>
             </div>
         {/each}
@@ -176,17 +207,32 @@ p strong {
     color: #ffffff;
 }
 
-.editable-row i {
-    font-size: 1rem;
-    color: #4f46e5;
+.edit-profile-button {
+    background-color: #4f46e5;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     cursor: pointer;
-    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 200px;
+    margin: 0.5rem auto;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s;
 }
 
-.editable-row i:hover {
-    color: #4338ca;
+.edit-profile-button i {
+    font-size: 1.2rem;
 }
 
+.edit-profile-button:hover {
+    background-color: #4338ca;
+}
 .editable-row p {
     font-size: 0.9rem;
     margin: 0;

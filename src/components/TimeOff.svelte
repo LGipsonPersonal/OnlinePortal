@@ -28,8 +28,10 @@
             <select id="type" name="type" required>
                 <option value="" disabled selected>Select type</option>
                 <option value="holiday">Holiday</option>
-                <option value="pto">PTO</option>
+                <option value="pto">Vacation</option>
+                <option value="pto">Sick</option>
                 <option value="emergency">Emergency</option>
+                <option value="emergency">Unpaid</option>
             </select>
         </div>
         <div class="form-group">

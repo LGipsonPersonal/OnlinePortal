@@ -1,6 +1,7 @@
 <script>
     // @ts-ignore
     import { profile } from "$assets/store.svelte.js";
+    // @ts-ignore
     import { camelCaseToWords, titleCase } from "$assets/utils.js";
     let editing = $state(false); // Reactive editing mode toggle
 
@@ -14,23 +15,19 @@
 
 <div class="user-profile">
     <h2 class="profile-title">User Profile</h2>
+    <h3 class="profile-name">{profile.fullName}</h3>
 
     <div class="profile-section profile-image">
-        <img src="default-profile.png" alt="User Profile" class="profile-pic">
-        {#if editing}
-            <label class="icon-edit">
-                <input type="file" class="hidden" accept="image/*">
-                <i class="fas fa-edit"></i>
-            </label>
-        {/if}
+        <img src="./src/assets/{profile.profileImage}.jpg" alt="User Profile" class="profile-pic">
     </div>
 
     <button class="edit-profile-button" onclick={toggleEdit}>
-        <i class="fas fa-edit"></i>
         {editing ? "Save Changes" : "Edit Profile"}
+        <i class="fas fa-edit"></i>
     </button>
 
     <div class="profile-section">
+        <h3>Login Credentials</h3>
         <div class="editable-row">
             <p>
                 <strong>Username:</strong>
@@ -44,9 +41,6 @@
                 {/if}
             </p>
         </div>
-    </div>
-
-    <div class="profile-section">
         <div class="editable-row">
             <p>
                 <strong>Password:</strong>
@@ -70,7 +64,7 @@
                     {profile.jobTitle}
             </p>
         </div>
-        {#each ["address", "phone", "workEmail"] as field}
+        {#each ["address", "phone", "workEmail", "team"] as field}
             <div class="editable-row">
                 <p>
                     <strong>{formatTitles(field)}:</strong>
@@ -105,10 +99,6 @@
             </div>
         {/each}
     </div>
-
-    <div class="profile-section">
-        <p><strong>Team:</strong> {profile.team}</p>
-    </div>
 </div>
 
 <style>
@@ -119,7 +109,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     width: 100%;
     max-width: 350px;
-    margin: 8px auto;
+    margin: 8px;
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     box-sizing: border-box;
@@ -128,7 +118,7 @@
 .profile-title {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 0.4rem;
     text-align: center;
     color: #ffffff;
 }
@@ -137,26 +127,26 @@
     margin-bottom: 1rem;
 }
 
-.profile-section h3 {
+.profile-section, .profile-name {
     font-size: 1rem;
     font-weight: 500;
     color: #d1d1d1;
     margin-bottom: 0.5rem;
 }
 
-.profile-section label {
-    font-size: 0.9rem;
-    color: #9e9e9e;
-    margin-bottom: 0.3rem;
+.profile-name{
+    margin-top: 0px;
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .profile-pic {
+    margin: auto;
     display: block;
     width: 80px;
-    height: 80px;
-    margin: 0 auto 0.5rem;
+    height: 80px; /* Match the width to enforce a square aspect ratio */
     border-radius: 50%;
-    object-fit: cover;
+    object-fit: cover; /* Ensures the image fits within its box */
     border: 1px solid #2a2a2a;
 }
 
@@ -170,36 +160,11 @@ p strong {
     color: #ffffff;
 }
 
-.hidden {
-    display: none;
-}
-
-.icon-edit {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-    margin-top: 8px;
-    text-align: center;
-}
-
-.icon-edit i {
-    font-size: 1.2rem;
-    background: #4f46e5;
-    border-radius: 50%;
-    padding: 0.4rem;
-    transition: background-color 0.3s;
-}
-
-.icon-edit i:hover {
-    background: #4338ca;
-}
 
 .editable-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    cursor: pointer;
     color: #d1d1d1;
 }
 
@@ -211,23 +176,22 @@ p strong {
     background-color: #4f46e5;
     color: #ffffff;
     border: none;
-    padding: 0.75rem 1.5rem;
+    padding: 0.45rem 1rem; /* Shorter padding */
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    width: 100%;
-    max-width: 200px;
-    margin: 0.5rem auto;
+    width: 90%;
+    margin: 1rem auto; /* Center the button */
     font-size: 1rem;
     font-weight: 500;
     transition: background-color 0.3s;
 }
 
 .edit-profile-button i {
-    font-size: 1.2rem;
+    font-size: 1rem; /* Adjusted icon size */
 }
 
 .edit-profile-button:hover {

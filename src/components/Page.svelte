@@ -1,3 +1,4 @@
+<!-- svelte-ignore state_referenced_locally -->
 <svelte:window onpopstate={watchURL}/>
 <script>
   import Menu from "./Menu.svelte";
@@ -12,7 +13,7 @@
   import Announcements from "./Announcements.svelte";
   import QuickTime from "./widgets/QuickTime.svelte";
   // @ts-ignore
-  import { tabs, requests, docs, images } from "$assets/store.svelte.js";
+  import { tabs, requests, docs, images, profile } from "$assets/store.svelte.js";
 
   setContext('MainPage', { updateChoice})
 
@@ -76,8 +77,6 @@
         <UploadDocs {docs}></UploadDocs>
       {:else if choice === tabs[3].subtabs[1].key}
         <ViewDocuments></ViewDocuments>
-      {:else if choice === tabs[4].key}
-        <UserProfile></UserProfile>
     {/if}
   </div>
 </div>

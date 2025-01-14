@@ -31,15 +31,7 @@ export const tabs = [
         { name: "Upload Document", key: "3-0" },
         { name: "View Documents", key: "3-1" },
       ],
-    },
-    {
-      name: "My Profile",
-      key: '4',
-      icon: 'fas fa-user-alt',
-      subtabs: [
-
-      ],
-    },
+    }
   ];
   export const requests = [
     {
@@ -77,7 +69,10 @@ export const tabs = [
     ];
 
     export let profile = $state({
+        fullName: "John Doe",
+        profileImage: 'ZFewuwKm',
         username: "johndoe",
+        password: 'plaintext-placeholder',
         jobTitle: "Software Developer",
         address: "123 Main Street, Springfield, IL",
         phone: "(555) 123-4567",
@@ -88,7 +83,7 @@ export const tabs = [
             phone: "(555) 987-6543",
             relationship: "Spouse"
         },
-        team: "Frontend Development"
+        team: "SEG"
     });
     
     

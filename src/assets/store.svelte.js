@@ -31,6 +31,14 @@ export const tabs = [
         { name: "Upload Document", key: "3-0" },
         { name: "View Documents", key: "3-1" },
       ],
+    },
+    {
+      name: "Settings",
+      key: '4',
+      icon: 'fas fa fa-cog',
+      subtabs: [
+
+      ],
     }
   ];
   export const requests = [

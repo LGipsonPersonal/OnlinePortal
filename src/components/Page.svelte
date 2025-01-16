@@ -77,6 +77,8 @@
         <UploadDocs {docs}></UploadDocs>
       {:else if choice === tabs[3].subtabs[1].key}
         <ViewDocuments></ViewDocuments>
+      {:else if choice === tabs[4].key}
+        WIP
     {/if}
   </div>
 </div>
@@ -95,7 +97,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
   }
 
   .time-off-page{

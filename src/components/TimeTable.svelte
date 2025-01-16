@@ -2,10 +2,32 @@
   const DAYS_IN_WEEK = 7;
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-   // 5 X 7 array meant to house the input time data
+  let projects = $state([
+    {
+      name: 'Project X', 
+      tasks:["Task 1", "Task 2"]
+    }, 
+    {
+      name: 'Project Y', 
+      tasks:["Task 1", "Task 2"]
+    },{
+      name: 'Project Z', 
+      tasks:["Task 1", "Task 2"]
+    },
+    {
+      name: 'Project R', 
+      tasks:["Task 1", "Task 2"]
+    },
+    {
+      name: 'Leave', 
+      tasks:["PTO", "Holdiay", "Unpaid"]
+    },
+  
+  ])
+
    let tableData = $state(
-    Array.from({ length: 6 }, () =>
-      Array.from({ length: 7 }, () => "")
+    Array.from({ length:  projects.length}, () =>
+      Array.from({ length: DAYS_IN_WEEK }, () => "")
     )
   );
 
@@ -89,23 +111,21 @@
         <tr>
           <th>Projects</th>
           <th>Tasks</th>
-          {#each weekDays as day}
+          {#each weekDays as day (day)}
             <th>{day}</th>
           {/each}
           <th>Totals</th>
         </tr>
       </thead>
       <tbody>
-        {#each { length: 6 } as _, rowIndex}
-        {#if rowIndex !== 5}
+        {#each projects as project, rowIndex}
           <tr>
-            <td>Project {rowIndex + 1}</td>
+            <td>{project.name}</td>
             <td>
               <select>
-                <option value="task1">Task 1</option>
-                <option value="task2">Task 2</option>
-                <option value="task3">Task 3</option>
-                <option value="task4">Task 4</option>
+                {#each project.tasks as task}
+                  <option>{task}</option>
+                {/each}
               </select>
             </td>
             {#each { length: DAYS_IN_WEEK } as _, colIndex}
@@ -121,29 +141,6 @@
             {/each}
             <td>{rowTotals[rowIndex]}</td>
           </tr>
-        {:else}
-          <tr>
-            <td>Leave</td>
-            <td>
-              <select>
-                <option value="task1">Paid Leave</option>
-                <option value="task2">Unpaid</option>
-              </select>
-            </td>
-            {#each { length: DAYS_IN_WEEK } as _, colIndex}
-              <td>
-                <input
-                  bind:value={tableData[rowIndex][colIndex]}
-                  type="number"
-                  placeholder="0"
-                  min="0"
-                  max="24"
-                />
-              </td>
-            {/each}
-            <td>{rowTotals[rowIndex]}</td>
-          </tr>
-        {/if}
         {/each}
         <tr class="total-row">
           <td colspan="2"><strong>Totals</strong></td>

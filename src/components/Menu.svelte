@@ -30,52 +30,69 @@
   </div>
   <div class="sidebar-text-container">
     {#each tabs as tab, i (tab.key)}
-    <div class="tab-item">
-      <div class="tab-content-wrapper">
-        <button
-          class="tab-button {choice === tab.key ? 'selected-tab' : ''}"
-          onclick={() => {
-            if (tab.subtabs.length === 0) {
-              selectChoice(tab.key);
-            } else {
-              toggleSubmenu(i);
-            }
-          }}
-        >
-          <i class="{tab.icon} icon"></i>
-          {tab.name}
-        </button>
-        {#if tab.subtabs.length !== 0}
-        <button
-          class="submenu-toggle"
-          onclick={() => toggleSubmenu(i)}
-        >
-          {#if openSubmenuIndex === i}
-            <i class="fas fa-chevron-up"></i>
-          {:else}
-            <i class="fas fa-chevron-down"></i>
+      {#if tab.name !== 'Settings'}
+      <div class="tab-item">
+        <div class="tab-content-wrapper">
+          <button
+            class="tab-button {choice === tab.key ? 'selected-tab' : ''}"
+            onclick={() => {
+              if (tab.subtabs.length === 0) {
+                selectChoice(tab.key);
+              } else {
+                toggleSubmenu(i);
+              }
+            }}
+          >
+            <i class="{tab.icon} icon"></i>
+            {tab.name}
+          </button>
+          {#if tab.subtabs.length !== 0}
+          <button
+            class="submenu-toggle"
+            onclick={() => toggleSubmenu(i)}
+          >
+            {#if openSubmenuIndex === i}
+              <i class="fas fa-chevron-up"></i>
+            {:else}
+              <i class="fas fa-chevron-down"></i>
+            {/if}
+          </button>
           {/if}
-        </button>
+        </div>
+        {#if openSubmenuIndex === i}
+        <div transition:slide class="sidebar-submenu">
+          {#each tab.subtabs as subTab, j}
+          <div
+            onclick={() => {
+              selectChoice(subTab.key);
+            }}
+            class="sidebar-submenu-item {choice === subTab.key ? 'selected-tab' : ''}"
+          >
+            {subTab.name}
+          </div>
+          {/each}
+        </div>
         {/if}
       </div>
-      {#if openSubmenuIndex === i}
-      <div transition:slide class="sidebar-submenu">
-        {#each tab.subtabs as subTab, j}
-        <div
-          onclick={() => {
-            selectChoice(subTab.key);
-          }}
-          class="sidebar-submenu-item {choice === subTab.key ? 'selected-tab' : ''}"
-        >
-          {subTab.name}
-        </div>
-        {/each}
-      </div>
       {/if}
-    </div>
     {/each}
   </div>
+  <!-- Settings tab at the bottom -->
+  {#each tabs as tab, i (tab.key)}
+    {#if tab.name === 'Settings'}
+    <div class="tab-item settings-tab">
+      <button
+        class="tab-button {choice === tab.key ? 'selected-tab' : ''}"
+        onclick={() => selectChoice(tab.key)}
+      >
+        <i class="{tab.icon} icon"></i>
+        {tab.name}
+      </button>
+    </div>
+    {/if}
+  {/each}
 </div>
+
 
 
 
@@ -235,8 +252,23 @@
   color: #fff; /* Highlight text color on hover */
 }
 
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space out items */
+  height: 100%; /* Full height for flexbox alignment */
+}
 
+.sidebar-text-container {
+  flex-grow: 1; /* Fill available space */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
 
+.settings-tab {
+  margin-top: auto; /* Push to the bottom */
+}
 </style>
 
 

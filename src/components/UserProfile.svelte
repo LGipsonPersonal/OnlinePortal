@@ -14,8 +14,7 @@
 </script>
 
 <div class="user-profile">
-    <h2 class="profile-title">User Profile</h2>
-    <h3 class="profile-name">{profile.fullName}</h3>
+    <h2 class="profile-title">Hi, {profile.fullName}</h2>
 
     <div class="profile-section profile-image">
         <img src="./src/assets/{profile.profileImage}.jpg" alt="User Profile" class="profile-pic">
@@ -25,37 +24,6 @@
         {editing ? "Save Changes" : "Edit Profile"}
         <i class="fas fa-edit"></i>
     </button>
-
-    <div class="profile-section">
-        <h3>Login Credentials</h3>
-        <div class="editable-row">
-            <p>
-                <strong>Username:</strong>
-                {#if editing}
-                    <input 
-                        type="text" 
-                        bind:value={profile.username} 
-                    />
-                {:else}
-                    {profile.username}
-                {/if}
-            </p>
-        </div>
-        <div class="editable-row">
-            <p>
-                <strong>Password:</strong>
-                {#if editing}
-                    <input 
-                        type="password" 
-                        bind:value={profile.password}
-                    />
-                {:else}
-                    ••••••••
-                {/if}
-            </p>
-        </div>
-    </div>
-
     <div class="profile-section">
         <h3>Personal Info</h3>
         <div class="editable-row">
@@ -64,7 +32,7 @@
                     {profile.jobTitle}
             </p>
         </div>
-        {#each ["address", "phone", "workEmail", "team"] as field}
+        {#each ["address", "phone", "workEmail"] as field}
             <div class="editable-row">
                 <p>
                     <strong>{formatTitles(field)}:</strong>
@@ -79,6 +47,12 @@
                 </p>
             </div>
         {/each}
+        <div class="editable-row">
+            <p>
+                <strong>Team:</strong>
+                    {profile.team}
+            </p>
+        </div>
     </div>
 
     <div class="profile-section team-info">
@@ -200,5 +174,8 @@ p strong {
 .editable-row p {
     font-size: 0.9rem;
     margin: 0;
+}
+h3{
+    margin-bottom: 0.5rem;
 }
 </style>

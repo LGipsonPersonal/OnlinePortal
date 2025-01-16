@@ -34,13 +34,15 @@
 <style>
 /* Breadcrumbs container */
 .breadcrumbs {
+    flex-shrink: 0;
+    flex-grow: 0;
     background-color: var(--accent-color-two); /* Dark background */
     padding: 1rem;
     color: #e0e0e0;
     font-size: 0.875rem;
     border-bottom: 1px solid #333; /* Subtle border */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    max-height: 1.5rem;
+    height: 1.5rem;
     display: flex;
     align-items: center; /* Vertically centers all children */
     justify-content: space-between; /* Ensures spacing between items */

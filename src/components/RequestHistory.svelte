@@ -36,9 +36,10 @@
     .timeoff-container {
       width:90%;
       max-width: 1200px;
-      height: 96%;
+      height: 90%;
       max-height: 870px;
-      margin: 1rem;
+      margin-top: 1rem;
+      margin-right: 1rem;
       font-family: 'Inter', sans-serif;
       font-size: 0.875rem;
       background-color: var(--accent-color-two);

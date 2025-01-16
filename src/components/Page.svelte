@@ -12,6 +12,7 @@
   import ViewDocuments from "./ViewDocuments.svelte";
   import Announcements from "./Announcements.svelte";
   import QuickTime from "./widgets/QuickTime.svelte";
+  import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
   import { tabs, requests, docs, images, profile } from "$assets/store.svelte.js";
 
@@ -57,6 +58,7 @@
 </script>
 
 <div class="fullscreen">
+  <Popup></Popup>
   <Menu {choice} {tabs}></Menu>
   <div class="main-page">
     <Breadcrumbs {currentTabs}></Breadcrumbs>

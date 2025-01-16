@@ -81,6 +81,8 @@
   function handleDateChange() {
     
   }
+  
+  function addRow() {}
 
   updateWeekRange();
 
@@ -153,6 +155,7 @@
     </table>
   </div>
   <div class="submit-container">
+    <button class="add-row-button" onclick={addRow}>Add Row</button>
     <button class="submit-button" onclick={submitTimesheet}>Submit Timesheet</button>
   </div>
 </div>
@@ -263,8 +266,31 @@
 /* Submit Button Container */
 .submit-container {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem; /* Adds space between the table and button */
+  justify-content: space-between;
+  align-items: center; /* Ensures vertical alignment */
+  margin-top: 1rem; /* Adds space between the table and buttons */
+}
+/* Add Row Button */
+.add-row-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #4caf50; /* Green button color */
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.add-row-button:hover {
+  background-color: #45a047;
+  transform: translateY(-2px);
+}
+
+.add-row-button:active {
+  background-color: #2e7d32;
+  transform: translateY(0);
 }
 
 /* Submit Button */
@@ -290,7 +316,7 @@
   transform: translateY(0);
 }
 
-.arrow-button, .submit-button {
+.arrow-button, .submit-button, .add-row-button {
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 6px;

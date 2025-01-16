@@ -6,7 +6,6 @@ import path from "path";
 export default defineConfig({
   base: './', // Use './' for relative paths
   plugins: [svelte()],
-  base: '/<REPO>/',
   resolve: {
     alias: {
       $lib: path.resolve(__dirname, "./src/lib"),

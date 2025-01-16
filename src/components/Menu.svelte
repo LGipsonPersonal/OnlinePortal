@@ -25,7 +25,6 @@
 
 <div class="sidebar">
   <div class="logo-container">
-    <img src="./svelte.svg" alt="Logo" class="sidebar-logo" />
     <span class="logo-text">Portal</span>
   </div>
   <div class="sidebar-text-container">

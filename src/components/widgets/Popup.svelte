@@ -1,5 +1,11 @@
+<script>
+    let { popupContent } = $props()
+</script>
+
 <div class="popup-overlay">
-    <div class="popup-box"></div>
+    <div class="popup-box">
+        {@render popupContent()}
+    </div>
 </div>
 
 <style>
@@ -25,8 +31,6 @@
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
-    width: 400px; /* Adjust width as needed */
-    height: 300px; /* Adjust height as needed */
     box-sizing: border-box; /* Ensures padding is included in width/height */
 }
 </style>

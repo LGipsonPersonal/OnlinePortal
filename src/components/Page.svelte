@@ -57,8 +57,12 @@
 
 </script>
 
+{#snippet message()}
+  <p class="blue">Hello World!</p>
+{/snippet}
+
 <div class="fullscreen">
-  <Popup></Popup>
+  <Popup popupContent={message}></Popup>
   <Menu {choice} {tabs}></Menu>
   <div class="main-page">
     <Breadcrumbs {currentTabs}></Breadcrumbs>
@@ -109,5 +113,8 @@
   .homePage{
     display: flex;
     height: 100%;
+  }
+  .blue{
+    color: blue;
   }
 </style>

@@ -1,3 +1,7 @@
+# What this is
+
+This is a personel project meant to mimic a typical company portal with the abbility to input a time sheet, request time off, manage documents, etc etc. It is still very much a work in progress, but feel free to use it as you please.
+
 # Svelte + Vite
 
 This template should help get you started developing with Svelte in Vite.

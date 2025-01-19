@@ -7,7 +7,6 @@
     } = $props()
 
     let showUserProfile = $state(false)
-    $inspect(showUserProfile)
 </script>
 
 <div class="breadcrumbs" aria-label="Breadcrumb">

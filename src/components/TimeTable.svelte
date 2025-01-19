@@ -1,35 +1,14 @@
 <script>
   const DAYS_IN_WEEK = 7;
+  import { tick } from 'svelte'
   const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  let projects = $state([
-    {
-      name: 'Project X', 
-      tasks:["Task 1", "Task 2"]
-    }, 
-    {
-      name: 'Project Y', 
-      tasks:["Task 1", "Task 2"]
-    },{
-      name: 'Project Z', 
-      tasks:["Task 1", "Task 2"]
-    },
-    {
-      name: 'Project R', 
-      tasks:["Task 1", "Task 2"]
-    },
-    {
-      name: 'Leave', 
-      tasks:["PTO", "Holdiay", "Unpaid"]
-    },
-  
-  ])
+  let  { projects } = $props()
 
-   let tableData = $state(
-    Array.from({ length:  projects.length}, () =>
-      Array.from({ length: DAYS_IN_WEEK }, () => "")
-    )
-  );
+  let activeProjects = $state([])
+
+   let tableData = $state([]);
+  $inspect(tableData)
 
   // Form an Array of the Time data totals
   let columnTotals = $derived.by(() => {
@@ -82,7 +61,18 @@
     
   }
   
-  function addRow() {}
+  function addRow() {
+    activeProjects.push(
+      {
+        name: '', 
+        tasks:[""]
+      }
+    )
+    tick().then(() => tableData.push(Array.from({ length: DAYS_IN_WEEK }, () => "")))
+  }
+  function chooseProject(event, rowIndex) {
+    activeProjects[rowIndex] = projects[event.target.value]
+  }
 
   updateWeekRange();
 
@@ -120,17 +110,25 @@
         </tr>
       </thead>
       <tbody>
-        {#each projects as project, rowIndex}
+        {#each activeProjects as project, rowIndex}
           <tr>
-            <td>{project.name}</td>
+            <td>
+              <select onchange={(event) => chooseProject(event, rowIndex)}>
+                <option value="" disabled selected>Select a Project!</option>
+                {#each projects as projectSelection, i}
+                  <option value={i}>{projectSelection.name}</option>
+                {/each}
+            </select>
+          </td>
             <td>
               <select>
+                <option value="" disabled selected>Select a task!</option>
                 {#each project.tasks as task}
                   <option>{task}</option>
                 {/each}
               </select>
             </td>
-            {#each { length: DAYS_IN_WEEK } as _, colIndex}
+            {#each tableData[rowIndex] as _, colIndex}
               <td>
                 <input
                   bind:value={tableData[rowIndex][colIndex]}
@@ -161,61 +159,32 @@
 </div>
 
 <style>
+/* General Styles */
+:root {
+  --button-hover-bg: #4f46e5;
+  --button-active-bg: #2a259a;
+  --input-bg: #1e1e1e;
+  --input-border: #3a3a3a;
+  --input-focus-border: #4f46e5;
+}
+
 /* Wrapper for Table to Enable Horizontal Scrolling */
 .table-wrapper {
   overflow-x: auto;
   width: 100%;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .controls {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .arrow-button {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .calendar-input {
-    width: 100%;
-  }
-
-  .project-table input {
-    width: 3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .form-title {
-    font-size: 1.2rem;
-  }
-
-  .project-table th, .project-table td {
-    font-size: 0.75rem;
-    padding: 0.5rem;
-  }
-
-  .submit-button {
-    width: 100%;
-  }
-}
-
 /* Container */
 .project-table-container {
   background: var(--accent-color-two);
-  padding: 2rem;
-  padding-top: 0.4rem;
+  padding: 1.8rem 2rem 0.4rem;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-  margin: 2rem auto; /* Adds vertical space and centers horizontally */
+  margin: 2rem auto;
   color: #d1d1d1;
-  width: 95%; /* Takes up most of the available space */
-  box-sizing: border-box; /* Includes padding in width calculation */
+  width: 95%;
+  box-sizing: border-box;
 }
-
 
 /* Title */
 .project-table-container .form-title {
@@ -238,16 +207,15 @@
 
 .calendar-input {
   padding: 0.5rem 1rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid var(--input-border);
   border-radius: 6px;
-  background-color: #1e1e1e;
+  background-color: var(--input-bg);
   color: #e0e0e0;
   font-size: 0.875rem;
-  font-family: 'Inter', sans-serif;
   text-align: center;
   outline: none;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  transition: 0.2s;
 }
 
 .calendar-input:hover {
@@ -255,89 +223,75 @@
 }
 
 .calendar-input:focus {
-  border-color: #4f46e5;
+  border-color: var(--input-focus-border);
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
 }
 
 .calendar-input::-webkit-calendar-picker-indicator {
-  filter: invert(1); /* Ensures the calendar icon matches the light text style */
+  filter: invert(1);
   cursor: pointer;
 }
-/* Submit Button Container */
-.submit-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center; /* Ensures vertical alignment */
-  margin-top: 1rem; /* Adds space between the table and buttons */
-}
-/* Add Row Button */
-.add-row-button {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  background-color: #4caf50; /* Green button color */
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
 
-.add-row-button:hover {
-  background-color: #45a047;
-  transform: translateY(-2px);
-}
-
-.add-row-button:active {
-  background-color: #2e7d32;
-  transform: translateY(0);
-}
-
-/* Submit Button */
-.submit-button {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 6px;
-  background-color: #4f46e5;
-  color: #ffffff;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.submit-button:hover {
-  background-color: #3b36d5;
-  transform: translateY(-2px);
-}
-
-.submit-button:active {
-  background-color: #2a259a;
-  transform: translateY(0);
-}
-
-.arrow-button, .submit-button, .add-row-button {
-  padding: 0.5rem 1rem;
+/* Button Styles (Shared) */
+button, .arrow-button, .submit-button, .add-row-button {
+  padding: 0.5rem 1rem; /* Adjusted padding for uniform size */
+  font-size: 0.875rem; /* Consistent font size */
   border: none;
   border-radius: 6px;
   background-color: #272727;
   color: #ffffff;
-  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+  transition: background-color 0.2s, transform 0.2s;
 }
-
-.arrow-button:hover, .submit-button:hover {
-  background-color: #4f46e5;
-}
-
-.date-range {
+.date-range{
   text-align: center;
-  font-size: 1rem;
-  color: #ffffff;
+}
+button:hover, .arrow-button:hover, .submit-button:hover, .add-row-button:hover {
+  background-color: var(--button-hover-bg);
+  transform: translateY(-2px);
+}
+
+button:active, .arrow-button:active, .submit-button:active, .add-row-button:active {
+  background-color: var(--button-active-bg);
+  transform: translateY(0);
+}
+/* Adjust Layout for Narrow Screens */
+
+/* Submit Container Alignment */
+.submit-container {
+  display: flex;
+  justify-content: space-between; /* Centers horizontally */
+  align-items: center; /* Aligns vertically */
+  gap: 1rem; /* Spacing between buttons */
+  margin-top: 1rem; /* Space above the container */
   margin-bottom: 1rem;
+}
+.form-title{
+  margin-top: 0
+}
+@media (max-width: 1250px) {
+  .submit-button {
+  position: absolute;
+  right: 1.5rem; /* Sticks to the right side */
+  margin-left: auto; /* Pushes it to the far right within its container */
+  z-index: 10; /* Ensures it stays above other content */
+}
+}
+/* Responsive Adjustments (Optional for Smaller Screens) */
+@media (max-width: 768px) {
+  .submit-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .submit-button{
+    position: unset;
+    margin-left: 0; /* Pushes it to the far right within its container */
+  }
 }
 
 /* Table */
@@ -347,11 +301,9 @@
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
   background-color: var(--accent-color-two);
-  overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-/* Table Header */
 .project-table th {
   background-color: var(--accent-color-one);
   color: #ffffff;
@@ -362,7 +314,6 @@
   border-bottom: 1px solid #2e2e2e;
 }
 
-/* Table Body */
 .project-table td {
   padding: 1rem;
   text-align: center;
@@ -370,22 +321,22 @@
   border: 1px solid #2e2e2e;
 }
 
-/* Input Fields */
+/* Inputs in Table */
 .project-table input {
-  width: 4rem; /* Adjust width for better number display */
+  width: 4rem;
   padding: 0.5rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid var(--input-border);
   border-radius: 6px;
   font-size: 0.875rem;
   text-align: center;
-  background-color: #1e1e1e;
+  background-color: var(--input-bg);
   color: #e0e0e0;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: 0.2s;
 }
 
 .project-table input:focus {
-  border-color: #4f46e5;
+  border-color: var(--input-focus-border);
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
 }
 
@@ -401,4 +352,36 @@
   background-color: #333333;
   transition: background-color 0.3s ease;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .arrow-button {
+    width: 100%;
+  }
+
+  .calendar-input, .project-table input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-title {
+    font-size: 1.2rem;
+  }
+
+  .project-table th, .project-table td {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}
+
 </style>

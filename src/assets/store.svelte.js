@@ -93,5 +93,27 @@ export const tabs = [
         },
         team: "SEG"
     });
+
+    export let projects = [
+    {
+      name: 'Project X', 
+      tasks:["Task 1", "Task 2"]
+    }, 
+    {
+      name: 'Project Y', 
+      tasks:["Task 1", "Task 2"]
+    },{
+      name: 'Project Z', 
+      tasks:["Task 1", "Task 2"]
+    },
+    {
+      name: 'Project R', 
+      tasks:["Task 1", "Task 2", "Task 3"]
+    },
+    {
+      name: 'Leave', 
+      tasks:["PTO", "Holdiay", "Unpaid"]
+    } 
+  ]
     
     

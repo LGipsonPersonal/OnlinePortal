@@ -14,7 +14,7 @@
   import QuickTime from "./widgets/QuickTime.svelte";
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
-  import { tabs, requests, docs, images, profile } from "$assets/store.svelte.js";
+  import { tabs, requests, docs, images, profile, projects } from "$assets/store.svelte.js";
 
   setContext('MainPage', { updateChoice})
 
@@ -57,12 +57,8 @@
 
 </script>
 
-{#snippet message()}
-  <p class="blue">Hello World!</p>
-{/snippet}
 
 <div class="fullscreen">
-  <Popup popupContent={message}></Popup>
   <Menu {choice} {tabs}></Menu>
   <div class="main-page">
     <Breadcrumbs {currentTabs}></Breadcrumbs>
@@ -73,7 +69,7 @@
           <QuickTime totalHoursThisWeek={1}></QuickTime>
       </div>
     {:else if choice === tabs[1].key}
-      <TimeTable></TimeTable>
+      <TimeTable {projects}></TimeTable>
     {:else if choice === tabs[2].key}
       <div class="time-off-page">
         <TimeOff></TimeOff>

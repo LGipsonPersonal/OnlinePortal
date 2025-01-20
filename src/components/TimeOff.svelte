@@ -53,11 +53,10 @@
 /* Parent container */
 .request-time-off {
     background: var(--accent-color-two);
-    padding: 2rem;
+    padding: 1.8rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     margin: 1rem;
-    max-height: 870px;
     min-width: 600px;
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
@@ -141,7 +140,7 @@
 /* Submit button */
 .request-time-off .submit-button {
     width: 100%;
-    padding: 1rem;
+    padding: 0.9rem;
     font-size: 1rem;
     font-weight: 600;
     color: #ffffff;

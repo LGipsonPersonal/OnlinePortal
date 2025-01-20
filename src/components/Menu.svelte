@@ -240,7 +240,7 @@
 }
 
 .tab-content-wrapper .tab-button,
-.tab-content-wrapper .submenu-toggle {
+.tab-content-wrapper {
   background: none;
   border: none;
   color: #aaa;

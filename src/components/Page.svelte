@@ -104,7 +104,6 @@
   .time-off-page{
     display: flex;
     align-items: flex-start;
-    height: 100%;
   }
   .homePage{
     display: flex;

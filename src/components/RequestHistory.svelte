@@ -38,11 +38,11 @@
 <style>
   .timeoff-container {
       width:90%;
-      max-width: 1200px;
-      height: 90%;
-      max-height: 870px;
+      height: calc(100% - 2rem);
+
       margin-top: 1rem;
       margin-right: 1rem;
+      margin-bottom: 1rem;
       font-family: 'Inter', sans-serif;
       font-size: 0.875rem;
       background-color: var(--accent-color-two);

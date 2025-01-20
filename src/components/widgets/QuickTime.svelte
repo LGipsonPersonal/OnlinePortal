@@ -64,7 +64,7 @@
 /* Parent container */
 .work-hours-tracker {
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
-    padding: 2rem;
+    padding: 1.2rem 2rem 1.6rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     width: 100%;
@@ -122,16 +122,7 @@
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
 }
 
-/* Output area */
-.work-hours-tracker #output {
-    margin-top: 1rem;
-    max-height: 8rem;
-    overflow-y: auto;
-    border-top: 1px solid #3a3a3a;
-    padding-top: 1rem;
-    color: #e0e0e0;
-    font-size: 0.875rem;
-}
+
 
 
 /* Submit button */

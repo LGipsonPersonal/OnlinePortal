@@ -115,5 +115,30 @@ export const tabs = [
       tasks:["PTO", "Holdiay", "Unpaid"]
     } 
   ]
-    
+  
+  export const documentCategories = [
+    {
+      category: "Insurance",
+      documents: [
+        "Health Insurance Policy",
+        "Car Insurance Policy"
+      ]
+    },
+    {
+      category: "Security Information",
+      documents: [
+        "Network Security Guidelines",
+        "Password Policy"
+      ]
+    },
+    {
+      category: "Retirement Account Information",
+      documents: [
+        "401(k) Plan Summary",
+        "Pension Fund Details"
+      ]
+    }
+  ];
+  
+  
     

@@ -1,37 +1,45 @@
+<script>
+  // @ts-ignore
+  import { documentCategories } from "$assets/store.svelte.js";
+  import { slide } from 'svelte/transition'
+
+  const DEFAULT_TAB_STATE = true // open the page with all the tabs open
+
+  let openTabs = Array.from({ length: documentCategories.length }, () => DEFAULT_TAB_STATE)
+
+  function toggleSubmenu(index) {
+    openTabs[index] = !openTabs[index]
+  }
+  function downloadDoc(section, doc) {
+    console.log(documentCategories[section].documents[doc])
+  }
+</script>
+
 <div class="documents-container">
+  {#each documentCategories as section, i (section.category)}
     <div class="category-section">
-      <div class="category-header">Insurance</div>
-      <div class="document-row">
-        <span class="document-name">Health Insurance Policy</span>
-        <button class="download-button">Download</button>
+      <div class="category-header">
+        {section.category}
+        <button class="submenu-toggle" onclick={() => toggleSubmenu(i)}>
+            {#if !openTabs[i]}
+              <i class="fas fa-chevron-up"></i>
+            {:else}
+              <i class="fas fa-chevron-down"></i>
+            {/if}
+        </button>
       </div>
-      <div class="document-row">
-        <span class="document-name">Car Insurance Policy</span>
-        <button class="download-button">Download</button>
-      </div>
+      {#if openTabs[i]}
+        <div class="doc-seciton" transition:slide>
+          {#each section.documents as doc, j (doc)}
+            <div class="document-row">
+                <span class="document-name">{doc}</span>
+                <button class="download-button" onclick={() => downloadDoc(i,j)}>Download</button>
+            </div>
+          {/each}
+          </div>
+      {/if}
     </div>
-    <div class="category-section">
-      <div class="category-header">Security Information</div>
-      <div class="document-row">
-        <span class="document-name">Network Security Guidelines</span>
-        <button class="download-button">Download</button>
-      </div>
-      <div class="document-row">
-        <span class="document-name">Password Policy</span>
-        <button class="download-button">Download</button>
-      </div>
-    </div>
-    <div class="category-section">
-      <div class="category-header">Retirement Account Information</div>
-      <div class="document-row">
-        <span class="document-name">401(k) Plan Summary</span>
-        <button class="download-button">Download</button>
-      </div>
-      <div class="document-row">
-        <span class="document-name">Pension Fund Details</span>
-        <button class="download-button">Download</button>
-      </div>
-    </div>
+    {/each}
   </div>
   
   <style>
@@ -60,6 +68,8 @@
       font-size: 0.875rem;
       margin-bottom: 0.5rem;
       border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
     }
   
     .document-row {
@@ -97,5 +107,16 @@
       background-color: #4a4a4a;
       border-color: #555;
     }
+
+    .submenu-toggle:hover {
+      color: #fff; /* Highlight text color on hover */
+    }
+    .submenu-toggle {
+      background: none;
+      border: none;
+      color: #aaa;
+      cursor: pointer;
+      transition: color 0.2s;
+  }
   </style>
   

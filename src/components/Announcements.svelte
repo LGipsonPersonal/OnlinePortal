@@ -46,7 +46,8 @@
         padding: 2rem;
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-        width: 40%;
+        width: 35%;
+        max-width: 800px;
         margin: 12px auto;
         height: 89%;
 

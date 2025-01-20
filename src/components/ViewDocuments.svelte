@@ -44,7 +44,7 @@
       overflow: hidden;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
       margin: 2rem auto;
-      padding: 1rem;
+      padding: 1rem 1rem 0px;
     }
   
     .category-section {

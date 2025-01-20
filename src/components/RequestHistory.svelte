@@ -1,39 +1,42 @@
 <script>
   let { requests } = $props();
 </script>
-  
-  <div class="timeoff-container">
-    <div class="timeoff-header">
-      <div class="timeoff-column req-date">Request Date</div>
-      <div class="timeoff-column start-date">Start Date</div>
-      <div class="timeoff-column">End Date</div>
-      <div class="timeoff-column duration">Duration</div>
-      <div class="timeoff-column status">Status</div>
-      <div class="timeoff-column note">Supervisor's Note</div>
-      <div class="timeoff-column">Action</div>
-    </div>
-    {#each requests as request, i (request.id)}
-      <div class="timeoff-row {request.status.toLowerCase()}">
-        <div class="timeoff-request-date">{request.request_date}</div>
-        <div class="timeoff-start-date">{request.start_date}</div>
-        <div class="timeoff-end-date">{request.end_date}</div>
-        <div class="timeoff-duration">{request.duration}</div>
-        <div class="timeoff-status">{request.status}</div>
-        <div class="timeoff-supervisor-note">{request.supervisor_note}</div>
-        <div class="timeoff-action">
-          {#if request.action === 'Cancel'}
-            <button class="cancel-button">Cancel</button>
-          {:else}
-            <span>{request.action}</span>
-          {/if}
-        </div>
-      </div>
-    {/each}
-  </div>
-  
 
-  <style>
-    .timeoff-container {
+<div class="timeoff-container">
+  <div class="timeoff-header">
+    <div class="timeoff-column req-date">Request Date</div>
+    <div class="timeoff-column start-date">Start Date</div>
+    <div class="timeoff-column">End Date</div>
+    <div class="timeoff-column duration">Duration</div>
+    <div class="timeoff-column status">Status</div>
+    <div class="timeoff-column note">Supervisor's Note</div>
+    <div class="timeoff-column">Action</div>
+  </div>
+  {#each requests as request, i (request.id)}
+    <div class="timeoff-row {request.status.toLowerCase()}">
+      <div class="timeoff-request-date">{request.request_date}</div>
+      <div class="timeoff-start-date">{request.start_date}</div>
+      <div class="timeoff-end-date">{request.end_date}</div>
+      <div class="timeoff-duration">{request.duration}</div>
+      <div class="timeoff-status">{request.status}</div>
+      <div class="timeoff-supervisor-note">{request.supervisor_note}</div>
+      <div class="timeoff-action">
+        {#if request.action === 'Cancel'}
+          <button class="cancel-button">Cancel</button>
+        {:else}
+          <span>{request.action}</span>
+        {/if}
+      </div>
+    </div>
+  {/each}
+  <!-- Placeholder for future requests -->
+  <div class="timeoff-placeholder">
+    <p>End of Request History</p>
+  </div>
+</div>
+
+<style>
+  .timeoff-container {
       width:90%;
       max-width: 1200px;
       height: 90%;
@@ -47,8 +50,20 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
       overflow: hidden;
     }
-  
-    .timeoff-header {
+
+  .timeoff-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    font-style: italic;
+    font-size: 1rem;
+    color: #888888;
+    background-color: #1f1f1f;
+    border-top: 1px solid #2e2e2e;
+  }
+
+  .timeoff-header {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
       background-color: var(--accent-color-one);
@@ -57,6 +72,15 @@
       text-transform: uppercase;
       padding: 1rem;
       border-bottom: 1px solid #2e2e2e;
+    }
+
+    .timeoff-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
+      padding: 1rem;
+      border-bottom: 1px solid #2e2e2e;
+      background-color: #2a2a2a;
+      color: #d4d4d4;
     }
   
     .timeoff-column {
@@ -67,14 +91,6 @@
 
     }
   
-    .timeoff-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
-      padding: 1rem;
-      border-bottom: 1px solid #2e2e2e;
-      background-color: #2a2a2a;
-      color: #d4d4d4;
-    }
   
     .timeoff-row:hover {
       background-color: #333333;

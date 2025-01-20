@@ -114,7 +114,7 @@
           <tr>
             <td>
               <select onchange={(event) => chooseProject(event, rowIndex)}>
-                <option value="" disabled selected>Select a Project!</option>
+                <option value="" disabled selected>Select a Project</option>
                 {#each projects as projectSelection, i}
                   <option value={i}>{projectSelection.name}</option>
                 {/each}
@@ -122,7 +122,7 @@
           </td>
             <td>
               <select>
-                <option value="" disabled selected>Select a task!</option>
+                <option value="" disabled selected>Select a task</option>
                 {#each project.tasks as task}
                   <option>{task}</option>
                 {/each}

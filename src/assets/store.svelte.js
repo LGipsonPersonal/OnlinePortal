@@ -140,5 +140,60 @@ export const tabs = [
     }
   ];
   
+  export const announcements = {
+    boardTitle: "What's happening at Company",
+    announcements: [
+        {
+            id: 1,
+            avatar: "avatar1.png",
+            title: "Alice posted an announcement: \"New Feature Released!\"",
+            description: "We are excited to announce a new feature...",
+            timestamp: "2 hours ago"
+        },
+        {
+            id: 2,
+            avatar: "avatar2.png",
+            title: "Bob posted an announcement: \"Scheduled Maintenance\"",
+            description: "The system will be down for maintenance...",
+            timestamp: "1 day ago"
+        },
+        {
+            id: 3,
+            avatar: "avatar3.png",
+            title: "Carol posted an announcement: \"Weekly Update\"",
+            description: "Here is your weekly company update...",
+            timestamp: "3 days ago"
+        }
+    ]
+};
+
+export const events = {
+  boardTitle: "Upcoming Events",
+  announcements: [
+      {
+          id: 1,
+          avatar: "avatar1.png",
+          title: "Los Marcos, June 25th: \"Celebrate Another Gold Delivery!\"",
+          description: "With the final delivery of XYSR out the gate...",
+          timestamp: "2 hours ago"
+      },
+      {
+          id: 2,
+          avatar: "avatar2.png",
+          title: "OKC Office, May 7th: \"Annual Chili Party!\"",
+          description: "Come by the office for our annual Chili party...",
+          timestamp: "1 day ago"
+      },
+      {
+          id: 3,
+          avatar: "avatar3.png",
+          title: "AMC - Penn State, Jan 19th: \"Movie Night!\"",
+          description: "Come watch a movie with us this Friday night...",
+          timestamp: "3 days ago"
+      }
+  ]
+};
+
+  
   
     

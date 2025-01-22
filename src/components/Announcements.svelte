@@ -1,56 +1,38 @@
+<script>
+    let { props } = $props();
+
+    function handleAnnouncementClick(id) {
+        console.log(`Announcement ${id} clicked`);
+    }
+</script>
+
 <div class="announcement-board">
-    <h2 class="board-title">What's happening at Company</h2>
-    <div class="announcement" onclick={() => handleAnnouncementClick(1)}>
-        <div class="avatar-container">
-            <div class="avatar">
-                <img src="avatar1.png" alt="User Avatar">
+    <h2 class="board-title">{props.boardTitle}</h2>
+    {#each props.announcements as announcement, i (announcement.id)}
+        <div class="announcement" onclick={() => handleAnnouncementClick(i)}>
+            <div class="avatar-container">
+                <div class="avatar">
+                    <img src={announcement.avatar} alt="User Avatar" />
+                </div>
+            </div>
+            <div class="announcement-content">
+                <p class="title">{announcement.title}</p>
+                <p class="description">{announcement.description}</p>
+                <p class="timestamp">{announcement.timeStamp}</p>
             </div>
         </div>
-        <div class="announcement-content">
-            <p class="title">Alice posted an announcement: "New Feature Released!"</p>
-            <p class="description">We are excited to announce a new feature...</p>
-            <p class="timestamp">2 hours ago</p>
-        </div>
-    </div>
-
-    <div class="announcement" onclick={() => handleAnnouncementClick(2)}>
-        <div class="avatar-container">
-            <div class="avatar">
-                <img src="avatar2.png" alt="User Avatar">
-            </div>
-        </div>
-        <div class="announcement-content">
-            <p class="title">Bob posted an announcement: "Scheduled Maintenance"</p>
-            <p class="description">The system will be down for maintenance...</p>
-            <p class="timestamp">1 day ago</p>
-        </div>
-    </div>
-
-    <div class="announcement" onclick={() => handleAnnouncementClick(3)}>
-        <div class="avatar-container">
-            <div class="avatar">
-                <img src="avatar3.png" alt="User Avatar">
-            </div>
-        </div>
-        <div class="announcement-content">
-            <p class="title">Carol posted an announcement: "Weekly Update"</p>
-            <p class="description">Here is your weekly company update...</p>
-            <p class="timestamp">3 days ago</p>
-        </div>
-    </div>
+    {/each}
 </div>
 
 <style>
     .announcement-board {
+        flex-shrink: 0;
+        flex-grow: 0;
         background: var(--accent-color-two);
-        padding: 2rem;
+        padding: 2rem 2rem 1rem;
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-        width: 35%;
         max-width: 800px;
-        margin: 12px auto;
-        height: 89%;
-
         border: 1px solid #1e1e1e;
         color: #d1d1d1;
     }
@@ -74,7 +56,9 @@
         border-radius: 8px;
         border: 1px solid #3a3a3a;
         margin-bottom: 1rem;
-        transition: background-color 0.3s, transform 0.2s;
+        transition:
+            background-color 0.3s,
+            transform 0.2s;
         cursor: pointer;
     }
 
@@ -123,9 +107,3 @@
         color: #aaa;
     }
 </style>
-
-<script>
-    function handleAnnouncementClick(id) {
-        console.log(`Announcement ${id} clicked`);
-    }
-</script>

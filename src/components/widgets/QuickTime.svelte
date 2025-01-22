@@ -68,7 +68,6 @@
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     width: 100%;
-    margin: 12px;
     height: fit-content;
     max-width: 400px;
     border: 1px solid #1e1e1e;
@@ -81,7 +80,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    margin-top: 0.3rem;
+    margin-top: 1rem;
     text-align: center;
     color: #ffffff;
     border-bottom: 1px solid #1e1e1e;

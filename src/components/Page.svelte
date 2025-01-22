@@ -14,7 +14,7 @@
   import QuickTime from "./widgets/QuickTime.svelte";
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
-  import { tabs, requests, docs, images, profile, projects } from "$assets/store.svelte.js";
+  import { tabs, requests, docs, images, profile, events, projects, announcements } from "$assets/store.svelte.js";
 
   setContext('MainPage', { updateChoice})
 
@@ -64,7 +64,8 @@
     <Breadcrumbs {currentTabs}></Breadcrumbs>
     {#if choice === tabs[0].key}
       <div class="homePage">
-          <Announcements></Announcements>
+          <Announcements props={announcements}></Announcements>
+          <Announcements props={events}></Announcements>
           <!--<Carousel {images}></Carousel>-->
           <QuickTime totalHoursThisWeek={1}></QuickTime>
       </div>
@@ -108,6 +109,9 @@
   .homePage{
     display: flex;
     height: 100%;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
   }
   .blue{
     color: blue;

@@ -29,10 +29,10 @@
         flex-shrink: 0;
         flex-grow: 0;
         background: var(--accent-color-two);
-        padding: 2rem 2rem 1rem;
+        padding: 1.8rem 2rem 1rem;
+        max-height: 465px;
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-        max-width: 800px;
         border: 1px solid #1e1e1e;
         color: #d1d1d1;
     }

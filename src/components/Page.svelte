@@ -14,7 +14,7 @@
   import QuickTime from "./widgets/QuickTime.svelte";
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
-  import { tabs, requests, docs, images, profile, events, projects, announcements } from "$assets/store.svelte.js";
+  import { tabs, requests, docs, images, profile, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
 
   setContext('MainPage', { updateChoice})
 
@@ -64,10 +64,16 @@
     <Breadcrumbs {currentTabs}></Breadcrumbs>
     {#if choice === tabs[0].key}
       <div class="homePage">
-          <Announcements props={announcements}></Announcements>
-          <Announcements props={events}></Announcements>
+        <div class="main-row">
+            <Announcements props={announcements}></Announcements>
+            <Announcements props={events}></Announcements>
+            <QuickTime totalHoursThisWeek={1}></QuickTime>
+        </div>
+        <div class="main-row">
+          <Announcements props={deadlines}></Announcements>
+          <Announcements props={meetings}></Announcements>
+        </div>
           <!--<Carousel {images}></Carousel>-->
-          <QuickTime totalHoursThisWeek={1}></QuickTime>
       </div>
     {:else if choice === tabs[1].key}
       <TimeTable {projects}></TimeTable>
@@ -101,7 +107,13 @@
     display: flex;
     flex-direction: column;
   }
+  .main-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+    align-items: flex-start;
 
+  }
   .time-off-page{
     display: flex;
     align-items: flex-start;
@@ -109,9 +121,10 @@
   .homePage{
     display: flex;
     height: 100%;
-    gap: 1rem;
+    gap: 0.75rem;
     align-items: flex-start;
-    padding: 1rem;
+    padding: 0.75rem;
+    flex-direction: column;
   }
   .blue{
     color: blue;

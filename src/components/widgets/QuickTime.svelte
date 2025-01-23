@@ -8,7 +8,8 @@
     <!-- Display total hours worked this week -->
     <div class="hours-summary">
         <strong>Total Hours Worked This Week:</strong>
-        <span>{totalHoursThisWeek} hours</span>
+        <br>
+        <span>{totalHoursThisWeek} hour(s)</span>
     </div>
 
     <form id="hoursForm">
@@ -63,15 +64,16 @@
 
 /* Parent container */
 .work-hours-tracker {
+    flex-shrink: 0;
+    flex-grow: 0;
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
-    padding: 1.2rem 2rem 1.6rem;
+    padding: 1.3rem 2rem 1.6rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    width: 100%;
     height: fit-content;
-    max-width: 400px;
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
+    height: 100%;
     box-sizing: border-box;
 }
 

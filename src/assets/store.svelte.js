@@ -173,26 +173,81 @@ export const events = {
       {
           id: 1,
           avatar: "avatar1.png",
-          title: "Los Marcos, June 25th: \"Celebrate Another Gold Delivery!\"",
+          title: "Los Marcos, June 25th: Celebrate Another Gold Delivery!",
           description: "With the final delivery of XYSR out the gate...",
           timestamp: "2 hours ago"
       },
       {
           id: 2,
           avatar: "avatar2.png",
-          title: "OKC Office, May 7th: \"Annual Chili Party!\"",
+          title: "OKC Office, May 7th: Annual Chili Party!",
           description: "Come by the office for our annual Chili party...",
           timestamp: "1 day ago"
       },
       {
           id: 3,
           avatar: "avatar3.png",
-          title: "AMC - Penn State, Jan 19th: \"Movie Night!\"",
+          title: "AMC - Penn State, Jan 19th: Movie Night!",
           description: "Come watch a movie with us this Friday night...",
           timestamp: "3 days ago"
       }
   ]
 };
+
+export const deadlines = {
+  boardTitle: "Upcoming Deadlines",
+  announcements: [
+      {
+          id: 1,
+          avatar: "avatar1.png",
+          title: "May 4, WATR Beta Delivery",
+          description: "Expected features shown at https://docs.google.com/...",
+          timestamp: "2 hours ago"
+      },
+      {
+        id: 2,
+        avatar: "avatar2.png",
+        title: "Feb 8, 508 Compliance Report",
+        description: "Details and checklist shown at https://docs.google.com/...",
+        timestamp: "2 hours ago"
+    },
+    {
+      id: 3,
+      avatar: "avatar2.png",
+      title: "Feb 8, 508 Compliance Report",
+      description: "Details and checklist shown at https://docs.google.com/...",
+      timestamp: "2 hours ago"
+  }
+  ]
+};
+
+export const meetings= {
+  boardTitle: "Upcoming Meetings",
+  announcements: [
+      {
+          id: 1,
+          avatar: "avatar1.png",
+          title: "SYS Techincal Review Meeting",
+          description: "Link: https://meet.google.com/wka-nvbw-jwx?pli=1&ijlm=1737...",
+          timestamp: "2 hours ago"
+      },
+      {
+        id: 2,
+        avatar: "avatar2.png",
+        title: "SEG Summer intern interview",
+        description: "Link: https://meet.google.com/wka-nvbw-jwx?pli=1&ijl...",
+        timestamp: "2 hours ago"
+    },
+    {
+      id: 3,
+      avatar: "avatar2.png",
+      title: "Standup",
+      description: "Link: https://meet.google.com/wka-nvbw-jwx?pli=1&ijl...",
+      timestamp: "2 hours ago"
+  }
+  ]
+};
+
 
   
   

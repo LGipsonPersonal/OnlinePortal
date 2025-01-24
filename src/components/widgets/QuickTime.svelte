@@ -67,13 +67,12 @@
     flex-shrink: 0;
     flex-grow: 0;
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
-    padding: 1.3rem 2rem 1.6rem;
+    padding: 1rem 1.5rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    height: fit-content;
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
-    height: 100%;
+    height: 424px;
     box-sizing: border-box;
 }
 
@@ -81,17 +80,16 @@
 .work-hours-tracker .form-title {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
     margin-top: 1rem;
     text-align: center;
     color: #ffffff;
     border-bottom: 1px solid #1e1e1e;
-    padding-bottom: 1rem;
+    margin-bottom: 1rem; /* Reduced margin */
+    padding-bottom: 0.8rem; /* Reduced padding */
 }
 
-/* Form groups */
 .work-hours-tracker .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem; /* Reduced margin between form groups */
 }
 
 /* Labels */
@@ -149,7 +147,7 @@
 .work-hours-tracker .hours-summary {
     font-size: 1rem;
     margin-bottom: 1rem;
-    padding: 0.5rem;
+    padding: 0.4rem;
     background: #3a3a3a;
     color: #e0e0e0;
     border-radius: 6px;

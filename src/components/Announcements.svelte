@@ -8,6 +8,7 @@
 
 <div class="announcement-board">
     <h2 class="board-title">{props.boardTitle}</h2>
+    <div class="scroll-wrap">
     {#each props.announcements as announcement, i (announcement.id)}
         <div class="announcement" onclick={() => handleAnnouncementClick(i)}>
             <div class="avatar-container">
@@ -23,26 +24,35 @@
         </div>
     {/each}
 </div>
+</div>
 
 <style>
     .announcement-board {
-        flex-shrink: 0;
-        flex-grow: 0;
+
         background: var(--accent-color-two);
-        padding: 1.8rem 2rem 1rem;
-        max-height: 465px;
+        padding: 1.8rem 1.6rem 1rem;
+        width: 618px;
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         border: 1px solid #1e1e1e;
         color: #d1d1d1;
     }
-
+    .scroll-wrap{
+        position: relative;
+        height: 305px;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+        overflow-y: scroll;
+    }
     .board-title {
         font-size: 1.5rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
         margin-top: 0.3rem;
         text-align: center;
+        background: var(--accent-color-two);
+        position: sticky;
+        top:5px;
         color: #ffffff;
         border-bottom: 1px solid #1e1e1e;
         padding-bottom: 1rem;
@@ -55,7 +65,7 @@
         background-color: #2a2a2a;
         border-radius: 8px;
         border: 1px solid #3a3a3a;
-        margin-bottom: 1rem;
+        margin-bottom: 0.8rem;
         transition:
             background-color 0.3s,
             transform 0.2s;

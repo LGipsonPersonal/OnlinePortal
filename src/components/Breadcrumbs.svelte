@@ -114,4 +114,10 @@
     top: 2.5rem;
     right: 2rem;
 }
+
+@media (max-width: 768px) {
+    .breadcrumbs{
+        display: none;
+    }
+}
 </style>

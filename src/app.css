@@ -60,3 +60,33 @@ scrollbar-width: thin; /* Matches Firefox's thin scrollbar */
       box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
     }
   }
+
+  /* Add this at the end of the file */
+@media (max-width: 768px) {
+  .fullscreen {
+    flex-direction: column;
+  }
+
+  .main-page {
+    padding: 1rem;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .breadcrumbs {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .breadcrumbs-list {
+    flex-wrap: wrap;
+  }
+
+  .profile-pic-button {
+    margin-top: 1rem;
+  }
+}

@@ -31,7 +31,6 @@
 
         background: var(--accent-color-two);
         padding: 1.8rem 1.6rem 1rem;
-        width: 618px;
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         border: 1px solid #1e1e1e;
@@ -51,8 +50,7 @@
         margin-top: 0.3rem;
         text-align: center;
         background: var(--accent-color-two);
-        position: sticky;
-        top:5px;
+
         color: #ffffff;
         border-bottom: 1px solid #1e1e1e;
         padding-bottom: 1rem;

@@ -383,5 +383,35 @@ button:active, .arrow-button:active, .submit-button:active, .add-row-button:acti
     width: 100%;
   }
 }
+/* Add this at the end of the file */
+@media (max-width: 768px) {
+  .project-table-container {
+    padding: 1rem;
+  }
 
+  .controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .calendar-input,
+  .arrow-button {
+    width: 100%;
+  }
+
+  .project-table th,
+  .project-table td {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .submit-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}
 </style>

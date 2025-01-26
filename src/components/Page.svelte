@@ -12,6 +12,7 @@
   import ViewDocuments from "./ViewDocuments.svelte";
   import Announcements from "./Announcements.svelte";
   import QuickTime from "./widgets/QuickTime.svelte";
+  import EmergencyRequestOff from "./widgets/EmergencyRequestOff.svelte";
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
   import { tabs, requests, docs, images, profile, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
@@ -72,6 +73,7 @@
         <div class="main-row">
           <Announcements props={deadlines}></Announcements>
           <Announcements props={meetings}></Announcements>
+          <EmergencyRequestOff></EmergencyRequestOff>
         </div>
           <!--<Carousel {images}></Carousel>-->
       </div>
@@ -106,12 +108,14 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
   }
   .main-row {
     display: flex;
     flex-direction: row;
     gap: 0.75rem;
-    align-items: flex-start;
+    width: 100%;
+    justify-content: space-between;
 
   }
   .time-off-page{
@@ -129,4 +133,23 @@
   .blue{
     color: blue;
   }
+
+  /* Add this at the end of the file */
+@media (max-width: 768px) {
+  .main-page {
+    padding: 1rem;
+  }
+
+  .main-row {
+    flex-direction: column;
+  }
+
+  .time-off-page {
+    flex-direction: column;
+  }
+
+  .homePage {
+    padding: 1rem;
+  }
+}
 </style>

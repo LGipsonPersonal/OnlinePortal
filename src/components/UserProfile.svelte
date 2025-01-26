@@ -178,4 +178,24 @@ p strong {
 h3{
     margin-bottom: 0.5rem;
 }
+/* Add this at the end of the file */
+@media (max-width: 768px) {
+  .user-profile {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  .profile-title {
+    font-size: 1.25rem;
+  }
+
+  .editable-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .edit-profile-button {
+    width: 100%;
+  }
+}
 </style>

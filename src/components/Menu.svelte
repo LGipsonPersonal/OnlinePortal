@@ -1,4 +1,3 @@
-
 <script>
   import { getContext } from 'svelte';
   import { slide } from 'svelte/transition'
@@ -269,8 +268,43 @@
 .settings-tab {
   margin-top: auto; /* Push to the bottom */
 }
+
+/* Add this at the end of the file */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .tab-button {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .submenu-toggle {
+    padding: 0.5rem;
+  }
+
+  .sidebar-submenu-item {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .main-page {
+    padding: 1rem;
+  }
+
+  .main-row {
+    flex-direction: column;
+  }
+
+  .time-off-page {
+    flex-direction: column;
+  }
+
+  .homePage {
+    padding: 1rem;
+  }
+}
 </style>
-
-
-
-

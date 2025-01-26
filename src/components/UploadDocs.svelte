@@ -169,4 +169,24 @@
       padding: 0.25rem 0.5rem;
     }
   }
+  /* Add this at the end of the file */
+@media (max-width: 768px) {
+  .documents-container {
+    font-size: 0.75rem;
+  }
+
+  .document-header,
+  .document-row {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .document-submitted-date {
+    display: none;
+  }
+
+  .action-button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
 </style>

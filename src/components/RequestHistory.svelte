@@ -204,6 +204,27 @@
       display: none;
     }
    }
+   /* Add this at the end of the file */
+@media (max-width: 768px) {
+  .timeoff-container {
+    font-size: 0.75rem;
+  }
+
+  .timeoff-header,
+  .timeoff-row {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .timeoff-duration,
+  .timeoff-supervisor-note {
+    display: none;
+  }
+
+  .cancel-button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+}
   </style>
   
   

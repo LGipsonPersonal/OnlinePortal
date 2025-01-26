@@ -28,7 +28,8 @@
 
 <style>
     .announcement-board {
-
+        max-height: 380px;
+        flex: 1 1 auto;
         background: var(--accent-color-two);
         padding: 1.8rem 1.6rem 1rem;
         border-radius: 12px;
@@ -38,7 +39,7 @@
     }
     .scroll-wrap{
         position: relative;
-        height: 305px;
+        height: calc(100% - 4.8rem);
         padding-left: 0.4rem;
         padding-right: 0.4rem;
         overflow-y: scroll;

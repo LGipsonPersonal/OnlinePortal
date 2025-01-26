@@ -121,7 +121,7 @@
             </select>
           </td>
             <td>
-              <select>
+              <select disabled={project.name === ''}>
                 <option value="" disabled selected>Select a task</option>
                 {#each project.tasks as task}
                   <option>{task}</option>
@@ -153,7 +153,11 @@
     </table>
   </div>
   <div class="submit-container">
-    <button class="add-row-button" onclick={addRow}>Add Row</button>
+    <div class="left-side-buttons">
+      <button class="add-row-button" onclick={addRow}>Add Row</button>
+      <button class="add-row-button" onclick={addRow}>Copy last week's projects/tasks</button>
+    </div>
+
     <button class="submit-button" onclick={submitTimesheet}>Submit Timesheet</button>
   </div>
 </div>
@@ -173,7 +177,10 @@
   overflow-x: auto;
   width: 100%;
 }
-
+.left-side-buttons{
+  display: flex;
+  gap: 1rem;
+}
 /* Container */
 .project-table-container {
   background: var(--accent-color-two);

@@ -124,7 +124,6 @@
   }
   .homePage{
     display: flex;
-    height: 100%;
     gap: 0.75rem;
     align-items: flex-start;
     padding: 0.75rem;

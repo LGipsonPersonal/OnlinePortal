@@ -52,6 +52,7 @@
     background-color: #1e1e1e;
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+    max-width:320px;
 }
 
 /* Focus state for dropdown */
@@ -82,7 +83,7 @@
     margin-top: 1rem;
     text-align: center;
     color: #ffffff;
-    border-bottom: 1px solid #1e1e1e;
+    border-bottom: 2px solid #4f46e5;
     margin-bottom: 1rem; /* Reduced margin */
     padding-bottom: 0.8rem; /* Reduced padding */
 }

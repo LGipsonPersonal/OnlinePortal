@@ -195,7 +195,7 @@ export const events = {
 };
 
 export const deadlines = {
-  boardTitle: "Upcoming Deadlines",
+  boardTitle: " Your Upcoming Deadlines",
   announcements: [
       {
           id: 1,
@@ -222,7 +222,7 @@ export const deadlines = {
 };
 
 export const meetings= {
-  boardTitle: "Upcoming Meetings",
+  boardTitle: "Your Upcoming Meetings",
   announcements: [
       {
           id: 1,

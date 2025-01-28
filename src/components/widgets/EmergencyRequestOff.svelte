@@ -70,34 +70,35 @@
 }
 
 .day-off-request {
-    flex-shrink: 0;
-    flex-grow: 0;
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
-    padding: 1.5rem;
+    padding: 1.5rem 1rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
     text-align: center;
 }
 
 .form-title {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     color: #ffffff;
     text-align: center;
-    border-bottom: 1px solid #1e1e1e;
-    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #4f46e5;
+    padding-bottom: 1rem;
 }
 
 .days-summary {
     font-size: 1rem;
     margin-bottom: 1rem;
-    padding: 0.5rem;
+    padding: 1rem;
     background: #3a3a3a;
     color: #e0e0e0;
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
 label {
@@ -105,7 +106,7 @@ label {
     font-size: 1rem;
     font-weight: 500;
     color: #9e9e9e;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     text-align: left;
 }
 
@@ -114,9 +115,9 @@ textarea {
     padding: 1rem;
     font-size: 1rem;
     border: 1px solid #2a2a2a;
-    border-radius: 6px;
+    border-radius: 8px;
     color: #e0e0e0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     background-color: #1e1e1e;
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -132,12 +133,12 @@ textarea:focus {
 .submit-button {
     width: 100%;
     padding: 1rem;
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: #ffffff;
     background-color: #4f46e5;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
@@ -148,18 +149,20 @@ textarea:focus {
 }
 
 .feedback-message {
-    margin-top: 1rem;
-    padding: 0.8rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
     background: #4caf50;
     color: #ffffff;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-size: 1rem;
 }
 
 .error-message {
     margin-top: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.75rem;
     background: #f44336;
     color: #ffffff;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-size: 1rem;
 }
 </style>

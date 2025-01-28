@@ -1,33 +1,36 @@
 <script>
-  const DAYS_IN_WEEK = 7;
-  import { tick } from 'svelte'
-  const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  const DAYS_IN_TWO_WEEKS = 14;
+  import { tick } from 'svelte';
+  const weekDays = [
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+  ];
 
-  let  { projects } = $props()
+  let { projects } = $props();
 
-  let activeProjects = $state([])
+  let activeProjects = $state([]);
 
-   let tableData = $state([]);
-  $inspect(tableData)
+  let tableData = $state([]);
+  $inspect(tableData);
 
   // Form an Array of the Time data totals
   let columnTotals = $derived.by(() => {
-    return Array.from({ length: DAYS_IN_WEEK }, (_, colIndex) =>
+    return Array.from({ length: DAYS_IN_TWO_WEEKS }, (_, colIndex) =>
       tableData.reduce((sum, row) => sum + (parseFloat(row[colIndex]) || 0), 0)
     );
-  }
-  )
+  });
 
   // @ts-ignore
-  let tableTotal = $derived(columnTotals.reduce((sum, value) => sum + (parseFloat(value) || 0), 0))
+  let tableTotal = $derived(columnTotals.reduce((sum, value) => sum + (parseFloat(value) || 0), 0));
 
   let rowTotals = $derived.by(() => {
     return tableData.map(row =>
       row.reduce((sum, value) => sum + (parseFloat(value) || 0), 0)
     );
-  })
+  });
+
   let currentDate = new Date();
-  let weekStart = $state(null)
+  let weekStart = $state(null);
   let weekEnd = $state(null);
 
   const updateWeekRange = () => {
@@ -36,7 +39,7 @@
     weekStart = new Date(currentDate);
     weekStart.setDate(currentDate.getDate() - startOffset);
     weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 6);
+    weekEnd.setDate(weekStart.getDate() + 13); // 13 days to cover two weeks
   };
 
   const formatDate = (date) => {
@@ -44,45 +47,44 @@
   };
 
   const previousWeek = () => {
-    currentDate.setDate(currentDate.getDate() - 7);
+    currentDate.setDate(currentDate.getDate() - 14); // Move back by two weeks
     updateWeekRange();
   };
 
   const nextWeek = () => {
-    currentDate.setDate(currentDate.getDate() + 7);
+    currentDate.setDate(currentDate.getDate() + 14); // Move forward by two weeks
     updateWeekRange();
   };
-  let selectedDate = ''
+
+  let selectedDate = '';
   const submitTimesheet = () => {
     console.log('Timesheet submitted:', tableData);
   };
 
   function handleDateChange() {
-    
+    // Handle date change logic here
   }
-  
+
   function addRow() {
-    activeProjects.push(
-      {
-        name: '', 
-        tasks:[""]
-      }
-    )
-    tick().then(() => tableData.push(Array.from({ length: DAYS_IN_WEEK }, () => "")))
+    activeProjects.push({
+      name: '',
+      tasks: [""]
+    });
+    tick().then(() => tableData.push(Array.from({ length: DAYS_IN_TWO_WEEKS }, () => "")));
   }
+
   function chooseProject(event, rowIndex) {
-    activeProjects[rowIndex] = projects[event.target.value]
+    activeProjects[rowIndex] = projects[event.target.value];
   }
 
   updateWeekRange();
-
 </script>
 
 <div class="project-table-container">
   <h2 class="form-title">Time Sheet</h2>
   <div class="controls">
     <button class="arrow-button" onclick={previousWeek}>
-      <i class="fas fa-arrow-left"></i> Previous Week
+      <i class="fas fa-arrow-left"></i> Previous Two Weeks
     </button>
     <input 
       class="calendar-input" 
@@ -92,7 +94,7 @@
       aria-label="Select Date" 
     />
     <button class="arrow-button" onclick={nextWeek}>
-      Next Week <i class="fas fa-arrow-right"></i>
+      Next Two Weeks <i class="fas fa-arrow-right"></i>
     </button>
   </div>
   <p class="date-range">{formatDate(weekStart)} - {formatDate(weekEnd)}</p>
@@ -103,7 +105,7 @@
         <tr>
           <th>Projects</th>
           <th>Tasks</th>
-          {#each weekDays as day (day)}
+          {#each weekDays as day}
             <th>{day}</th>
           {/each}
           <th>Totals</th>
@@ -118,8 +120,8 @@
                 {#each projects as projectSelection, i}
                   <option value={i}>{projectSelection.name}</option>
                 {/each}
-            </select>
-          </td>
+              </select>
+            </td>
             <td>
               <select disabled={project.name === ''}>
                 <option value="" disabled selected>Select a task</option>
@@ -154,8 +156,9 @@
   </div>
   <div class="submit-container">
     <div class="left-side-buttons">
-      <button class="add-row-button" onclick={addRow}>Add Row</button>
-      <button class="add-row-button" onclick={addRow}>Copy last week's projects/tasks</button>
+      <button class="left-button" onclick={addRow}>Add Row</button>
+      <button class="left-button" onclick={addRow}>Copy last week's projects/tasks</button>
+      <button class="left-button" onclick={addRow}>Add Note to timesheet</button>
     </div>
 
     <button class="submit-button" onclick={submitTimesheet}>Submit Timesheet</button>
@@ -200,7 +203,7 @@
   margin-bottom: 1rem;
   text-align: center;
   color: #ffffff;
-  border-bottom: 1px solid #1e1e1e;
+  border-bottom: 2px solid #4f46e5;
   padding-bottom: 1rem;
 }
 
@@ -240,7 +243,7 @@
 }
 
 /* Button Styles (Shared) */
-button, .arrow-button, .submit-button, .add-row-button {
+button, .arrow-button, .submit-button, .left-button {
   padding: 0.5rem 1rem; /* Adjusted padding for uniform size */
   font-size: 0.875rem; /* Consistent font size */
   border: none;
@@ -258,12 +261,12 @@ button, .arrow-button, .submit-button, .add-row-button {
 .date-range{
   text-align: center;
 }
-button:hover, .arrow-button:hover, .submit-button:hover, .add-row-button:hover {
+button:hover, .arrow-button:hover, .submit-button:hover, .left-button:hover {
   background-color: var(--button-hover-bg);
   transform: translateY(-2px);
 }
 
-button:active, .arrow-button:active, .submit-button:active, .add-row-button:active {
+button:active, .arrow-button:active, .submit-button:active, .left-button:active {
   background-color: var(--button-active-bg);
   transform: translateY(0);
 }

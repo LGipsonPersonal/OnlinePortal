@@ -53,7 +53,7 @@
         background: var(--accent-color-two);
 
         color: #ffffff;
-        border-bottom: 1px solid #1e1e1e;
+        border-bottom: 2px solid #4f46e5;
         padding-bottom: 1rem;
     }
 

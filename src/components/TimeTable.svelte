@@ -134,7 +134,7 @@
               <td>
                 <input
                   bind:value={tableData[rowIndex][colIndex]}
-                  type="number"
+                  type="text"
                   placeholder="0"
                   min="0"
                   max="24"
@@ -320,12 +320,12 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.75rem;
-  padding: 1rem;
+  padding: 0.5rem; /* Reduced padding */
   border-bottom: 1px solid #2e2e2e;
 }
 
 .project-table td {
-  padding: 1rem;
+  padding: 0.5rem; /* Reduced padding */
   text-align: center;
   color: #d4d4d4;
   border: 1px solid #2e2e2e;
@@ -333,11 +333,11 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
 
 /* Inputs in Table */
 .project-table input {
-  width: 4rem;
-  padding: 0.5rem;
+  width: 2rem; /* Reduced width */
+  padding: 0.25rem; /* Reduced padding */
   border: 1px solid var(--input-border);
   border-radius: 6px;
-  font-size: 0.875rem;
+  font-size: 0.75rem; /* Reduced font size */
   text-align: center;
   background-color: var(--input-bg);
   color: #e0e0e0;

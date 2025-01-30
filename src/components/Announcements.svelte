@@ -31,17 +31,16 @@
         max-height: 380px;
         flex: 1 1 auto;
         background: var(--accent-color-two);
-        padding: 1.8rem 1.6rem 1rem;
+        padding: 1.8rem 1.5rem 1rem;
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         border: 1px solid #1e1e1e;
         color: #d1d1d1;
     }
     .scroll-wrap{
-        position: relative;
         height: calc(100% - 4.8rem);
-        padding-left: 0.4rem;
-        padding-right: 0.4rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
         overflow-y: scroll;
     }
     .board-title {

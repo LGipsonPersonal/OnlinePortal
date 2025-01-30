@@ -198,7 +198,6 @@
     border-color: #4f46e5;
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
   }
-
 /* No changes required for these styles */
 .sidebar-submenu {
   display: flex; /* Visible only when rendered */
@@ -223,7 +222,6 @@
   background-color: #555; /* Slightly darker on active */
 }
 
-/* here */
 .tab-content-wrapper {
   display: flex;
   align-items: center;
@@ -268,6 +266,10 @@
 .settings-tab {
   margin-top: auto; /* Push to the bottom */
 }
+.tab-button:active{
+  background-color: #555;
+    
+  }
 
 /* Add this at the end of the file */
 @media (max-width: 768px) {

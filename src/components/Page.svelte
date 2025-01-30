@@ -108,9 +108,9 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
   }
   .main-row {
+    min-height: 0px;
     display: flex;
     flex-direction: row;
     gap: 0.75rem;
@@ -123,6 +123,7 @@
     align-items: flex-start;
   }
   .homePage{
+    min-height: 0px;
     display: flex;
     gap: 0.75rem;
     align-items: flex-start;

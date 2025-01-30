@@ -432,7 +432,7 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
     padding: 0.5rem;
   }
 
-  .submit-container {6
+  .submit-container {
     flex-direction: column;
     gap: 0.5rem;
   }

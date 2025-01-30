@@ -78,7 +78,7 @@
           <!--<Carousel {images}></Carousel>-->
       </div>
     {:else if choice === tabs[1].key}
-      <TimeTable {projects}></TimeTable>
+      <TimeTable {projects} sheetRecords={[{startDate: "January 27, 2025"}]}></TimeTable>
     {:else if choice === tabs[2].key}
       <div class="time-off-page">
         <TimeOff></TimeOff>

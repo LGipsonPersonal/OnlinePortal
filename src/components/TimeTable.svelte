@@ -1,12 +1,9 @@
 <script>
-  const DAYS_IN_TWO_WEEKS = 14;
+  const DAYS_IN_TEN_DAYS = 10;
   import { tick } from 'svelte';
-  const weekDays = [
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
-    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-  ];
-
-  let { projects } = $props();
+ 
+  let weekDays = $state([]);
+  let { projects, sheetRecords } = $props();
 
   let activeProjects = $state([]);
 
@@ -15,7 +12,7 @@
 
   // Form an Array of the Time data totals
   let columnTotals = $derived.by(() => {
-    return Array.from({ length: DAYS_IN_TWO_WEEKS }, (_, colIndex) =>
+    return Array.from({ length: DAYS_IN_TEN_DAYS }, (_, colIndex) =>
       tableData.reduce((sum, row) => sum + (parseFloat(row[colIndex]) || 0), 0)
     );
   });
@@ -29,30 +26,42 @@
     );
   });
 
-  let currentDate = new Date();
+  let startDate = new Date(sheetRecords[sheetRecords.length - 1].startDate);
   let weekStart = $state(null);
   let weekEnd = $state(null);
 
-  const updateWeekRange = () => {
-    const dayOfWeek = currentDate.getDay();
+  function updateWeekRange() {
+    const dayOfWeek = startDate.getDay();
     const startOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    weekStart = new Date(currentDate);
-    weekStart.setDate(currentDate.getDate() - startOffset);
+    weekStart = new Date(startDate);
+    weekStart.setDate(startDate.getDate() - startOffset);
     weekEnd = new Date(weekStart);
     weekEnd.setDate(weekStart.getDate() + 13); // 13 days to cover two weeks
-  };
+
+    // Adjust weekEnd to skip weekends
+    let daysAdded = 0;
+    weekDays = [];
+    let currentDate = new Date(weekStart);
+    while (daysAdded < 10) {
+      if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+        weekDays.push(currentDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }));
+        daysAdded++;
+      }
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+  }
 
   const formatDate = (date) => {
     return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
   };
 
   const previousWeek = () => {
-    currentDate.setDate(currentDate.getDate() - 14); // Move back by two weeks
+    startDate.setDate(startDate.getDate() - 14); // Move back by two weeks
     updateWeekRange();
   };
 
   const nextWeek = () => {
-    currentDate.setDate(currentDate.getDate() + 14); // Move forward by two weeks
+    startDate.setDate(startDate.getDate() + 14); // Move forward by two weeks
     updateWeekRange();
   };
 
@@ -70,11 +79,18 @@
       name: '',
       tasks: [""]
     });
-    tick().then(() => tableData.push(Array.from({ length: DAYS_IN_TWO_WEEKS }, () => "")));
+    tick().then(() => tableData.push(Array.from({ length: DAYS_IN_TEN_DAYS }, () => "")));
   }
 
   function chooseProject(event, rowIndex) {
     activeProjects[rowIndex] = projects[event.target.value];
+  }
+
+  function copyLastWeek(){
+    console.log('Stub')
+  }
+  function AddNote(){
+    console.log('Stub')
   }
 
   updateWeekRange();
@@ -157,8 +173,8 @@
   <div class="submit-container">
     <div class="left-side-buttons">
       <button class="left-button" onclick={addRow}>Add Row</button>
-      <button class="left-button" onclick={addRow}>Copy last week's projects/tasks</button>
-      <button class="left-button" onclick={addRow}>Add Note to timesheet</button>
+      <button class="left-button" onclick={copyLastWeek}>Copy last week's projects/tasks</button>
+      <button class="left-button" onclick={AddNote}>Add Note to Timesheet</button>
     </div>
 
     <button class="submit-button" onclick={submitTimesheet}>Submit Timesheet</button>
@@ -284,6 +300,7 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
 .form-title{
   margin-top: 0
 }
+
 @media (max-width: 1250px) {
   .submit-button {
   position: absolute;
@@ -319,7 +336,7 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
   color: #ffffff;
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: 0.6rem;
   padding: 0.5rem; /* Reduced padding */
   border-bottom: 1px solid #2e2e2e;
 }
@@ -353,7 +370,7 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
 /* Totals Row */
 .project-table .total-row td {
   font-weight: 600;
-  background-color: var(--accent-color-one);
+  background-color: var (--accent-color-one);
   color: #ffffff;
 }
 
@@ -385,7 +402,7 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
   }
 
   .project-table th, .project-table td {
-    font-size: 0.75rem;
+    font-size: 0.6rem;
     padding: 0.5rem;
   }
 
@@ -411,11 +428,11 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
 
   .project-table th,
   .project-table td {
-    font-size: 0.75rem;
+    font-size: 0.rem;
     padding: 0.5rem;
   }
 
-  .submit-container {
+  .submit-container {6
     flex-direction: column;
     gap: 0.5rem;
   }

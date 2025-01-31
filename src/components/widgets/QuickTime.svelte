@@ -6,6 +6,7 @@
     <h2 class="form-title">Work Hours Tracker</h2>
 
     <!-- Display total hours worked this week -->
+    <div class="scroll-wrap">
     <div class="hours-summary">
         <strong>Total Hours Worked This Week:</strong>
         <br>
@@ -29,7 +30,7 @@
         <button type="submit" class="submit-button">Add Hours</button>
     </form>
 
-    <div id="output"></div>
+    </div>
 </div>
 
 
@@ -68,12 +69,14 @@
     flex-grow: 0;
     flex-shrink: 0;
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
-    padding: 1rem 1.5rem;
+    padding: 1rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     box-sizing: border-box;
+
+
 }
 
 /* Title styling */
@@ -85,7 +88,7 @@
     color: #ffffff;
     border-bottom: 2px solid #4f46e5;
     margin-bottom: 1rem; /* Reduced margin */
-    padding-bottom: 0.8rem; /* Reduced padding */
+    padding-bottom: 0.9rem; /* Reduced padding */
 }
 
 .work-hours-tracker .form-group {

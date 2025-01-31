@@ -13,6 +13,7 @@
     openSubmenuIndex = openSubmenuIndex === index ? null : index;
   }
 
+  $inspect(tabs)
   /**
      * @param {string} key
   */
@@ -29,8 +30,7 @@
   </div>
   <div class="sidebar-text-container">
     {#each tabs as tab, i (tab.key)}
-      {#if tab.name !== 'Settings'}
-      <div class="tab-item">
+      <div class="tab-item {tab.name === 'Settings' ? 'settings-tab' : ''}">
         <div class="tab-content-wrapper">
           <button
             class="tab-button {choice === tab.key ? 'selected-tab' : ''}"
@@ -73,23 +73,8 @@
         </div>
         {/if}
       </div>
-      {/if}
     {/each}
   </div>
-  <!-- Settings tab at the bottom -->
-  {#each tabs as tab, i (tab.key)}
-    {#if tab.name === 'Settings'}
-    <div class="tab-item settings-tab">
-      <button
-        class="tab-button {choice === tab.key ? 'selected-tab' : ''}"
-        onclick={() => selectChoice(tab.key)}
-      >
-        <i class="{tab.icon} icon"></i>
-        {tab.name}
-      </button>
-    </div>
-    {/if}
-  {/each}
 </div>
 
 
@@ -264,7 +249,8 @@
 }
 
 .settings-tab {
-  margin-top: auto; /* Push to the bottom */
+  margin-top: auto;
+  order: 1;
 }
 .tab-button:active{
   background-color: #555;

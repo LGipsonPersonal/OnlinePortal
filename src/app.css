@@ -7,6 +7,7 @@
     --accent-color-two:#121212;
     --highlight-color-one:#4f46e5;
     --highlight-color-two: #4338ca;
+    --alt-highlight: #56b6c2
 }
 /* General scrollbar styles for webkit-based browsers */
 ::-webkit-scrollbar {
@@ -27,6 +28,13 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: #888; /* Slightly darker on hover */
+}
+.scroll-wrap {
+  height: calc(100% - 4.8rem);
+  overflow-y: scroll;
+  padding-left: 0.5rem;
+  padding-bottom: 2px;
+  padding-right: 0.5rem;
 }
 
 /* Styling for scrollbar in Firefox */

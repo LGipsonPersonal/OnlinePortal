@@ -1,6 +1,7 @@
 <script>
   const DAYS_IN_TEN_DAYS = 10;
   import { tick } from 'svelte';
+  import Popup from './widgets/Popup.svelte';
  
   let weekDays = $state([]);
   let { projects, sheetRecords } = $props();
@@ -8,7 +9,10 @@
   let activeProjects = $state([]);
 
   let tableData = $state([]);
-  $inspect(tableData);
+  let noteText = $state('');
+  let takingNote = $state(false);
+  
+  $inspect(noteText);
 
   // Form an Array of the Time data totals
   let columnTotals = $derived.by(() => {
@@ -90,13 +94,42 @@
     console.log('Stub')
   }
   function AddNote(){
-    console.log('Stub')
+    takingNote = true;
   }
 
   updateWeekRange();
 </script>
 
+{#snippet noteBox()}
+<input class="minimal-textbox" type="text" placeholder="Enter text here..." bind:value={noteText}/>
+
+  <style>
+    /* Minimalist text box styling */
+.minimal-textbox {
+    min-width: 25vw;
+    min-height: 20vh;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: #d1d1d1;
+    background-color: var(--input-bg, #2e2e2e); /* Default dark background for the input */
+    border: 1px solid #3e3e3e; /* Subtle border for the input */
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.minimal-textbox:focus {
+    border-color: var(--accent-color, #4f46e5); /* Accent color on focus*/
+    box-shadow: 0 0 5px rgba(86, 182, 194, 0.5); /* Subtle glow on focus */
+    background-color: var(--input-focus-bg, #3e3e3e); /* Slightly lighter background on focus */
+}
+  </style>
+{/snippet}
+
 <div class="project-table-container">
+
+    <Popup popupContent={noteBox} bind:active={takingNote}></Popup>
   <h2 class="form-title">Time Sheet</h2>
   <div class="controls">
     <button class="arrow-button" onclick={previousWeek}>

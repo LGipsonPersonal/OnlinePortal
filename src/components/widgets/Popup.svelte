@@ -1,12 +1,15 @@
 <script>
-    let { popupContent } = $props()
+    let { popupContent, active = $bindable() } = $props()
 </script>
 
-<div class="popup-overlay">
-    <div class="popup-box">
-        {@render popupContent()}
+{#if active}
+    <div class="popup-overlay">
+        <div class="popup-box">
+            {@render popupContent()}
+        </div>
+        <button onclick={() => active = false}>Close</button>
     </div>
-</div>
+{/if}
 
 <style>
 /* Overlay styling */

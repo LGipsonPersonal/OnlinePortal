@@ -39,6 +39,14 @@ export const tabs = [
       subtabs: [
 
       ],
+    },
+    {
+      name: "Your Projects",
+      key: '5',
+      icon: 'fas fa-project-diagram',
+      subtabs: [
+
+      ],
     }
   ];
   export const requests = [

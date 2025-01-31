@@ -31,8 +31,10 @@
     <h2 class="form-title">Request Today Off</h2>
 
     <!-- Display available days off -->
+     <div class="scroll-wrap">
     <div class="days-summary">
         <strong>Available Days Off:</strong>
+        <br>
         <span>{availableDaysOff} day(s)</span>
     </div>
 
@@ -60,6 +62,7 @@
         <div class="feedback-message">{feedbackMessage}</div>
     {/if}
 </div>
+</div>
 
 <style>
 /* Universal box-sizing fix */
@@ -71,7 +74,7 @@
 
 .day-off-request {
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
-    padding: 1.5rem 1rem;
+    padding: 1rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #1e1e1e;
@@ -89,13 +92,13 @@
     color: #ffffff;
     text-align: center;
     border-bottom: 2px solid #4f46e5;
-    padding-bottom: 1rem;
+    padding-bottom: 0.9rem;
 }
 
 .days-summary {
     font-size: 1rem;
     margin-bottom: 1rem;
-    padding: 1rem;
+    padding: 0.8rem;
     background: #3a3a3a;
     color: #e0e0e0;
     border-radius: 8px;

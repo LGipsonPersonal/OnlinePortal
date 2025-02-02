@@ -15,8 +15,8 @@
 {#snippet shownAnnouncement(announcementContent)}
     <article class="blog-post">
         <header class="post-header">
-            <h1 class="post-title">Exploring the Dark Aesthetic</h1>
-            <p class="post-meta">Published on February 1, 2025 by Jane Doe</p>
+            <h1 class="post-title">{announcementContent.title}</h1>
+            <p class="post-meta">Published on {announcementContent.date} by {announcementContent.author}</p>
         </header>
         <section class="post-content">
             {@html announcementContent.postContent}

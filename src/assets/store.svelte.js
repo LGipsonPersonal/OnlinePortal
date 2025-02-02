@@ -164,8 +164,10 @@ export const tabs = [
         {
             id: 1,
             avatar: "avatar1.png",
+            author: "Alice Doe",
             title: "Alice posted an announcement: \"New Feature Released!\"",
             description: "We are excited to announce a new feature...",
+            date: "Feb 12, 2024",
             timestamp: "2 hours ago",
             postContent: `
             <p>

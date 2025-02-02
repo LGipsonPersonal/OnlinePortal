@@ -1,70 +1,76 @@
 <div class="request-time-off">
     <h2 class="form-title">Request Time Off</h2>
+    <div class="scroll-wrap">
     <form>
-        <!-- PTO Information Row -->
-        <div class="pto-info-row">
-            <div class="pto-info">
-                <label for="available-vacation">Vacation Time</label>
-                <p id="available-vacation">40 hours</p>
+            <!-- PTO Information Row -->
+            <div class="pto-info-row">
+                <div class="pto-info">
+                    <label for="available-vacation">Vacation Time</label>
+                    <p id="available-vacation">40 hours</p>
+                </div>
+                <div class="pto-info">
+                    <label for="available-sick">Sick Time</label>
+                    <p id="available-sick">20 hours</p>
+                </div>
             </div>
-            <div class="pto-info">
-                <label for="available-sick">Sick Time</label>
-                <p id="available-sick">20 hours</p>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="start-date">Start Date</label>
+                    <input type="date" id="start-date" name="start-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="end-date">End Date</label>
+                    <input type="date" id="end-date" name="end-date" required>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-row">
             <div class="form-group">
-                <label for="start-date">Start Date</label>
-                <input type="date" id="start-date" name="start-date" required>
+                <label for="type">Type</label>
+                <select id="type" name="type" required>
+                    <option value="" disabled selected>Select type</option>
+                    <option value="holiday">Holiday</option>
+                    <option value="pto">Vacation</option>
+                    <option value="pto">Sick</option>
+                    <option value="emergency">Emergency</option>
+                    <option value="emergency">Unpaid</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="end-date">End Date</label>
-                <input type="date" id="end-date" name="end-date" required>
+                <label for="amount">Amount (hours)</label>
+                <input type="number" id="amount" name="amount" min="0" step="0.5" required>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="type">Type</label>
-            <select id="type" name="type" required>
-                <option value="" disabled selected>Select type</option>
-                <option value="holiday">Holiday</option>
-                <option value="pto">Vacation</option>
-                <option value="pto">Sick</option>
-                <option value="emergency">Emergency</option>
-                <option value="emergency">Unpaid</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="amount">Amount (hours)</label>
-            <input type="number" id="amount" name="amount" min="0" step="0.5" required>
-        </div>
-        <div class="form-group">
-            <label for="note">Note (optional)</label>
-            <textarea id="note" name="note" rows="4" placeholder="Add extra information..."></textarea>
-        </div>
-        <label for="password">Password</label>
-        <input type="password" class="password-field form-group" id="password"/>
-        <button type="submit" class="submit-button">Submit</button>
+            <div class="form-group">
+                <label for="note">Note (optional)</label>
+                <textarea id="note" name="note" rows="4" placeholder="Add extra information..."></textarea>
+            </div>
+            <label for="password">Password</label>
+            <input type="password" class="password-field form-group" id="password"/>
+            <button type="submit" class="submit-button">Submit</button>
     </form>
+</div>
 </div>
 
 
 <style>
 /* Parent container */
 .request-time-off {
+    flex: 1 1 auto;
     background: var(--accent-color-two);
-    padding: 1.8rem;
+    padding: 1.8rem 1rem;;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-    margin: 1rem;
     min-width: 600px;
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     box-sizing: border-box; /* Ensures all child elements respect padding */ 
+    height: 100%;
 }
 
 /* Title styling */
 .request-time-off .form-title {
+    width:96%;
+    margin-right: auto;
+    margin-left: auto;
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
@@ -81,7 +87,11 @@
     gap: 1.5rem;
 
 }
-
+.scroll-wrap {
+    height: calc(100% - 3.8rem);
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+}
 /* Form groups */
 .request-time-off .form-group {
     margin-bottom: 1.5rem;

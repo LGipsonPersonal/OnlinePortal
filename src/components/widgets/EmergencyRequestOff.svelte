@@ -73,6 +73,8 @@
 }
 
 .day-off-request {
+    flex-grow: 0;
+    flex-shrink: 0;
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
     padding: 1rem;
     border-radius: 12px;

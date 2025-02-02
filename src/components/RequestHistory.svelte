@@ -12,6 +12,7 @@
     <div class="timeoff-column note">Supervisor's Note</div>
     <div class="timeoff-column">Action</div>
   </div>
+  <div class="scroll-wrap">
   {#each requests as request, i (request.id)}
     <div class="timeoff-row {request.status.toLowerCase()}">
       <div class="timeoff-request-date">{request.request_date}</div>
@@ -29,6 +30,7 @@
       </div>
     </div>
   {/each}
+  </div>
   <!-- Placeholder for future requests -->
   <div class="timeoff-placeholder">
     <p>End of Request History</p>
@@ -37,12 +39,9 @@
 
 <style>
   .timeoff-container {
+      flex: 1 1 auto;
       width:90%;
-      height: calc(100% - 2rem);
-
-      margin-top: 1rem;
-      margin-right: 1rem;
-      margin-bottom: 1rem;
+      height: 100%;
       font-family: 'Inter', sans-serif;
       font-size: 0.875rem;
       background-color: var(--accent-color-two);
@@ -99,7 +98,13 @@
     .timeoff-row:last-child {
       border-bottom: none;
     }
-  
+    .scroll-wrap {
+      height:unset;
+      overflow-y: scroll;
+      padding-left: 0;
+      padding-bottom: 0px;
+      padding-right: 0;
+    }
     .timeoff-request-date,
     .timeoff-start-date,
     .timeoff-end-date,

@@ -21,7 +21,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #4338ca; /* Gray thumb for similarity */
+  background-color: #4f46e5;/* Gray thumb for similarity */
   border-radius: 6px;
   border: 3px solid #1a1a1a; /* Adds padding around thumb for a cleaner look */
 }
@@ -39,8 +39,8 @@
 
 /* Styling for scrollbar in Firefox */
 *{
-scrollbar-color: #4338ca #1a1a1a;; /* Thumb color, Track color */
-scrollbar-width: thin; /* Matches Firefox's thin scrollbar */
+scrollbar-color: #4f46e5 #1a1a1a;; /* Thumb color, Track color */
+scrollbar-width: 2px; /* Matches Firefox's thin scrollbar */
 }
 .caution-button {
     background-color: #eab308 !important; /* Yellow warning color */
@@ -73,6 +73,7 @@ scrollbar-width: thin; /* Matches Firefox's thin scrollbar */
 @media (max-width: 768px) {
   .fullscreen {
     flex-direction: column;
+    overflow-y: scroll;
   }
 
   .main-page {

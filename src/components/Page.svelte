@@ -119,8 +119,11 @@
 
   }
   .time-off-page{
+    min-height: 0px;
     display: flex;
+    gap: 1rem;
     align-items: flex-start;
+    padding: 1rem;
   }
   .homePage{
     min-height: 0px;

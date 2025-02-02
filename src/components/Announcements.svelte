@@ -1,16 +1,81 @@
 <script>
+    import Popup from './widgets/Popup.svelte';
     let { props } = $props();
 
+    let announcementContent = $state(null);
+    let showingAnnouncement = $state(false);
+
     function handleAnnouncementClick(id) {
-        console.log(`Announcement ${id} clicked`);
+        console.log(id);
+        announcementContent = props.announcements.find(announcement => announcement.id === id);
+        showingAnnouncement = true;
     }
 </script>
 
+{#snippet shownAnnouncement(announcementContent)}
+    <article class="blog-post">
+        <header class="post-header">
+            <h1 class="post-title">Exploring the Dark Aesthetic</h1>
+            <p class="post-meta">Published on February 1, 2025 by Jane Doe</p>
+        </header>
+        <section class="post-content">
+            {@html announcementContent.postContent}
+        </section>
+    </article>
+    <style>
+        /* Blog post styles */
+    .post-content {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .blog-post {
+        line-height: 1.6;
+    }
+    .post-header {
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #4f46e5;
+        padding-bottom: 0.5rem;
+    }
+
+    .post-title {
+        margin: 0;
+        font-size: 2rem;
+        color: #fff;
+    }
+
+    .post-meta {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #bbb;
+    }
+
+    .post-content p {
+        margin: 1rem 0;
+        color: #ccc;
+    }
+
+    .post-content blockquote {
+        margin: 1rem 0;
+        padding-left: 1rem;
+        border-left: 4px solid #555;
+        color: #aaa;
+        font-style: italic;
+    }
+
+    .post-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1rem 0;
+    }
+    </style>
+{/snippet}
+
 <div class="announcement-board">
+    <Popup popupContent={shownAnnouncement} bind:active={showingAnnouncement} popupData={announcementContent}> </Popup>
     <h2 class="board-title">{props.boardTitle}</h2>
     <div class="scroll-wrap">
     {#each props.announcements as announcement, i (announcement.id)}
-        <div class="announcement" onclick={() => handleAnnouncementClick(i)}>
+        <div class="announcement" onclick={() => handleAnnouncementClick(announcement.id)}>
             <div class="avatar-container">
                 <div class="avatar">
                     <img src={announcement.avatar} alt="User Avatar" />
@@ -29,19 +94,17 @@
 <style>
     .announcement-board {
         max-height: 380px;
-        flex: 1 1 auto;
+        flex: 1 1 100%;
         background: var(--accent-color-two);
-        padding: 1.8rem 1.5rem 1rem;
+        padding: 1.8rem 1rem 1rem;
         border-radius: 12px;
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         border: 1px solid #1e1e1e;
         color: #d1d1d1;
     }
-    .scroll-wrap{
-        height: calc(100% - 4.8rem);
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        overflow-y: scroll;
+    .scroll-wrap {
+        padding-right: 1rem;
+        padding-left: 1rem;
     }
     .board-title {
         font-size: 1.5rem;
@@ -50,10 +113,13 @@
         margin-top: 0.3rem;
         text-align: center;
         background: var(--accent-color-two);
-
+        width:96%;
         color: #ffffff;
         border-bottom: 2px solid #4f46e5;
         padding-bottom: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 2rem;
     }
 
     .announcement {

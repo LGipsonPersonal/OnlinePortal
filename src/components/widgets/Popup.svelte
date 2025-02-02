@@ -1,13 +1,13 @@
 <script>
-    let { popupContent, active = $bindable() } = $props()
+    let { popupContent, active = $bindable(), popupData } = $props()
 </script>
 
 {#if active}
     <div class="popup-overlay">
         <div class="popup-box">
-            {@render popupContent()}
+            {@render popupContent(popupData)}
+            <button onclick={() => active = false}>Close</button>
         </div>
-        <button onclick={() => active = false}>Close</button>
     </div>
 {/if}
 
@@ -35,5 +35,9 @@
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     box-sizing: border-box; /* Ensures padding is included in width/height */
+    max-width: 800px;
+    width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
 }
 </style>

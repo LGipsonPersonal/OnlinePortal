@@ -75,7 +75,8 @@
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     box-sizing: border-box;
-
+    width: 100%;
+    max-width: 320px;
 
 }
 

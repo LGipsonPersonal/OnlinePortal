@@ -69,7 +69,17 @@ export const tabs = [
       status: 'Denied', 
       supervisor_note: 'Insufficient coverage.', 
       action: 'Retry'
-   }
+   },
+   {
+    id: 3, 
+    request_date: '05/04/2024', 
+    start_date: '06/04/2024', 
+    end_date: '06/04/2024', 
+    duration: '4 hours', 
+    status: 'Denied', 
+    supervisor_note: 'Insufficient coverage.', 
+    action: 'Retry'
+ }
   ]
   
   export const docs = [
@@ -156,7 +166,35 @@ export const tabs = [
             avatar: "avatar1.png",
             title: "Alice posted an announcement: \"New Feature Released!\"",
             description: "We are excited to announce a new feature...",
-            timestamp: "2 hours ago"
+            timestamp: "2 hours ago",
+            postContent: `
+            <p>
+                Welcome to a deep dive into the minimal, modern aesthetics that define today's digital design trends. In this post, we explore how subtle color palettes and careful typography can create an immersive reading experience.
+            </p>
+            <blockquote>
+                "Design is not just what it looks like and feels like. Design is how it works." – Steve Jobs
+            </blockquote>
+            <p>
+                Whether you're a designer or just a lover of sleek interfaces, there's a lot to uncover about the art of simplicity. The approach here mirrors the clean style seen on platforms like ShadeCN, focusing on functionality, readability, and a dark theme that brings content to the forefront.
+            </p>
+            <img src="https://via.placeholder.com/600x300?text=Dark+Aesthetic" alt="Dark Aesthetic" class="post-image" />
+            <p>
+                Stay tuned for more insights on design, trends, and the creative process. Your journey into the elegant side of dark mode begins here.
+            </p>
+            <p>
+                Welcome to a deep dive into the minimal, modern aesthetics that define today's digital design trends. In this post, we explore how subtle color palettes and careful typography can create an immersive reading experience.
+            </p>
+            <blockquote>
+                "Design is not just what it looks like and feels like. Design is how it works." – Steve Jobs
+            </blockquote>
+            <p>
+                Whether you're a designer or just a lover of sleek interfaces, there's a lot to uncover about the art of simplicity. The approach here mirrors the clean style seen on platforms like ShadeCN, focusing on functionality, readability, and a dark theme that brings content to the forefront.
+            </p>
+            <img src="https://via.placeholder.com/600x300?text=Dark+Aesthetic" alt="Dark Aesthetic" class="post-image" />
+            <p>
+                Stay tuned for more insights on design, trends, and the creative process. Your journey into the elegant side of dark mode begins here.
+            </p>
+            `
         },
         {
             id: 2,

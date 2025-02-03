@@ -1,11 +1,14 @@
 <script>
   import { slide } from 'svelte/transition';
   import { documentCategories } from "$assets/store.svelte.js";
+  import Popup from './widgets/Popup.svelte';
 
   const DEFAULT_TAB_STATE = true; // open the page with all the tabs open
 
   let openTabs = Array.from({ length: documentCategories.length }, () => DEFAULT_TAB_STATE);
   let downloadLink = null;
+  let showingDocument = $state(false);
+  let documentContent = $state(null);
 
   function toggleSubmenu(index) {
     openTabs[index] = !openTabs[index];
@@ -29,7 +32,14 @@
       console.error('There was a problem with the fetch operation:', error);
     }
   }
+
+  function viewDoc(section, doc) {
+    const fileUrl = `./sample.pdf`; // Adjust the path as needed
+    documentContent = fileUrl;
+    showingDocument = true;
+  }
 </script>
+
 
 <div class="documents-container">
   {#each documentCategories as section, i (section.category)}
@@ -49,7 +59,10 @@
           {#each section.documents as doc, j (doc)}
             <div class="document-row">
               <span class="document-name">{doc}</span>
-              <button class="download-button" onclick={() => downloadDoc(i, j)}>Download</button>
+              <div class="buttons">
+                <button class="btn" onclick={() => downloadDoc(i, j)}>Download</button>
+                <button class="btn" onclick={() => viewDoc(i, j)}>View</button>
+            </div>
             </div>
           {/each}
         </div>
@@ -60,6 +73,12 @@
 
 <!-- Hidden download link -->
 <a bind:this={downloadLink} style="display: none;" download></a>
+
+{#snippet documentViewer(documentContent)}
+  <iframe src={documentContent} width="100%" height="800px"></iframe>
+{/snippet}
+<!-- Popup for viewing document -->
+<Popup popupContent={documentViewer} bind:active={showingDocument} popupData={documentContent}></Popup>
 
 <style>
   .documents-container {
@@ -111,7 +130,7 @@
     color: #d4d4d4;
   }
 
-  .download-button {
+  .btn {
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
     font-weight: 600;
@@ -123,11 +142,14 @@
     transition: background-color 0.2s, border-color 0.2s;
   }
 
-  .download-button:hover {
+  .btn:hover {
     background-color: var(--highlight-color-two); /* Darker purple on hover */
     border-color: #282177;
   }
-
+  .buttons {
+    display: flex;
+    gap: 1rem;
+  }
   .submenu-toggle {
     background: none;
     border: none;

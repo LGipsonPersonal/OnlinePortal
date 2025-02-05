@@ -2,7 +2,7 @@
     let { totalHoursThisWeek = 0 } = $props(); // Accessing props using rune syntax
 </script>
 
-<div class="work-hours-tracker">
+<div class="work-hours-tracker box-shadow">
     <h2 class="form-title">Work Hours Tracker</h2>
 
     <!-- Display total hours worked this week -->
@@ -71,7 +71,6 @@
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
     padding: 1rem;
     border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     box-sizing: border-box;

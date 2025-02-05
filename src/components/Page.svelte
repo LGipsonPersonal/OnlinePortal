@@ -5,7 +5,7 @@
   import { setContext } from "svelte";
   import TimeTable from "./TimeTable.svelte";;
   import TimeOff from "./TimeOff.svelte";
-  import Breadcrumbs from "./Breadcrumbs.svelte";
+  import TopBar from "./TopBar.svelte";
   import UploadDocs from "./UploadDocs.svelte";
   import RequestHistory from "./RequestHistory.svelte";
   import UserProfile from "./UserProfile.svelte";
@@ -62,7 +62,7 @@
 <div class="fullscreen">
   <Menu {choice} {tabs}></Menu>
   <div class="main-page">
-    <Breadcrumbs {currentTabs}></Breadcrumbs>
+    <TopBar {currentTabs}></TopBar>
     {#if choice === tabs[0].key}
       <div class="homePage">
         <div class="main-row">

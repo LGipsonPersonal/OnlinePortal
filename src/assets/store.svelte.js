@@ -47,6 +47,14 @@ export const tabs = [
       subtabs: [
 
       ],
+    },
+    {
+      name: "IT Helpdesk",
+      key: '6',
+      icon: 'fa-solid fa-headset',
+      subtabs: [
+
+      ],
     }
   ];
   export const requests = [

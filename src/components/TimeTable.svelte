@@ -127,7 +127,7 @@
   </style>
 {/snippet}
 
-<div class="project-table-container">
+<div class="project-table-container box-shadow">
 
     <Popup popupContent={noteBox} bind:active={takingNote}></Popup>
   <h2 class="form-title">Time Sheet</h2>
@@ -238,7 +238,7 @@
   background: var(--accent-color-two);
   padding: 1.8rem 2rem 0.4rem;
   border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  border: 1px solid #1e1e1e;
   margin: 2rem auto;
   color: #d1d1d1;
   width: 95%;

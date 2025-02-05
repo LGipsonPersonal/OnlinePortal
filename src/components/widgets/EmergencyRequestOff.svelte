@@ -27,7 +27,7 @@
     }
 </script>
 
-<div class="day-off-request">
+<div class="day-off-request box-shadow">
     <h2 class="form-title">Request Today Off</h2>
 
     <!-- Display available days off -->
@@ -78,7 +78,6 @@
     background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
     padding: 1rem;
     border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #1e1e1e;
     color: #d1d1d1;
     width: 100%;

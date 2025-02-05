@@ -5,7 +5,7 @@
 
   const DEFAULT_TAB_STATE = true; // open the page with all the tabs open
 
-  let openTabs = Array.from({ length: documentCategories.length }, () => DEFAULT_TAB_STATE);
+  let openTabs = $state(Array.from({ length: documentCategories.length }, () => DEFAULT_TAB_STATE));
   let downloadLink = null;
   let showingDocument = $state(false);
   let documentContent = $state(null);

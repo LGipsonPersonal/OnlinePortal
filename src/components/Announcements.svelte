@@ -70,7 +70,7 @@
     </style>
 {/snippet}
 
-<div class="announcement-board">
+<div class="announcement-board box-shadow">
     <Popup popupContent={shownAnnouncement} bind:active={showingAnnouncement} popupData={announcementContent}> </Popup>
     <h2 class="board-title">{props.boardTitle}</h2>
     <div class="scroll-wrap">
@@ -98,7 +98,6 @@
         background: var(--accent-color-two);
         padding: 1.8rem 1rem 1rem;
         border-radius: 12px;
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         border: 1px solid #1e1e1e;
         color: #d1d1d1;
     }

@@ -55,7 +55,20 @@ export const tabs = [
       subtabs: [
 
       ],
-    }
+    },
+    {
+      name: "Messages",
+      key: '7',
+      icon: 'fa-solid fa-message',
+      subtabs: [
+        { name: "John", key: "7-0" },
+        { name: "Jane", key: "7-1" },
+        { name: "Randy", key: "7-2" },
+        { name: "Rabecca", key: "7-3" },
+        { name: "Connor", key: "7-4" },
+        { name: "Candy", key: "7-5" },
+      ],
+    },
   ];
   export const requests = [
     {
@@ -219,7 +232,21 @@ export const tabs = [
             title: "Carol posted an announcement: \"Weekly Update\"",
             description: "Here is your weekly company update...",
             timestamp: "3 days ago"
-        }
+        },
+        {
+          id: 4,
+          avatar: "avatar2.png",
+          title: "Bob posted an announcement: \"Scheduled Maintenance\"",
+          description: "The system will be down for maintenance...",
+          timestamp: "1 day ago"
+      },
+      {
+          id: 5,
+          avatar: "avatar3.png",
+          title: "Carol posted an announcement: \"Weekly Update\"",
+          description: "Here is your weekly company update...",
+          timestamp: "3 days ago"
+      }
     ]
 };
 

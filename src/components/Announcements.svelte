@@ -1,5 +1,5 @@
 <script>
-    import Popup from './widgets/Popup.svelte';
+    import Popup from "./widgets/Popup.svelte";
     let { props } = $props();
 
     let announcementContent = $state(null);
@@ -7,7 +7,9 @@
 
     function handleAnnouncementClick(id) {
         console.log(id);
-        announcementContent = props.announcements.find(announcement => announcement.id === id);
+        announcementContent = props.announcements.find(
+            (announcement) => announcement.id === id,
+        );
         showingAnnouncement = true;
     }
 </script>
@@ -16,7 +18,9 @@
     <article class="blog-post">
         <header class="post-header">
             <h1 class="post-title">{announcementContent.title}</h1>
-            <p class="post-meta">Published on {announcementContent.date} by {announcementContent.author}</p>
+            <p class="post-meta">
+                Published on {announcementContent.date} by {announcementContent.author}
+            </p>
         </header>
         <section class="post-content">
             {@html announcementContent.postContent}
@@ -24,71 +28,78 @@
     </article>
     <style>
         /* Blog post styles */
-    .post-content {
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    .blog-post {
-        line-height: 1.6;
-    }
-    .post-header {
-        margin-bottom: 1.5rem;
-        border-bottom: 2px solid #4f46e5;
-        padding-bottom: 0.5rem;
-    }
+        .post-content {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .blog-post {
+            line-height: 1.6;
+        }
+        .post-header {
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #4f46e5;
+            padding-bottom: 0.5rem;
+        }
 
-    .post-title {
-        margin: 0;
-        font-size: 2rem;
-        color: #fff;
-    }
+        .post-title {
+            margin: 0;
+            font-size: 2rem;
+            color: #fff;
+        }
 
-    .post-meta {
-        margin-top: 0.5rem;
-        font-size: 0.9rem;
-        color: #bbb;
-    }
+        .post-meta {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
 
-    .post-content p {
-        margin: 1rem 0;
-        color: #ccc;
-    }
+        .post-content p {
+            margin: 1rem 0;
+            color: #ccc;
+        }
 
-    .post-content blockquote {
-        margin: 1rem 0;
-        padding-left: 1rem;
-        border-left: 4px solid #555;
-        color: #aaa;
-        font-style: italic;
-    }
+        .post-content blockquote {
+            margin: 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid #555;
+            color: #aaa;
+            font-style: italic;
+        }
 
-    .post-image {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin: 1rem 0;
-    }
+        .post-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
     </style>
 {/snippet}
 
 <div class="announcement-board box-shadow">
-    <Popup popupContent={shownAnnouncement} bind:active={showingAnnouncement} popupData={announcementContent}> </Popup>
+    <Popup
+        popupContent={shownAnnouncement}
+        bind:active={showingAnnouncement}
+        popupData={announcementContent}
+    ></Popup>
     <h2 class="board-title">{props.boardTitle}</h2>
     <div class="scroll-wrap">
-    {#each props.announcements as announcement, i (announcement.id)}
-        <div class="announcement" onclick={() => handleAnnouncementClick(announcement.id)}>
-            <div class="avatar-container">
-                <div class="avatar">
-                    <img src={announcement.avatar} alt="User Avatar" />
+        {#each props.announcements as announcement, i (announcement.id)}
+            <div
+                class="announcement"
+                onclick={() => handleAnnouncementClick(announcement.id)}
+            >
+                <div class="avatar-container">
+                    <div class="avatar">
+                        <img src={announcement.avatar} alt="User Avatar" />
+                    </div>
+                </div>
+                <div class="announcement-content">
+                    <p class="title">{announcement.title}</p>
+                    <p class="description">{announcement.description}</p>
+                    <p class="timestamp">{announcement.timeStamp}</p>
                 </div>
             </div>
-            <div class="announcement-content">
-                <p class="title">{announcement.title}</p>
-                <p class="description">{announcement.description}</p>
-                <p class="timestamp">{announcement.timeStamp}</p>
-            </div>
-        </div>
-    {/each}
-</div>
+        {/each}
+    </div>
 </div>
 
 <style>
@@ -112,7 +123,7 @@
         margin-top: 0.3rem;
         text-align: center;
         background: var(--accent-color-two);
-        width:96%;
+        width: 96%;
         color: #ffffff;
         border-bottom: 2px solid #4f46e5;
         padding-bottom: 1rem;

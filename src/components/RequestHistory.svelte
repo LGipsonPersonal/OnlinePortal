@@ -40,7 +40,7 @@
       flex: 1 1 auto;
       width:90%;
       height: 100%;
-      font-family: 'Inter', sans-serif;
+      
       font-size: 0.875rem;
       background-color: var(--accent-color-two);
       border-radius: 4px;
@@ -63,6 +63,7 @@
   .timeoff-header {
       position: sticky;
       top: 0;
+      font-family: 'Inter', sans-serif;
       z-index: 10;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;

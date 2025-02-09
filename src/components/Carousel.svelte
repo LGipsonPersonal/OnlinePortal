@@ -43,7 +43,7 @@
 </div>
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Material+Icons&display=swap');
+    
 
     .carousel {
         width: 100%;

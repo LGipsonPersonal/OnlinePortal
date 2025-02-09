@@ -56,7 +56,7 @@
 .request-time-off {
     flex: 1 1 auto;
     background: var(--accent-color-two);
-    padding: 1.8rem 1rem;;
+	padding: 1.8rem 1rem 1.2rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     min-width: 600px;
@@ -74,7 +74,7 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    margin-top: 0.3rem;
+    margin-top: 0;
     text-align: center;
     color: #ffffff;
     border-bottom: 2px solid #4f46e5;
@@ -89,8 +89,7 @@
 }
 .scroll-wrap {
     height: calc(100% - 3.8rem);
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
+
 }
 /* Form groups */
 .request-time-off .form-group {

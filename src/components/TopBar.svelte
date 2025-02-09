@@ -64,7 +64,7 @@
         display: flex;
         align-items: center; /* Vertically centers all children */
         justify-content: space-between; /* Ensures spacing between items */
-        overflow: hidden; /* Prevent unexpected growth from children */
+        
     }
 
     /* Breadcrumbs list */

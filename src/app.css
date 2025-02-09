@@ -9,22 +9,26 @@
     --highlight-color-two: #4338ca;
     --alt-highlight: #56b6c2
 }
+  /* Set Consolas as the default font for the entire website */
+  body {
+    font-family: 'Consolas', monospace;
+  }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   /* General scrollbar styles for webkit-based browsers */
   ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 2px;
   }
+
 
   ::-webkit-scrollbar-track {
     background: #1a1a1a;/* Light background for the track */
-    border-radius: 6px;
+
   }
 
   ::-webkit-scrollbar-thumb {
     background-color: #4f46e5;/* Gray thumb for similarity */
     border-radius: 6px;
-    border: 3px solid #1a1a1a; /* Adds padding around thumb for a cleaner look */
+
   }
 
   ::-webkit-scrollbar-thumb:hover {

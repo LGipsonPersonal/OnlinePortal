@@ -129,7 +129,7 @@
 
 <div class="project-table-container box-shadow">
 
-    <Popup popupContent={noteBox} bind:active={takingNote}></Popup>
+    <Popup popupContent={noteBox} bind:active={takingNote} popupData={''}></Popup>
   <h2 class="form-title">Time Sheet</h2>
   <div class="controls">
     <button class="arrow-button" onclick={previousWeek}>

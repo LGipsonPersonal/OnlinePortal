@@ -13,6 +13,7 @@
   import Announcements from "./Announcements.svelte";
   import QuickTime from "./widgets/QuickTime.svelte";
   import EmergencyRequestOff from "./widgets/EmergencyRequestOff.svelte";
+  import ItSupportTicket from "./ItSupportTicket.svelte";
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
   import { tabs, requests, docs, images, profile, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
@@ -55,7 +56,7 @@
     return [];
   }
 });
-
+$inspect(choice)
 </script>
 
 
@@ -90,6 +91,10 @@
         <ViewDocuments></ViewDocuments>
       {:else if choice === tabs[4].key}
         WIP
+      {:else if choice === tabs[6].key}
+        <div class="time-off-page">
+          <ItSupportTicket></ItSupportTicket>
+        </div>
     {/if}
   </div>
 </div>

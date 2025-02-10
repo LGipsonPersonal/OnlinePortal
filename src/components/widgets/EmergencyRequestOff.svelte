@@ -89,7 +89,8 @@
 .form-title {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 0.8rem;
     color: #ffffff;
     text-align: center;
     border-bottom: 2px solid #4f46e5;
@@ -121,7 +122,7 @@ textarea {
     border: 1px solid #2a2a2a;
     border-radius: 8px;
     color: #e0e0e0;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     background-color: #1e1e1e;
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -168,5 +169,10 @@ textarea:focus {
     color: #ffffff;
     border-radius: 8px;
     font-size: 1rem;
+}
+.scroll-wrap {
+    height: calc(100% - 4.1rem);
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
 }
 </style>

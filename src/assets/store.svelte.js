@@ -200,7 +200,7 @@ export const tabs = [
             <p>
                 Whether you're a designer or just a lover of sleek interfaces, there's a lot to uncover about the art of simplicity. The approach here mirrors the clean style seen on platforms like ShadeCN, focusing on functionality, readability, and a dark theme that brings content to the forefront.
             </p>
-            <img src="https://via.placeholder.com/600x300?text=Dark+Aesthetic" alt="Dark Aesthetic" class="post-image" />
+            <img src="https://placehold.co/600x300/?text=Placeholder+Image" alt="Dark Aesthetic" class="post-image" />
             <p>
                 Stay tuned for more insights on design, trends, and the creative process. Your journey into the elegant side of dark mode begins here.
             </p>
@@ -213,7 +213,7 @@ export const tabs = [
             <p>
                 Whether you're a designer or just a lover of sleek interfaces, there's a lot to uncover about the art of simplicity. The approach here mirrors the clean style seen on platforms like ShadeCN, focusing on functionality, readability, and a dark theme that brings content to the forefront.
             </p>
-            <img src="https://via.placeholder.com/600x300?text=Dark+Aesthetic" alt="Dark Aesthetic" class="post-image" />
+            <img src="https://placehold.co/600x300/?text=Placeholder+Image" alt="Dark Aesthetic" class="post-image" />
             <p>
                 Stay tuned for more insights on design, trends, and the creative process. Your journey into the elegant side of dark mode begins here.
             </p>

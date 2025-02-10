@@ -64,7 +64,7 @@
       position: sticky;
       top: 0;
       font-family: 'Inter', sans-serif;
-      z-index: 10;
+      z-index: 4;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
       background-color: var(--accent-color-one);

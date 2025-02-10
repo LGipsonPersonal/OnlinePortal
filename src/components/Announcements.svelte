@@ -107,7 +107,7 @@
         max-height: 380px;
         flex: 1 1 100%;
         background: var(--accent-color-two);
-        padding: 1.8rem 1rem 1rem;
+        padding: 1rem;
         border-radius: 12px;
         border: 1px solid #1e1e1e;
         color: #d1d1d1;
@@ -115,18 +115,19 @@
     .scroll-wrap {
         padding-right: 1rem;
         padding-left: 1rem;
+        height: calc(100% - 4.5rem);
     }
     .board-title {
         font-size: 1.5rem;
         font-weight: 700;
-        margin-bottom: 1.5rem;
-        margin-top: 0.3rem;
+        margin-bottom: 1rem;
+        margin-top: 0.8rem;
         text-align: center;
         background: var(--accent-color-two);
         width: 96%;
         color: #ffffff;
         border-bottom: 2px solid #4f46e5;
-        padding-bottom: 1rem;
+        padding-bottom: 0.8rem;
         margin-left: auto;
         margin-right: auto;
         max-height: 2rem;

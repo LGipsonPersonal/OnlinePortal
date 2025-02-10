@@ -63,7 +63,13 @@
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
 }
 
-
+.scroll-wrap {
+    height: calc(100% - 4rem);
+    overflow-y: auto;
+    padding-left: 0.4rem;
+    padding-bottom: 2px;
+    padding-right: 0.4rem;
+}
 /* Parent container */
 .work-hours-tracker {
     flex-grow: 0;
@@ -83,11 +89,11 @@
 .work-hours-tracker .form-title {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
     text-align: center;
     color: #ffffff;
     border-bottom: 2px solid #4f46e5;
-    margin-bottom: 1rem; /* Reduced margin */
+    margin-bottom: 0.9rem; /* Reduced margin */
     padding-bottom: 0.9rem; /* Reduced padding */
 }
 

@@ -48,7 +48,7 @@
         padding: 0.5rem 1rem;
         border-radius: 8px;
         color: #d1d1d1;
-        width: 18rem;
+        width: 16rem;
         position: relative;
     }
     .search-box {

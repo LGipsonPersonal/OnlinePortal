@@ -1,25 +1,30 @@
 <script>
   import { getContext } from 'svelte';
-  import { slide } from 'svelte/transition'
+  import { slide } from 'svelte/transition';
   let { choice, tabs } = $props();
-  let openSubmenuIndex = $state(null); // Tracks which submenu is open
-  let MainPage = getContext('MainPage') // communication channel to main app component
 
-  // Toggle submenu visibility
+  let MainPage = getContext('MainPage'); // Communication channel to main app component
+  let openTabs = $state([]); // Store indices of open submenus
+
   /**
-     * @param {number} index
-  */
+   * Toggle submenu visibility
+   * @param {number} index
+   */
   function toggleSubmenu(index) {
-    openSubmenuIndex = openSubmenuIndex === index ? null : index;
+    if (openTabs.includes(index)) {
+      openTabs = openTabs.filter(i => i !== index);
+    } else {
+      openTabs = [...openTabs, index];
+    }
   }
 
-  $inspect(tabs)
   /**
-     * @param {string} key
-  */
+   * Select a menu choice
+   * @param {string} key
+   */
   function selectChoice(key) {
-    choice = key
-    MainPage.updateChoice(choice)
+    choice = key;
+    MainPage.updateChoice(choice);
   }
 </script>
 
@@ -50,7 +55,7 @@
             class="submenu-toggle"
             onclick={() => toggleSubmenu(i)}
           >
-            {#if openSubmenuIndex === i}
+            {#if openTabs.includes(i)}
               <i class="fas fa-chevron-up"></i>
             {:else}
               <i class="fas fa-chevron-down"></i>
@@ -58,7 +63,7 @@
           </button>
           {/if}
         </div>
-        {#if openSubmenuIndex === i}
+        {#if openTabs.includes(i)}
         <div transition:slide class="sidebar-submenu">
           {#each tab.subtabs as subTab, j}
           <div
@@ -76,6 +81,7 @@
     {/each}
   </div>
 </div>
+
 
 
 

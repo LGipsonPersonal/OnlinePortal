@@ -3,11 +3,13 @@
     import { profile } from "$assets/store.svelte.js";
     import UserProfile from "./UserProfile.svelte";
     import Searchbar from "./widgets/Searchbar.svelte";
+    import NotifList from "./widgets/NotifList.svelte";
     let {
         currentTabs, // Array of Obj / [{name: 'home', key: '0', subtabs: [name: 'x', key: '0-0']}]
     } = $props();
 
     let showUserProfile = $state(false);
+    let showNotifs = $state(false);
 </script>
 
 <div class="Topbar" aria-label="Breadcrumb">
@@ -25,7 +27,7 @@
         <Searchbar></Searchbar>
         <button
             class="notif-button"
-            onclick={() => (showUserProfile = !showUserProfile)}
+            onclick={() => (showNotifs = !showNotifs)}
             aria-label="Toggle User Profile"
         >
             <i class="fa-solid fa-bell fa-lg white"></i>
@@ -46,6 +48,9 @@
         <div class="userProfileContainer">
             <UserProfile></UserProfile>
         </div>
+    {/if}
+    {#if showNotifs}
+        <NotifList></NotifList>
     {/if}
 </div>
 
@@ -148,6 +153,7 @@
         position: absolute;
         top: 2.5rem;
         right: 2rem;
+        z-index: 5;
     }
 
     @media (max-width: 768px) {

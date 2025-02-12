@@ -47,10 +47,10 @@
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--interact-border);
     border-radius: 6px;
-    color: #e0e0e0;
-    background-color: #1e1e1e;
+    color: var(--text-color);
+    background-color: var(--interact-bg);
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
     max-width:320px;
@@ -59,7 +59,7 @@
 /* Focus state for dropdown */
 .work-hours-tracker select:focus {
     outline: none;
-    border-color: #4f46e5;
+    border-color: var(--interact-focus-border);
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
 }
 
@@ -72,16 +72,20 @@
 }
 /* Parent container */
 .work-hours-tracker {
-    flex-grow: 0;
-    flex-shrink: 0;
-    background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
+    flex-grow: 1;
+    flex-shrink: 1;
+    background: var(--accent-color-two);
     padding: 1rem;
     border-radius: 12px;
-    border: 1px solid #1e1e1e;
-    color: #d1d1d1;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
     box-sizing: border-box;
     width: 100%;
     max-width: 320px;
+    max-height: 431px; /* Set explicit height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
 }
 
@@ -91,8 +95,8 @@
     font-weight: 700;
     margin-top: 0.8rem;
     text-align: center;
-    color: #ffffff;
-    border-bottom: 2px solid #4f46e5;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--highlight-color-one);
     margin-bottom: 0.9rem; /* Reduced margin */
     padding-bottom: 0.9rem; /* Reduced padding */
 }
@@ -106,7 +110,7 @@
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    color: #9e9e9e;
+    color: var(--text-color-muted);
     margin-bottom: 0.5rem;
 }
 
@@ -115,10 +119,10 @@
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--interact-border);
     border-radius: 6px;
-    color: #e0e0e0;
-    background-color: #1e1e1e;
+    color: var(--text-color);
+    background-color: var(--interact-bg);
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 }
@@ -126,7 +130,7 @@
 /* Focus state for inputs */
 .work-hours-tracker input:focus {
     outline: none;
-    border-color: #4f46e5;
+    border-color: var(--input-focus-border);
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
 }
 
@@ -139,8 +143,9 @@
     padding: 1rem;
     font-size: 1rem;
     font-weight: 600;
+    margin-top: 0.5rem;
     color: #ffffff;
-    background-color: #4f46e5;
+    background-color: var(--highlight-color-one);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -149,7 +154,7 @@
 
 /* Submit button hover effect */
 .work-hours-tracker .submit-button:hover {
-    background-color: #4338ca;
+    background-color: var(--highlight-color-two);
     transform: scale(1.02);
 }
 /* Add some styling for the hours summary */
@@ -157,8 +162,8 @@
     font-size: 1rem;
     margin-bottom: 1rem;
     padding: 0.4rem;
-    background: #3a3a3a;
-    color: #e0e0e0;
+    background: #4a4a4a;
+    color: var(--text-color);
     border-radius: 6px;
     text-align: center;
 }

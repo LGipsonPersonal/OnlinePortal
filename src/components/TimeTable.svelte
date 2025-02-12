@@ -217,11 +217,11 @@
 <style>
 /* General Styles */
 :root {
-  --button-hover-bg: #4f46e5;
-  --button-active-bg: #2a259a;
-  --input-bg: #1e1e1e;
-  --input-border: #3a3a3a;
-  --input-focus-border: #4f46e5;
+  --button-hover-bg: var(--highlight-color-one);
+  --button-active-bg: var(--highlight-color-two);
+  --input-bg: var(--input-bg);
+  --input-border: var(--input-border);
+  --input-focus-border: var(--input-focus-border);
 }
 
 /* Wrapper for Table to Enable Horizontal Scrolling */
@@ -238,9 +238,9 @@
   background: var(--accent-color-two);
   padding: 1.8rem 2rem 0.4rem;
   border-radius: 12px;
-  border: 1px solid #1e1e1e;
+  border: 1px solid var(--border-color);
   margin: 2rem auto;
-  color: #d1d1d1;
+  color: var(--text-color);
   width: 95%;
   box-sizing: border-box;
 }
@@ -251,8 +251,8 @@
   font-weight: 700;
   margin-bottom: 1rem;
   text-align: center;
-  color: #ffffff;
-  border-bottom: 2px solid #4f46e5;
+  color: var(--text-color);
+  border-bottom: 2px solid var(--highlight-color-one);
   padding-bottom: 1rem;
 }
 
@@ -266,9 +266,9 @@
 
 .calendar-input {
   padding: 0.5rem 1rem;
-  border: 1px solid var(--input-border);
+  border: 1px solid #3a3a3a;
   border-radius: 6px;
-  background-color: var(--input-bg);
+  background-color:#1e1e1e;
   color: #e0e0e0;
   font-size: 0.875rem;
   text-align: center;
@@ -276,14 +276,20 @@
   cursor: pointer;
   transition: 0.2s;
 }
-
+/*
+--button-hover-bg: #4f46e5;
+  --button-active-bg: #2a259a;
+  --input-bg: #1e1e1e;
+  --input-border: #3a3a3a;
+  --input-focus-border: #4f46e5;
+*/
 .calendar-input:hover {
   background-color: #272727;
 }
 
 .calendar-input:focus {
   border-color: var(--input-focus-border);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 0 0 3px rgba(90, 84, 229, 0.3);
 }
 
 .calendar-input::-webkit-calendar-picker-indicator {
@@ -298,7 +304,7 @@ button, .arrow-button, .submit-button, .left-button {
   border: none;
   border-radius: 6px;
   background-color: #272727;
-  color: #ffffff;
+  color: var(--text-color);
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -366,19 +372,19 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
 
 .project-table th {
   background-color: var(--accent-color-one);
-  color: #ffffff;
+  color: var(--text-color);
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.6rem;
   padding: 0.5rem; /* Reduced padding */
-  border-bottom: 1px solid #2e2e2e;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .project-table td {
   padding: 0.5rem; /* Reduced padding */
   text-align: center;
-  color: #d4d4d4;
-  border: 1px solid #2e2e2e;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 
 /* Inputs in Table */
@@ -390,21 +396,21 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
   font-size: 0.75rem; /* Reduced font size */
   text-align: center;
   background-color: var(--input-bg);
-  color: #e0e0e0;
+  color: var(--text-color);
   outline: none;
   transition: 0.2s;
 }
 
 .project-table input:focus {
   border-color: var(--input-focus-border);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 0 0 3px rgba(90, 84, 229, 0.3);
 }
 
 /* Totals Row */
 .project-table .total-row td {
   font-weight: 600;
-  background-color: var (--accent-color-one);
-  color: #ffffff;
+  background-color: var(--accent-color-one);
+  color: var(--text-color);
 }
 
 /* Row Hover */
@@ -461,7 +467,7 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
 
   .project-table th,
   .project-table td {
-    font-size: 0.rem;
+    font-size: 0.6rem;
     padding: 0.5rem;
   }
 

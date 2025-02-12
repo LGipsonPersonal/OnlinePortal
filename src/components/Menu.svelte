@@ -99,7 +99,7 @@
     height: 100%;
     width: 15rem; /* Sidebar width */
     background-color: var(--accent-color-two); /* Dark background */
-    border-right: 1px solid #333; /* Subtle border */
+    border-right: 1px solid var(--border-color); /* Subtle border */
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1rem; /* Generous padding */

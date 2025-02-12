@@ -104,13 +104,13 @@
 
 <style>
     .announcement-board {
-        max-height: 380px;
+        max-height: 400px;
         flex: 1 1 100%;
         background: var(--accent-color-two);
         padding: 1rem;
         border-radius: 12px;
-        border: 1px solid #1e1e1e;
-        color: #d1d1d1;
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
     }
     .scroll-wrap {
         padding-right: 1rem;
@@ -125,8 +125,8 @@
         text-align: center;
         background: var(--accent-color-two);
         width: 96%;
-        color: #ffffff;
-        border-bottom: 2px solid #4f46e5;
+        color: var(--text-color);
+        border-bottom: 2px solid var(--highlight-color-one);
         padding-bottom: 0.8rem;
         margin-left: auto;
         margin-right: auto;
@@ -145,7 +145,7 @@
             background-color 0.3s,
             transform 0.2s;
         cursor: pointer;
-    }
+            }
 
     .announcement:hover {
         background-color: #3a3a3a;
@@ -154,7 +154,7 @@
 
     .avatar-container {
         margin-right: 1rem;
-    }
+            }
 
     .avatar {
         width: 60px;
@@ -168,27 +168,29 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border: 1px solid var(--border-color);
     }
 
     .announcement-content {
         flex: 1;
+        color: var(--text-color);
     }
 
     .title {
         font-size: 1rem;
         font-weight: 600;
         margin: 0 0 0.5rem;
-        color: #ffffff;
+        color: var(--text-color);
     }
 
     .description {
         font-size: 0.9rem;
         margin: 0 0 0.5rem;
-        color: #ccc;
+        color: var(--text-color-muted);
     }
 
     .timestamp {
         font-size: 0.8rem;
-        color: #aaa;
+        color: var(--text-color-muted);
     }
 </style>

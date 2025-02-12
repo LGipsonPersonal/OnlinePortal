@@ -105,8 +105,8 @@
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     min-width: 600px;
-    border: 1px solid #1e1e1e;
-    color: #d1d1d1;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
     box-sizing: border-box;
     height: 100%;
     overflow: auto;
@@ -118,8 +118,8 @@
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #ffffff;
-    border-bottom: 2px solid #4f46e5;
+    color: var(--text-color);
+    border-bottom: 2px solid var(--highlight-color-one);
     padding-bottom: 1rem;
   }
 
@@ -138,7 +138,7 @@
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    color: #9e9e9e;
+    color: var(--text-color-muted);
     margin-bottom: 0.5rem;
   }
 
@@ -151,21 +151,22 @@
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--interact-border);
     border-radius: 6px;
-    color: #e0e0e0;
-    background-color: #1e1e1e;
+    color: var(--text-color);
+    background-color: var(--interact-bg);
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
     box-sizing: border-box;
   }
+
   /* Focus state */
   .support-ticket-form input:focus,
   .support-ticket-form select:focus,
   .support-ticket-form textarea:focus {
     outline: none;
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
+    border-color: var(--interact-focus-border);
+    box-shadow: 0 0 0 2px rgba(90, 84, 229, 0.4);
   }
 
   /* Form row for grouped fields */
@@ -191,7 +192,7 @@
     font-size: 1rem;
     font-weight: 600;
     color: #ffffff;
-    background-color: #4f46e5;
+    background-color: var(--highlight-color-one);
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -199,7 +200,7 @@
   }
 
   .support-ticket-form .submit-button:hover {
-    background-color: #4338ca;
+    background-color: var(--highlight-color-two);
     transform: scale(1.02);
   }
 
@@ -221,7 +222,7 @@
   }
 
   .selected-option {
-    background-color: #4f46e5;
+    background-color: var(--highlight-color-one);
     color: #ffffff;
     padding: 0.3rem 0.5rem;
     border-radius: 4px;
@@ -233,7 +234,7 @@
     border: none !important;
     outline: none !important;
     background: none !important;
-    color: #e0e0e0;
+    color: var(--text-color);
     font-size: 1rem;
     padding: 0.1rem;
   }
@@ -243,8 +244,8 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: #2a2a2a;
-    border: 1px solid #2a2a2a;
+    background-color: var(--interact-bg);
+    border: 1px solid var(--interact-border);
     border-radius: 6px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 10;
@@ -278,5 +279,56 @@
       flex-direction: column;
       gap: 1rem;
     }
+  }
+
+  .support-ticket-form {
+    background: var(--accent-color-two);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+  }
+
+  .support-ticket-form .form-title {
+    color: var(--text-color);
+    border-bottom: 2px solid var(--highlight-color-one);
+  }
+
+  .support-ticket-form label {
+    color: var(--text-color-muted);
+  }
+
+  .support-ticket-form input,
+  .support-ticket-form select,
+  .support-ticket-form textarea {
+    border: 1px solid var(--interact-border);
+    color: var(--text-color);
+    background-color: var(--interact-bg);
+  }
+
+  .support-ticket-form input:focus,
+  .support-ticket-form select:focus,
+  .support-ticket-form textarea:focus {
+    border-color: var(--interact-focus-border);
+  }
+
+  .support-ticket-form .submit-button {
+    background-color: var(--highlight-color-one);
+  }
+
+  .support-ticket-form .submit-button:hover {
+    background-color: var(--highlight-color-two);
+  }
+
+  .selected-option {
+    background-color: var(--highlight-color-one);
+    color: #ffffff;
+  }
+
+  .new-category-input {
+    color: var(--text-color);
+  }
+
+  .dropdown {
+    background-color: var(--interact-bg);
+    border: 1px solid var(--interact-border);
   }
 </style>

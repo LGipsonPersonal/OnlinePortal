@@ -1,13 +1,18 @@
-
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
 :root {
-    --main-bg-color: #1a1a1a;
-    --accent-color-one: #0c0c0c;
-    --accent-color-two:#121212;
-    --highlight-color-one:#4f46e5;
-    --highlight-color-two: #4338ca;
-    --alt-highlight: #56b6c2
+  --interact-bg: #333333; /* Input background color */
+  --interact-border: #555555; /* Input border color */
+  --interact-focus-border: #6a5acd; /* Input focus border color */
+  --main-bg-color: #1a1a1a; /* Slightly lighter */
+  --accent-color-one: #0d0d0d; /* Slightly lighter */
+  --accent-color-two: #121212; /* Slightly lighter */
+  --highlight-color-one: #4f46e5; /* Brighter purple */
+  --highlight-color-two: #483d8b; /* Darker purple */
+  --alt-highlight: #20b2aa; /* Brighter teal */
+  --text-color: #f0f0f0; /* Light gray for text */
+  --text-color-muted: #c0c0c0; /* Muted gray for less important text */
+  --border-color: #4a4a4a; /* Border color */
 }
   /* Set Consolas as the default font for the entire website */
   body {
@@ -16,7 +21,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   /* General scrollbar styles for webkit-based browsers */
   ::-webkit-scrollbar {
-    width: 2px;
+    width: 4px;
   }
 
 
@@ -50,7 +55,7 @@
 @-moz-document url-prefix(){
     *{
   scrollbar-color: #4f46e5 #1a1a1a;; /* Thumb color, Track color */
-  scrollbar-width: 2px; /* Matches Firefox's thin scrollbar */
+  scrollbar-width: thin; /* Matches Firefox's thin scrollbar */
   }
 }
 .caution-button {

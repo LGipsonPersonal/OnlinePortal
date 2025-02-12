@@ -63,7 +63,7 @@
         padding: 0.82rem;
         color: #e0e0e0;
         font-size: 0.875rem;
-        border-bottom: 1px solid #333; /* Subtle border */
+        border-bottom: 1px solid var(--border-color);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         height: 1.5rem;
         display: flex;

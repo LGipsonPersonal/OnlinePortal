@@ -98,12 +98,14 @@
   .sidebar {
     height: 100%;
     width: 15rem; /* Sidebar width */
+    min-width: 15rem;
     background-color: var(--accent-color-two); /* Dark background */
     border-right: 1px solid var(--border-color); /* Subtle border */
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1rem; /* Generous padding */
     box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
   }
 
   .logo-container {

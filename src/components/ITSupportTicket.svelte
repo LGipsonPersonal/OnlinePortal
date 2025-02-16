@@ -1,5 +1,6 @@
 <script>
-  import { onMount } from 'svelte';
+  // @ts-ignore
+  import { selfOnly } from "$assets/utils.js";
 
   let categories = [
     { value: "hardware", label: "Hardware" },
@@ -9,8 +10,13 @@
     { value: "other", label: "Other" }
   ];
 
+  let dropdownOpen = $state(false)
   let selectedCategories = $state([]);
   let newCategory = $state("");
+
+  function toggleDropDown() {
+    dropdownOpen = !dropdownOpen
+  }
 
   function toggleCategory(category) {
     if (selectedCategories.includes(category)) {
@@ -47,13 +53,14 @@
       <!-- Issue Details -->
       <div class="form-group">
         <label for="category">Issue Category</label>
-        <div class="multi-select">
+        <div class="multi-select {dropdownOpen ? 'multi-select-outline':''}" onclick={selfOnly(toggleDropDown)}>
           <div class="selected-options">
             {#each selectedCategories as category}
               <span class="selected-option">{category}</span>
             {/each}
-            <input type="text" bind:value={newCategory} onkeypress={handleKeyPress} placeholder="Add category" class="new-category-input">
+            <input type="text" bind:value={newCategory} onkeypress={handleKeyPress} onclick={() => {if (!dropdownOpen) {dropdownOpen = true }}} placeholder="Add category..." class="new-category-input">
           </div>
+          {#if dropdownOpen}
           <div class="dropdown">
             {#each categories as category}
               <div class="dropdown-item">
@@ -62,10 +69,11 @@
               </div>
             {/each}
           </div>
+          {/if}
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group outline">
         <label for="priority">Priority</label>
         <select id="priority" name="priority" required>
           <option value="low">Low</option>
@@ -75,12 +83,12 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group outline">
         <label for="summary">Issue Summary</label>
         <input type="text" id="summary" name="summary" class="summary-field" placeholder="Brief summary of the issue" required>
       </div>
 
-      <div class="form-group">
+      <div class="form-group outline">
         <label for="description">Detailed Description (Optional)</label>
         <textarea id="description" name="description" rows="4" placeholder="Describe the issue..." required></textarea>
       </div>
@@ -161,14 +169,16 @@
   }
 
   /* Focus state */
-  .support-ticket-form input:focus,
-  .support-ticket-form select:focus,
-  .support-ticket-form textarea:focus {
+  .outline input:focus,
+  .outline select:focus,
+  .outline textarea:focus,
+  .multi-select-outline {
     outline: none;
     border-color: var(--interact-focus-border);
     box-shadow: 0 0 0 2px rgba(90, 84, 229, 0.4);
   }
 
+  
   /* Form row for grouped fields */
   .support-ticket-form .form-row {
     display: flex;
@@ -241,7 +251,7 @@
 
   .dropdown {
     position: absolute;
-    top: 100%;
+    top: 102%;
     left: 0;
     width: 100%;
     background-color: var(--interact-bg);
@@ -251,12 +261,10 @@
     z-index: 10;
     max-height: 200px;
     overflow-y: auto;
-    display: none;
-  }
-
-  .multi-select:hover .dropdown {
     display: block;
   }
+
+
 
   .dropdown-item {
     padding: 0.5rem;
@@ -287,14 +295,6 @@
     color: var(--text-color);
   }
 
-  .support-ticket-form .form-title {
-    color: var(--text-color);
-    border-bottom: 2px solid var(--highlight-color-one);
-  }
-
-  .support-ticket-form label {
-    color: var(--text-color-muted);
-  }
 
   .support-ticket-form input,
   .support-ticket-form select,
@@ -304,31 +304,7 @@
     background-color: var(--interact-bg);
   }
 
-  .support-ticket-form input:focus,
-  .support-ticket-form select:focus,
-  .support-ticket-form textarea:focus {
-    border-color: var(--interact-focus-border);
-  }
 
-  .support-ticket-form .submit-button {
-    background-color: var(--highlight-color-one);
-  }
 
-  .support-ticket-form .submit-button:hover {
-    background-color: var(--highlight-color-two);
-  }
 
-  .selected-option {
-    background-color: var(--highlight-color-one);
-    color: #ffffff;
-  }
-
-  .new-category-input {
-    color: var(--text-color);
-  }
-
-  .dropdown {
-    background-color: var(--interact-bg);
-    border: 1px solid var(--interact-border);
-  }
 </style>

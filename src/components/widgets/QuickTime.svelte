@@ -169,9 +169,9 @@
 }
 
 /* Responsive styling */
-@media (max-width: 768px) {
-    .work-hours-tracker {
-        max-height: 600px;
+@media (max-width: 1340px) {
+    .work-hours-tracker{
+      display: none;
     }
 }
 

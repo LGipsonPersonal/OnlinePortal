@@ -176,4 +176,9 @@ textarea:focus {
     padding-left: 0.4rem;
     padding-right: 0.4rem;
 }
+@media (max-width: 1340px) {
+.day-off-request {
+    display: none;
+    }
+}
 </style>

@@ -18,3 +18,11 @@ export function titleCase(sentence) {
         .map(word => capitalizeFirstLetter(word)) // Capitalize each word
         .join(' '); // Join the words back into a sentence
 }
+export function selfOnly(fn) {
+    return function(event) {
+      if (event.target === event.currentTarget) {
+        fn.call(this, event);
+      }
+    };
+  }
+  

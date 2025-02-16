@@ -10,7 +10,9 @@
             <button class="close-btn" onclick={() => active = false}>
                 <span>&times;</span>
             </button>
+            <div class="blog-content">
             {@render popupContent(popupData)}
+        </div>
         </div>
     </div>
 {/if}
@@ -29,11 +31,15 @@
     align-items: center;
     z-index: 10;
 }
-
+.blog-content{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: -2px;
+}
 /* Popup box styling */
 .popup-box {
     background: var(--accent-color-two, #1e1e1e);
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     border: 1px solid #1e1e1e;
@@ -49,12 +55,15 @@
 
 /* Close button styling */
 .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
+    position: sticky;
+    top: -6px;
+    left: 100%;
     width: 32px;
     height: 32px;
     border: none;
+    margin-top: -2rem;
+    margin-bottom: -1rem;
+    margin-right: -0.4rem;
     background: transparent;
     color: #d1d1d1;
     font-size: 24px;

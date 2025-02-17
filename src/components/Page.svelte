@@ -17,6 +17,7 @@
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
   import { tabs, requests, docs, images, profile, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
+    import ProjectsDashboard from "./ProjectsDashboard.svelte";
 
   setContext('MainPage', { updateChoice})
 
@@ -69,7 +70,7 @@ $inspect(choice)
         <div class="main-row">
             <Announcements props={announcements}></Announcements>
             <Announcements props={events}></Announcements>
-            <QuickTime totalHoursThisWeek={1}></QuickTime>
+            <QuickTime></QuickTime>
         </div>
         <div class="main-row">
           <Announcements props={deadlines}></Announcements>
@@ -91,6 +92,8 @@ $inspect(choice)
         <ViewDocuments></ViewDocuments>
       {:else if choice === tabs[4].key}
         WIP
+      {:else if choice === tabs[5].key}
+        <ProjectsDashboard {projects} {announcements}></ProjectsDashboard>
       {:else if choice === tabs[6].key}
         <div class="time-off-page">
           <ItSupportTicket></ItSupportTicket>

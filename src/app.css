@@ -4,6 +4,7 @@
   --interact-bg: #333333; /* Input background color */
   --interact-border: #555555; /* Input border color */
   --interact-focus-border: #6a5acd; /* Input focus border color */
+  --interact-highlight-color: #3a3a3a;
   --main-bg-color: #1a1a1a; /* Slightly lighter */
   --accent-color-one: #0d0d0d; /* Slightly lighter */
   --accent-color-two: #121212; /* Slightly lighter */
@@ -58,6 +59,10 @@
   scrollbar-width: thin; /* Matches Firefox's thin scrollbar */
   }
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
 .caution-button {
     background-color: #eab308 !important; /* Yellow warning color */
     color: #1e1e1e; /* Dark text for contrast */

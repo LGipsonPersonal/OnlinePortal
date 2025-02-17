@@ -1,16 +1,22 @@
 <script>
-    let { totalHoursThisWeek = 0 } = $props(); // Accessing props using rune syntax
+    let totalHoursWorkedThisDay = $state(0)
+    let inputHours = $state(0)
+
+    function addHours(event) {
+        event.preventDefault()
+        totalHoursWorkedThisDay+=inputHours
+    }
 </script>
 
 <div class="work-hours-tracker box-shadow">
-    <h2 class="form-title">Work Hours Tracker</h2>
+    <h2 class="form-title">Add Today's Hours</h2>
 
     <!-- Display total hours worked this week -->
     <div class="scroll-wrap">
     <div class="hours-summary">
-        <strong>Total Hours Worked This Week:</strong>
+        <strong>Total Hours Worked This Day:</strong>
         <br>
-        <span>{totalHoursThisWeek} hour(s)</span>
+        <span>{totalHoursWorkedThisDay} hour(s)</span>
     </div>
 
     <form id="hoursForm">
@@ -25,9 +31,9 @@
         </div>
         <div class="form-group">
             <label for="hours">Hours Worked (1-8)</label>
-            <input type="number" id="hours" name="hours" min="1" max="8" required>
+            <input type="number" bind:value={inputHours} id="hours" name="hours" min="1" max="8" required>
         </div>
-        <button type="submit" class="submit-button">Add Hours</button>
+        <button type="submit" onclick={addHours} class="submit-button">Add Hours</button>
     </form>
 
     </div>

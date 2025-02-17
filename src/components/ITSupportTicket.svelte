@@ -1,21 +1,21 @@
 <script>
-  // @ts-ignore
   import { selfOnly } from "$assets/utils.js";
+  import { onMount, onDestroy } from 'svelte';
 
-  let categories = [
+  let categories = $state([
     { value: "hardware", label: "Hardware" },
     { value: "software", label: "Software" },
     { value: "network", label: "Network" },
-    { value: "access", label: "Account & Access" },
-    { value: "other", label: "Other" }
-  ];
+    { value: "access", label: "Account & Access" }
+  ]);
 
-  let dropdownOpen = $state(false)
+  let dropdownOpen = $state(false);
   let selectedCategories = $state([]);
   let newCategory = $state("");
+  let showingTooltip = $state(false)
 
   function toggleDropDown() {
-    dropdownOpen = !dropdownOpen
+    dropdownOpen = !dropdownOpen;
   }
 
   function toggleCategory(category) {
@@ -35,6 +35,7 @@
       event.preventDefault();
       if (!selectedCategories.includes(newCategory.trim())) {
         selectedCategories.push(newCategory.trim());
+        categories.push({ value: newCategory.trim(), label: newCategory.trim() });
       }
       newCategory = "";
     }
@@ -45,63 +46,85 @@
     console.log("Selected Categories:", selectedCategories);
     // Add your form submission logic here
   }
+
+  function handleClickOutside(event) {
+    const multiselect = document.querySelector('.multi-select');
+    if (multiselect && !multiselect.contains(event.target)) {
+      dropdownOpen = false;
+    }
+  }
+
+  onMount(() => {
+    document.addEventListener('click', handleClickOutside);
+  });
+
+  onDestroy(() => {
+    document.removeEventListener('click', handleClickOutside);
+  });
 </script>
 
 <div class="support-ticket-form">
   <h2 class="form-title">Submit an IT Support Ticket</h2>
-    <form onsubmit={handleSubmit}>
-      <!-- Issue Details -->
-      <div class="form-group">
-        <label for="category">Issue Category</label>
-        <div class="multi-select {dropdownOpen ? 'multi-select-outline':''}" onclick={selfOnly(toggleDropDown)}>
-          <div class="selected-options">
-            {#each selectedCategories as category}
-              <span class="selected-option">{category}</span>
-            {/each}
-            <input type="text" bind:value={newCategory} onkeypress={handleKeyPress} onclick={() => {if (!dropdownOpen) {dropdownOpen = true }}} placeholder="Add category..." class="new-category-input">
-          </div>
-          {#if dropdownOpen}
-          <div class="dropdown">
-            {#each categories as category}
-              <div class="dropdown-item">
-                <input type="checkbox" id={category.value} value={category.value} checked={isSelected(category.value)} onchange={() => toggleCategory(category.value)}>
-                <label for={category.value}>{category.label}</label>
-              </div>
-            {/each}
-          </div>
+  <form onsubmit={handleSubmit}>
+    <!-- Issue Details -->
+    <div class="form-group">
+      <label for="category">Issue Category
+        <button class="tooltip-button" aria-label="More info about categories" onclick={(event) => { event.preventDefault(); showingTooltip = !showingTooltip}}>
+          <i class="fas fa-info-circle"></i>
+          {#if showingTooltip}
+            <span class="tooltip-text">Interact with the category bar and chose the most appropriate category from the provided choices or type in and enter your own.</span>
           {/if}
+        </button>
+      </label>
+      <div class="multi-select {dropdownOpen ? 'multi-select-outline':''}" tabindex="0" onclick={selfOnly(toggleDropDown)}>
+        <div class="selected-options">
+          {#each selectedCategories as category}
+            <span class="selected-option">{category}</span>
+          {/each}
+          <input type="text" bind:value={newCategory} onkeypress={handleKeyPress} onclick={() => { if (!dropdownOpen) { dropdownOpen = true } }} placeholder="Add category..." class="new-category-input">
         </div>
+        {#if dropdownOpen}
+        <div class="dropdown">
+          {#each categories as category}
+            <div class="dropdown-item">
+              <input type="checkbox" id={category.value} value={category.value} checked={isSelected(category.value)} onchange={() => toggleCategory(category.value)}>
+              <label for={category.value}>{category.label}</label>
+            </div>
+          {/each}
+        </div>
+        {/if}
       </div>
+    </div>
 
-      <div class="form-group outline">
-        <label for="priority">Priority</label>
-        <select id="priority" name="priority" required>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
-          <option value="critical">Critical</option>
-        </select>
-      </div>
+    <div class="form-group outline">
+      <label for="priority">Priority</label>
+      <select id="priority" name="priority" required>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+        <option value="critical">Critical</option>
+      </select>
+    </div>
 
-      <div class="form-group outline">
-        <label for="summary">Issue Summary</label>
-        <input type="text" id="summary" name="summary" class="summary-field" placeholder="Brief summary of the issue" required>
-      </div>
+    <div class="form-group outline">
+      <label for="summary">Issue Summary</label>
+      <input type="text" id="summary" name="summary" class="summary-field" placeholder="Brief summary of the issue" required>
+    </div>
 
-      <div class="form-group outline">
-        <label for="description">Detailed Description (Optional)</label>
-        <textarea id="description" name="description" rows="4" placeholder="Describe the issue..." required></textarea>
-      </div>
+    <div class="form-group outline">
+      <label for="description">Detailed Description (Optional)</label>
+      <textarea id="description" name="description" rows="4" placeholder="Describe the issue..." required></textarea>
+    </div>
 
-      <!-- Attachments -->
-      <div class="form-group">
-        <label for="attachments">Attach Screenshot/Logs (Optional)</label>
-        <input type="file" id="attachments" class="file-attachments" name="attachments">
-      </div>
+    <!-- Attachments -->
+    <div class="form-group">
+      <label for="attachments">Attach Screenshot/Logs (Optional)</label>
+      <input type="file" id="attachments" class="file-attachments" name="attachments">
+    </div>
 
-      <!-- Submit Button -->
-      <button type="submit" class="submit-button">Submit Ticket</button>
-    </form>
+    <!-- Submit Button -->
+    <button type="submit" class="submit-button">Submit Ticket</button>
+  </form>
 </div>
 
 <style>
@@ -143,12 +166,40 @@
 
   /* Labels */
   .support-ticket-form label {
-    display: block;
+    display: flex;
+    align-items: center;
     font-size: 1rem;
     font-weight: 500;
     color: var(--text-color-muted);
     margin-bottom: 0.5rem;
   }
+
+  /* Tooltip button */
+  .tooltip-button {
+    background: none;
+    border: none;
+    color: var(--text-color-muted);
+    cursor: pointer;
+    margin-left: 0.5rem;
+    position: relative;
+  }
+
+  .tooltip-button .tooltip-text {
+    width: 200px;
+    background-color: var(--accent-color-one);
+    color: var(--text-color);
+    text-align: center;
+    border-radius: 6px;
+    padding: 0.5rem;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the button */
+    left: 50%;
+    margin-left: -100px; /* Center the tooltip */
+    transition: opacity 0.3s;
+  }
+
+
 
   /* Inputs, select, and textarea */
   .summary-field,
@@ -178,7 +229,6 @@
     box-shadow: 0 0 0 2px rgba(90, 84, 229, 0.4);
   }
 
-  
   /* Form row for grouped fields */
   .support-ticket-form .form-row {
     display: flex;
@@ -264,8 +314,6 @@
     display: block;
   }
 
-
-
   .dropdown-item {
     padding: 0.5rem;
     display: flex;
@@ -295,7 +343,6 @@
     color: var(--text-color);
   }
 
-
   .support-ticket-form input,
   .support-ticket-form select,
   .support-ticket-form textarea {
@@ -303,8 +350,4 @@
     color: var(--text-color);
     background-color: var(--interact-bg);
   }
-
-
-
-
 </style>

@@ -139,7 +139,7 @@
         padding: 1rem;
         background-color: #2a2a2a;
         border-radius: 8px;
-        border: 1px solid #3a3a3a;
+        border: 1px solid var(--interact-highlight-color);
         margin-bottom: 0.8rem;
         transition:
             background-color 0.3s,
@@ -148,7 +148,7 @@
             }
 
     .announcement:hover {
-        background-color: #3a3a3a;
+        background-color: var(--interact-highlight-color);
         transform: scale(1.02);
     }
 

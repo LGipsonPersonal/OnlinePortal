@@ -184,7 +184,7 @@
   }
 
 
-  .selected-tab{
+.selected-tab{
     outline: none;
     background-color: #444;
     color: #fff;

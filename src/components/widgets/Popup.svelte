@@ -61,7 +61,7 @@
     width: 32px;
     height: 32px;
     border: none;
-    margin-top: -2rem;
+    margin-top: -1rem;
     margin-bottom: -1rem;
     margin-right: -0.4rem;
     background: transparent;
@@ -72,11 +72,9 @@
     line-height: 1;
     border-radius: 50%;
     transition: background 0.2s, color 0.2s;
+
 }
-.close-btn span {
-    position: relative;
-    top: -2px;
-}
+
 .close-btn:hover {
     background: rgba(255, 0, 0, 0.7);
     color: white;

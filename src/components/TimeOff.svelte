@@ -52,6 +52,9 @@
 
 
 <style>
+input {
+  color-scheme: dark;
+}
 /* Parent container */
 .request-time-off {
     flex: 1 1 auto;
@@ -122,7 +125,11 @@
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
     box-sizing: border-box; /* Ensures input paddings are accounted for */ 
 }
-
+.request-time-off select,
+#start-date,
+#end-date {
+    cursor: pointer;
+}
 /* Focus state for inputs, select, and textarea */
 .request-time-off input:focus,
 .request-time-off select:focus,
@@ -145,6 +152,7 @@
     resize: none;
     height: 100px;
 }
+
 
 /* Submit button */
 .request-time-off .submit-button {

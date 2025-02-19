@@ -304,6 +304,7 @@ export const deadlines = {
   ]
 };
 
+
 export const meetings= {
   boardTitle: "Your Upcoming Meetings",
   announcements: [
@@ -331,6 +332,53 @@ export const meetings= {
   ]
 };
 
+export const projectUpcoming = [
+  {
+    id: 1,
+    avatar: "https://example.com/avatar1.png",
+    title: "Website Redesign",
+    description: "Update UI/UX for better user experience.",
+    timestamp: "Feb 18, 2025",
+    date: "Feb 25, 2025",
+    project: "Frontend Overhaul"
+  },
+  {
+    id: 2,
+    avatar: "https://example.com/avatar2.png",
+    title: "Database Migration",
+    description: "Move database to cloud infrastructure.",
+    timestamp: "Feb 16, 2025",
+    date: "Mar 5, 2025",
+    project: "Backend Upgrade"
+  },
+  {
+    id: 3,
+    avatar: "https://example.com/avatar3.png",
+    title: "Security Audit",
+    description: "Review and patch vulnerabilities.",
+    timestamp: "Feb 16, 2025",
+    date: "Mar 1, 2025",
+    project: "Cybersecurity"
+  },
+  {
+    id: 4,
+    avatar: "https://example.com/avatar4.png",
+    title: "API Development",
+    description: "Build new REST API endpoints.",
+    timestamp: "Feb 15, 2025",
+    date: "Feb 14, 2025",
+    project: "Microservices Expansion"
+  },
+  {
+    id: 5,
+    avatar: "https://example.com/avatar5.png",
+    title: "Marketing Campaign",
+    description: "Launch new product advertising campaign.",
+    timestamp: "Feb 14, 2025",
+    date: "Mar 10, 2025",
+    project: "Brand Awareness"
+  }
+];
 
   
   

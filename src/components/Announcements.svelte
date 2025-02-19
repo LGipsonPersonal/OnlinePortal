@@ -95,7 +95,7 @@
                 <div class="announcement-content">
                     <p class="title">{announcement.title}</p>
                     <p class="description">{announcement.description}</p>
-                    <p class="timestamp">{announcement.timeStamp}</p>
+                    <div class="timestamp">{announcement.timestamp}</div>
                 </div>
             </div>
         {/each}

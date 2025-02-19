@@ -1,6 +1,7 @@
 <script>
   import { selfOnly } from "$assets/utils.js";
   import { onMount, onDestroy } from 'svelte';
+  import Tooltip from "./widgets/Tooltip.svelte";
 
   let categories = $state([
     { value: "hardware", label: "Hardware" },
@@ -12,7 +13,6 @@
   let dropdownOpen = $state(false);
   let selectedCategories = $state([]);
   let newCategory = $state("");
-  let showingTooltip = $state(false)
 
   function toggleDropDown() {
     dropdownOpen = !dropdownOpen;
@@ -69,12 +69,7 @@
     <!-- Issue Details -->
     <div class="form-group">
       <label for="category">Issue Category
-        <button class="tooltip-button" aria-label="More info about categories" onclick={(event) => { event.preventDefault(); showingTooltip = !showingTooltip}}>
-          <i class="fas fa-info-circle"></i>
-          {#if showingTooltip}
-            <span class="tooltip-text">Interact with the category bar and chose the most appropriate category from the provided choices or type in and enter your own.</span>
-          {/if}
-        </button>
+        <Tooltip tooltipMessage={"Interact with the category bar and chose the most appropriate category from the provided choices or type in and enter your own."}></Tooltip>
       </label>
       <div class="multi-select {dropdownOpen ? 'multi-select-outline':''}" tabindex="0" onclick={selfOnly(toggleDropDown)}>
         <div class="selected-options">
@@ -174,30 +169,6 @@
     margin-bottom: 0.5rem;
   }
 
-  /* Tooltip button */
-  .tooltip-button {
-    background: none;
-    border: none;
-    color: var(--text-color-muted);
-    cursor: pointer;
-    margin-left: 0.5rem;
-    position: relative;
-  }
-
-  .tooltip-button .tooltip-text {
-    width: 200px;
-    background-color: var(--accent-color-one);
-    color: var(--text-color);
-    text-align: center;
-    border-radius: 6px;
-    padding: 0.5rem;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%; /* Position above the button */
-    left: 50%;
-    margin-left: -100px; /* Center the tooltip */
-    transition: opacity 0.3s;
-  }
 
 
 

@@ -16,7 +16,7 @@
   import ItSupportTicket from "./ItSupportTicket.svelte";
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
-  import { tabs, requests, docs, images, profile, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
+  import { tabs, requests, docs, images, profile, projectUpcoming, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
     import ProjectsDashboard from "./ProjectsDashboard.svelte";
 
   setContext('MainPage', { updateChoice})
@@ -93,7 +93,9 @@ $inspect(choice)
       {:else if choice === tabs[4].key}
         WIP
       {:else if choice === tabs[5].key}
-        <ProjectsDashboard {projects} {announcements}></ProjectsDashboard>
+      <div class="time-off-page">
+        <ProjectsDashboard props={projectUpcoming}></ProjectsDashboard>
+      </div>
       {:else if choice === tabs[6].key}
         <div class="time-off-page">
           <ItSupportTicket></ItSupportTicket>
@@ -128,6 +130,7 @@ $inspect(choice)
   }
   .time-off-page{
     min-height: 0px;
+    max-height: 100%;
     display: flex;
     gap: 1rem;
     align-items: flex-start;

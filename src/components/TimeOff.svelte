@@ -1,3 +1,7 @@
+<script>
+    import Tooltip from "./widgets/Tooltip.svelte";
+</script>
+
 <div class="request-time-off">
     <h2 class="form-title">Request Time Off</h2>
     <div class="scroll-wrap">

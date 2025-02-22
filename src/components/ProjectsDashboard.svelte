@@ -19,12 +19,18 @@
     }
     groupedAnnouncements[announcement.timestamp].push(announcement);
   });
+
+  // Sort dates chronologically
+  let sortedDates = Object.keys(groupedAnnouncements).sort((a, b) => {
+    // @ts-ignore
+    return new Date(a) - new Date(b);
+  });
 </script>
 
 <div class="deadline-board box-shadow">
   <h2 class="board-title">Projects Dashboard</h2>
   <div class="scroll-wrap">
-    {#each Object.keys(groupedAnnouncements) as timestamp, index}
+    {#each sortedDates as timestamp, index}
       {#if index !== 0}
         <hr class="date-divider" />
       {/if}
@@ -54,7 +60,6 @@
     {/each}
   </div>
 </div>
-
 <style>
   .deadline-board {
     max-height: calc(100vh - 7rem);

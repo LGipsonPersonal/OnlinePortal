@@ -72,7 +72,11 @@
     line-height: 1;
     border-radius: 50%;
     transition: background 0.2s, color 0.2s;
-
+}
+/* The x was not centered in the button */
+.close-btn span{
+    position: relative;
+    bottom: 2px;
 }
 
 .close-btn:hover {

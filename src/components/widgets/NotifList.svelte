@@ -24,7 +24,6 @@
 
 <style>
 .notification-container {
-    
     padding: 0.5rem;
     border-radius: 8px;
     color: #d1d1d1;
@@ -32,6 +31,7 @@
     position: absolute;
     top: calc(2rem + 10px);
     right: 1rem;
+    z-index: 10;
 }
 .notification-list {
     width: 100%;
@@ -43,7 +43,6 @@
     padding: 0;
     max-height: 200px;
     overflow-y: auto;
-    z-index: 10;
 }
 
 .notification-item {

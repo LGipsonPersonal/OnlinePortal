@@ -2,7 +2,7 @@ export const tabs = [
     {
       name: "Home",
       key: '0',
-      icon: 'fas fa-home',
+      icon: 'home',
       subtabs: [
 
       ],
@@ -10,7 +10,7 @@ export const tabs = [
     {
       name: "Time Sheet",
       key: '1',
-      icon: 'fas fa-calendar-days',
+      icon: 'calendar-alt',
       subtabs: [
 
       ],
@@ -18,7 +18,7 @@ export const tabs = [
     {
       name: "Request Time Off",
       key: '2',
-      icon: 'fas fa-calendar-times',
+      icon: 'calendar-edit',
       subtabs: [
 
       ],
@@ -26,7 +26,7 @@ export const tabs = [
     {
       name: "Documents",
       key: '3',
-      icon: 'fas fa-file-alt',
+      icon: 'file-alt',
       subtabs: [
         { name: "Upload Document", key: "3-0" },
         { name: "View Documents", key: "3-1" },
@@ -35,7 +35,7 @@ export const tabs = [
     {
       name: "Settings",
       key: '4',
-      icon: 'fas fa fa-cog',
+      icon: 'cog',
       subtabs: [
 
       ],
@@ -43,7 +43,7 @@ export const tabs = [
     {
       name: "Your Projects",
       key: '5',
-      icon: 'fas fa-project-diagram',
+      icon: 'project-diagram',
       subtabs: [
 
       ],
@@ -51,7 +51,7 @@ export const tabs = [
     {
       name: "IT Helpdesk",
       key: '6',
-      icon: 'fa-solid fa-headset',
+      icon: 'headset',
       subtabs: [
 
       ],
@@ -59,12 +59,12 @@ export const tabs = [
     {
       name: "Messages",
       key: '7',
-      icon: 'fa-solid fa-message',
+      icon: 'message',
       subtabs: [
-        { name: "John", key: "7-0" },
-        { name: "Jane", key: "7-1" },
-        { name: "Randy", key: "7-2" },
-        { name: "Rabecca", key: "7-3" },
+        { name: "Timesheet Reminder Bot", key: "7-0" },
+        { name: "Fitness Challenge Bot", key: "7-1" },
+        { name: "SEG Group Message", key: "7-2" },
+        { name: "Timothy (HR)", key: "7-3" },
         { name: "Connor", key: "7-4" },
         { name: "Candy", key: "7-5" },
       ],

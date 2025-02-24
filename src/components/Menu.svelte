@@ -36,7 +36,7 @@
   <div class="sidebar-text-container">
     {#each tabs as tab, i (tab.key)}
       <div class="tab-item {tab.name === 'Settings' ? 'settings-tab' : ''}">
-        <div class="tab-content-wrapper">
+        <div class="tab-content-wrapper {choice === tab.key ? 'selected-content-wrapper' : ''}">
           <button
             class="tab-button {choice === tab.key ? 'selected-tab' : ''}"
             onclick={() => {
@@ -47,7 +47,7 @@
               }
             }}
           >
-            <i class="{tab.icon} icon"></i>
+            <img src={`/${tab.icon}-${choice === tab.key ? 'solid': 'regular'}.svg`} alt="{tab.name} icon" class="icon {choice === tab.key ? 'selected-icon' : ''}" />
             {tab.name}
           </button>
           {#if tab.subtabs.length !== 0}
@@ -70,7 +70,7 @@
             onclick={() => {
               selectChoice(subTab.key);
             }}
-            class="sidebar-submenu-item {choice === subTab.key ? 'selected-tab' : ''}"
+            class="sidebar-submenu-item {choice === subTab.key ? 'selected-tab selected-content-wrapper' : ''}"
           >
             {subTab.name}
           </div>
@@ -81,11 +81,6 @@
     {/each}
   </div>
 </div>
-
-
-
-
-
 
 <style>
   /* General Reset */
@@ -136,6 +131,7 @@
   }
 
   .tab-item {
+    font-family: 'Tahoma';
     display: flex;
     flex-direction: column;
     width: 100%; /* Ensure full width */
@@ -147,9 +143,17 @@
     justify-content: space-between; /* Space between tab button and toggle button */
     width: 100%;
   }
-  .icon{
-    width:16px;
+
+  .icon {
+    width: 16px;
+    height: 16px;
+    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%); /* Apply filter to make the icon color #aaa */
   }
+
+  .selected-icon {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(100%); /* Apply filter to make the icon color #fff */
+  }
+
   .tab-button {
     display: flex;
     align-items: center;
@@ -160,7 +164,7 @@
     border-radius: 0.4rem; /* Subtly rounded corners */
     background-color: transparent;
     color: #aaa; /* Subtle text color */
-    font-size: 0.8rem; /* Smaller font size */
+    font-size: 0.9rem; /* Smaller font size */
     text-align: left;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
@@ -183,124 +187,122 @@
     transition: color 0.2s;
   }
 
-
-.selected-tab{
+  .selected-tab {
     outline: none;
     background-color: #444;
-    color: #fff;
+    color: #fff !important;
     border-color: #4f46e5;
     box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
   }
-/* No changes required for these styles */
-.sidebar-submenu {
-  display: flex; /* Visible only when rendered */
-  flex-direction: column;
-  gap: 0.4rem; /* Space between submenu items */
-  width: 100%; /* Match parent width */
-  padding: 0.4rem 0.2rem;
-}
 
-.sidebar-submenu-item {
-  padding: 0.4rem 0.6rem; /* Padding for a smaller, tighter button */
-  border-radius: 0.3rem;
-  background-color: transparent; /* Transparent background */
-  color: #aaa; /* Subtle text color */
-  font-size: 0.8rem; /* Smaller font size */
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-
-.sidebar-submenu-item:active {
-  background-color: #555; /* Slightly darker on active */
-}
-
-.tab-content-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0.1rem; /* Adjust padding as needed */
-  border-radius: 0.4rem; /* Match the button styles */
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.tab-content-wrapper:hover {
-  background-color: #333; /* Highlight background */
-}
-
-.tab-content-wrapper .tab-button,
-.tab-content-wrapper {
-  background: none;
-  border: none;
-  color: #aaa;
-  cursor: pointer;
-}
-
-.tab-content-wrapper:hover .tab-button,
-.tab-content-wrapper:hover .submenu-toggle {
-  color: #fff; /* Highlight text color on hover */
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Space out items */
-  height: 100%; /* Full height for flexbox alignment */
-}
-
-.sidebar-text-container {
-  flex-grow: 1; /* Fill available space */
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.settings-tab {
-  margin-top: auto;
-  order: 1;
-}
-.tab-button:active{
-  background-color: #555;
-    
-  }
-
-/* Add this at the end of the file */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    padding: 1rem;
-  }
-
-  .tab-button {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-
-  .submenu-toggle {
-    padding: 0.5rem;
+  .sidebar-submenu {
+    display: flex; /* Visible only when rendered */
+    flex-direction: column;
+    gap: 0.4rem; /* Space between submenu items */
+    width: 100%; /* Match parent width */
+    padding: 0.4rem 0.2rem;
   }
 
   .sidebar-submenu-item {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.6rem; /* Padding for a smaller, tighter button */
+    border-radius: 0.3rem;
+    background-color: transparent; /* Transparent background */
+    color: #aaa; /* Subtle text color */
+    font-size: 0.9rem; /* Smaller font size */
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
   }
 
-  .main-page {
-    padding: 1rem;
+  .sidebar-submenu-item:active {
+    background-color: #555; /* Slightly darker on active */
   }
 
-  .main-row {
+  .tab-content-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.1rem; /* Adjust padding as needed */
+    border-radius: 0.4rem; /* Match the button styles */
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .tab-content-wrapper:hover, .selected-content-wrapper {
+    background-color: #333 !important; /* Highlight background */
+  }
+
+  .tab-content-wrapper .tab-button,
+  .tab-content-wrapper {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+  }
+
+  .tab-content-wrapper:hover .tab-button,
+  .tab-content-wrapper:hover .submenu-toggle {
+    color: #fff; /* Highlight text color on hover */
+  }
+
+  .sidebar {
+    display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Space out items */
+    height: 100%; /* Full height for flexbox alignment */
   }
 
-  .time-off-page {
+  .sidebar-text-container {
+    flex-grow: 1; /* Fill available space */
+    display: flex;
     flex-direction: column;
+    gap: 0.5rem;
   }
 
-  .homePage {
-    padding: 1rem;
+  .settings-tab {
+    margin-top: auto;
+    order: 1;
   }
-}
+
+  .tab-button:active {
+    background-color: #555;
+  }
+
+  /* Add this at the end of the file */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      padding: 1rem;
+    }
+
+    .tab-button {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .submenu-toggle {
+      padding: 0.5rem;
+    }
+
+    .sidebar-submenu-item {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .main-page {
+      padding: 1rem;
+    }
+
+    .main-row {
+      flex-direction: column;
+    }
+
+    .time-off-page {
+      flex-direction: column;
+    }
+
+    .homePage {
+      padding: 1rem;
+    }
+  }
 </style>

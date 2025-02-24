@@ -27,11 +27,11 @@
     <div class="right">
         <Searchbar></Searchbar>
         <button
-            class="notif-button"
+            class="notif-button {showNotifs ? 'selected-tab' : ''}"
             onclick={() => {showNotifs = !showNotifs; notifCount = 0} }
             aria-label="Toggle Notifications"
         >
-            <i class="fa-solid fa-bell fa-xl white"></i>
+        <img src={`/bell-${showNotifs? 'solid': 'regular'}.svg`} alt="notifications icon" class="icon {showNotifs? 'selected-icon ': ''}" />
             {#if notifCount > 0}
                 <span class="notif-badge">{notifCount}</span>
             {/if}
@@ -118,6 +118,7 @@
 /* Profile pic button */
 .profile-pic-button,
 .notif-button {
+    padding: 0;
     background: none;
     border: none;
     margin-top: 2px;
@@ -127,7 +128,14 @@
     display: block;
     position: relative;
     transition: background-color 0.2s, transform 0.1s;
-    background-size: 200%;
+}
+
+.notif-button{ 
+    width: 2rem;
+    height: 2rem;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
 }
 
 /* Hover and click states for notif-button */
@@ -136,11 +144,23 @@
 }
 
 .notif-button:active {
-    transform: scale(0.95);
+    background-color: rgba(255, 255, 255, 0.2);
 }
-.notif-button{
-    width: fit-content;
+
+.selected-tab {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--highlight-color-one);
 }
+
+.icon {
+    width: 1.2rem;
+    filter: invert(60%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(90%) contrast(90%); /* Apply filter to make the icon color #aaa */
+}
+
+.selected-icon {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(180deg) brightness(100%) contrast(100%) !important; /* Apply filter to make the icon color #fff */
+}
+
 .white {
     color: #aaa;
 }

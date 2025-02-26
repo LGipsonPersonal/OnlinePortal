@@ -30,7 +30,7 @@
     );
   });
 
-  let startDate = new Date(sheetRecords[sheetRecords.length - 1].startDate);
+  let startDate = new Date(sheetRecords[0].startDate);
   let weekStart = $state(null);
   let weekEnd = $state(null);
 

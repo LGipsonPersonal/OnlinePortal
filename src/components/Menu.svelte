@@ -23,6 +23,7 @@
    * @param {string} key
    */
   function selectChoice(key) {
+    console.log(key);
     choice = key;
     MainPage.updateChoice(choice);
   }
@@ -42,7 +43,12 @@
             onclick={() => {
               if (tab.subtabs.length === 0) {
                 selectChoice(tab.key);
-              } else {
+              }
+              else if (tab.isOpener) {
+                selectChoice(tab.key);
+                toggleSubmenu(i);
+              }
+               else {
                 toggleSubmenu(i);
               }
             }}

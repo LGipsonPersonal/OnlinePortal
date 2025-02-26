@@ -181,8 +181,9 @@
     color: white;
     border-radius: 50%;
     padding: 2px 6px;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: bold;
+    border: 1px solid var(--accent-color-two);
 }
 
 .breadcrumb-item[aria-current="page"] {

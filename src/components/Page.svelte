@@ -13,11 +13,13 @@
   import Announcements from "./Announcements.svelte";
   import QuickTime from "./widgets/QuickTime.svelte";
   import EmergencyRequestOff from "./widgets/EmergencyRequestOff.svelte";
+    // @ts-ignore
   import ItSupportTicket from "./ItSupportTicket.svelte";
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
   import { tabs, requests, docs, images, profile, projectUpcoming, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
-    import ProjectsDashboard from "./ProjectsDashboard.svelte";
+  import ProjectsDashboard from "./ProjectsDashboard.svelte";
+  import Projectheader from "./Projectheader.svelte";
 
   setContext('MainPage', { updateChoice})
 
@@ -80,7 +82,7 @@ $inspect(choice)
           <!--<Carousel {images}></Carousel>-->
       </div>
     {:else if choice === tabs[1].key}
-      <TimeTable {projects} sheetRecords={[{startDate: "January 27, 2025"}]}></TimeTable>
+      <TimeTable {projects} sheetRecords={[{startDate: "Feburary 17, 2025"}]}></TimeTable>
     {:else if choice === tabs[2].key}
       <div class="time-off-page">
         <TimeOff></TimeOff>
@@ -92,15 +94,20 @@ $inspect(choice)
         <ViewDocuments></ViewDocuments>
       {:else if choice === tabs[4].key}
         WIP
-      {:else if choice === tabs[5].key}
-      <div class="time-off-page">
-        <ProjectsDashboard props={projectUpcoming}></ProjectsDashboard>
-      </div>
+        {:else if choice === tabs[5].key}
+        <div class="time-off-page">
+          <ProjectsDashboard props={projectUpcoming}></ProjectsDashboard>
+        </div>
       {:else if choice === tabs[6].key}
         <div class="time-off-page">
           <ItSupportTicket></ItSupportTicket>
         </div>
     {/if}
+    {#each tabs[5].subtabs as proj, i}
+        {#if choice === proj.key}
+          <Projectheader></Projectheader>
+        {/if}
+    {/each}
   </div>
 </div>
 

@@ -3,14 +3,15 @@ export const tabs = [
       name: "Home",
       key: '0',
       icon: 'home',
+      isOpener: false,
       subtabs: [
-
       ],
     },
     {
       name: "Time Sheet",
       key: '1',
       icon: 'calendar-alt',
+      isOpener: false,
       subtabs: [
 
       ],
@@ -18,6 +19,7 @@ export const tabs = [
     {
       name: "Request Time Off",
       key: '2',
+      isOpener: false,
       icon: 'calendar-edit',
       subtabs: [
 
@@ -27,6 +29,7 @@ export const tabs = [
       name: "Documents",
       key: '3',
       icon: 'file-alt',
+      isOpener: true,
       subtabs: [
         { name: "Upload Document", key: "3-0" },
         { name: "View Documents", key: "3-1" },
@@ -36,6 +39,7 @@ export const tabs = [
       name: "Settings",
       key: '4',
       icon: 'cog',
+      isOpener: false,
       subtabs: [
 
       ],
@@ -43,15 +47,20 @@ export const tabs = [
     {
       name: "Your Projects",
       key: '5',
+      isOpener: true,
       icon: 'project-diagram',
       subtabs: [
-
+        { name: "Project X", key: "5-0" },
+        { name: "Project Y", key: "5-1" },
+        { name: "Project Z", key: "5-2" },
+        { name: "Project R", key: "5-3" },
       ],
     },
     {
       name: "IT Helpdesk",
       key: '6',
       icon: 'headset',
+      isOpener: false,
       subtabs: [
 
       ],
@@ -60,6 +69,7 @@ export const tabs = [
       name: "Messages",
       key: '7',
       icon: 'message',
+      isOpener: false,
       subtabs: [
         { name: "Timesheet Reminder Bot", key: "7-0" },
         { name: "Fitness Challenge Bot", key: "7-1" },
@@ -340,7 +350,7 @@ export const projectUpcoming = [
     description: "Update UI/UX for better user experience.",
     timestamp: "Feb 18, 2025",
     date: "Feb 25, 2025",
-    project: "Frontend Overhaul"
+    project: "Project X"
   },
   {
     id: 2,
@@ -349,7 +359,7 @@ export const projectUpcoming = [
     description: "Move database to cloud infrastructure.",
     timestamp: "Feb 16, 2025",
     date: "Mar 5, 2025",
-    project: "Backend Upgrade"
+    project: "Project Y"
   },
   {
     id: 3,
@@ -358,7 +368,7 @@ export const projectUpcoming = [
     description: "Review and patch vulnerabilities.",
     timestamp: "Feb 16, 2025",
     date: "Mar 1, 2025",
-    project: "Cybersecurity"
+    project: "Project Z"
   },
   {
     id: 4,
@@ -367,7 +377,7 @@ export const projectUpcoming = [
     description: "Build new REST API endpoints.",
     timestamp: "Feb 15, 2025",
     date: "Feb 14, 2025",
-    project: "Microservices Expansion"
+    project: "Project R"
   },
   {
     id: 5,
@@ -376,7 +386,7 @@ export const projectUpcoming = [
     description: "Launch new product advertising campaign.",
     timestamp: "Feb 14, 2025",
     date: "Mar 10, 2025",
-    project: "Brand Awareness"
+    project: "Project X"
   }
 ];
 

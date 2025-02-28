@@ -1,6 +1,7 @@
 <script>
   const DAYS_IN_TEN_DAYS = 10;
   import { tick } from 'svelte';
+  import { setContext } from 'svelte';
   import Popup from './widgets/Popup.svelte';
  
   let weekDays = $state([]);
@@ -11,8 +12,8 @@
   let tableData = $state([]);
   let noteText = $state('');
   let takingNote = $state(false);
-  
-  $inspect(noteText);
+
+  setContext('TimeSheet', { addHoursToTable });
 
   // Form an Array of the Time data totals
   let columnTotals = $derived.by(() => {
@@ -95,6 +96,25 @@
   }
   function AddNote(){
     takingNote = true;
+  }
+
+  function addHoursToTable(date, hours, projectName) {
+    const dateObj = new Date(date);
+    const formattedDate = formatDate(dateObj);
+
+    const dayIndex = weekDays.findIndex(day => day === formattedDate);
+    if (dayIndex === -1) {
+      console.error('Date not found in the current week range');
+      return;
+    }
+
+    const projectIndex = activeProjects.findIndex(project => project.name === projectName);
+    if (projectIndex === -1) {
+      console.error('Project not found');
+      return;
+    }
+
+    tableData[projectIndex][dayIndex] = (parseFloat(tableData[projectIndex][dayIndex]) || 0) + hours;
   }
 
   updateWeekRange();

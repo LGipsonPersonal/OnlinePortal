@@ -72,7 +72,7 @@ export const tabs = [
       isOpener: false,
       subtabs: [
         { name: "Timesheet Reminder Bot", key: "7-0" },
-        { name: "Fitness Challenge Bot", key: "7-1" },
+        { name: "Fitness Challenge Group", key: "7-1" },
         { name: "SEG Group Message", key: "7-2" },
         { name: "Timothy (HR)", key: "7-3" },
         { name: "Connor", key: "7-4" },

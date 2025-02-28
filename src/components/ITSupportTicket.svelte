@@ -7,7 +7,8 @@
     { value: "hardware", label: "Hardware" },
     { value: "software", label: "Software" },
     { value: "network", label: "Network" },
-    { value: "access", label: "Account & Access" }
+    { value: "access", label: "Account & Access" },
+    { value: "equipment", label: "Equipment Request" }
   ]);
 
   let dropdownOpen = $state(false);

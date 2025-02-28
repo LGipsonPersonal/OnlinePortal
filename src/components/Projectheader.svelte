@@ -1,14 +1,14 @@
 <script>
-   let projectTitle = "Current Project";
+   let { projectTitle, selectedTab  = $bindable()} = $props();
   
     let tabs = [
-      { name: "Resources", key: "resources" },
       { name: "Timeline", key: "timeline" },
+      { name: "Resources", key: "resources" },
       { name: "People of Contact", key: "people" },
       { name: "Discussions", key: "discussions" }
     ];
-  
-    let selectedTab = $state(tabs[0].key);
+    selectedTab = tabs[0].name
+    
   
     function selectTab(key) {
       selectedTab = key;
@@ -20,8 +20,8 @@
     <div class="tabs">
       {#each tabs as tab}
         <button
-          class="tab-button {selectedTab === tab.key ? 'selected-tab' : ''}"
-          onclick={() => selectTab(tab.key)}
+          class="tab-button {selectedTab === tab.name ? 'selected-tab' : ''}"
+          onclick={() => selectTab(tab.name)}
         >
           {tab.name}
         </button>
@@ -38,10 +38,10 @@
       padding: 1rem;
       border-bottom: 1px solid var(--border-color);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      width: 100%;
     }
   
     .project-title {
+      margin-top: 0.3rem;
       font-size: 1.5rem;
       font-weight: 700;
       color: var(--text-color);

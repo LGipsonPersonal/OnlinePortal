@@ -20,8 +20,9 @@
   import { tabs, requests, docs, images, profile, projectUpcoming, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
   import ProjectsDashboard from "./ProjectsDashboard.svelte";
   import Projectheader from "./Projectheader.svelte";
+  import Conversation from "./Conversation.svelte";
 
-  setContext('MainPage', { updateChoice})
+  setContext('MainPage', {updateChoice})
 
   /**
      * @param {string} message
@@ -52,6 +53,9 @@
     
     // Ensure the tab and its subtabs exist
     if (selectedTab && selectedTab.subtabs?.[subtabIndex]) {
+      if(tabKey === '5'){
+        return [selectedTab, selectedTab.subtabs[+subtabIndex], {name: projSubChoice}];
+      }
       return [selectedTab, selectedTab.subtabs[+subtabIndex]];
     }
     
@@ -59,7 +63,9 @@
     return [];
   }
 });
-$inspect(choice)
+let projSubChoice = $state("Timeline");
+
+$inspect(projSubChoice)
 </script>
 
 
@@ -102,10 +108,12 @@ $inspect(choice)
         <div class="time-off-page">
           <ItSupportTicket></ItSupportTicket>
         </div>
+      {:else if choice === tabs[7].subtabs[0].key}
+        <Conversation></Conversation>
     {/if}
     {#each tabs[5].subtabs as proj, i}
         {#if choice === proj.key}
-          <Projectheader></Projectheader>
+          <Projectheader projectTitle={proj.name} bind:selectedTab={projSubChoice}></Projectheader>
         {/if}
     {/each}
   </div>
@@ -125,6 +133,7 @@ $inspect(choice)
     width: 100%;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid var(--border-color);
   }
   .main-row {
     min-height: 0px;

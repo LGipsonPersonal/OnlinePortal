@@ -1,10 +1,18 @@
 <script>
     let totalHoursWorkedThisDay = $state(0)
     let inputHours = $state(0)
+    import { getContext } from 'svelte'
+
+    let TimeSheet = getContext('TimeSheet')
+    console.log(TimeSheet)
+    let currDay = new Date()
+    let proj = $state('')
+    $inspect(proj)
 
     function addHours(event) {
         event.preventDefault()
         totalHoursWorkedThisDay+=inputHours
+        TimeSheet.addHoursToTable(currDay, inputHours, proj)
     }
 </script>
 
@@ -22,11 +30,11 @@
     <form id="hoursForm">
         <div class="form-group">
             <label for="project">Project Name</label>
-            <select id="project" name="project" required>
+            <select id="project" name="project" bind:value={proj} required>
                 <option value="" disabled selected>Select a project</option>
-                <option value="project1">Project 1</option>
-                <option value="project2">Project 2</option>
-                <option value="project3">Project 3</option>
+                <option value="project 1">Project 1</option>
+                <option value="project 2">Project 2</option>
+                <option value="project 3">Project 3</option>
             </select>
         </div>
         <div class="form-group">

@@ -11,7 +11,7 @@
   --highlight-color-one: #4f46e5; /* Brighter purple */
   --highlight-color-two: #483d8b; /* Darker purple */
   --alt-highlight: #20b2aa; /* Brighter teal */
-  --text-color: #f0f0f0; /* Light gray for text */
+  --text-color: #e0e0e0; /* Light gray for text */
   --text-color-muted: #c0c0c0; /* Muted gray for less important text */
   --border-color: #4a4a4a; /* Border color */
 }

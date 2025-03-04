@@ -5,6 +5,8 @@
 
     // Reactive state for feedback
     let feedbackMessage = $state("");
+    
+    let inputHours = $state(8)
 
     function submitRequest(event) {
         event.preventDefault(); // Prevent form submission from reloading the page
@@ -31,37 +33,41 @@
     <h2 class="form-title">Request Today Off</h2>
 
     <!-- Display available days off -->
-     <div class="scroll-wrap">
-    <div class="days-summary">
-        <strong>Available Days Off:</strong>
-        <br>
-        <span>{availableDaysOff} day(s)</span>
-    </div>
-
-    <form onsubmit={submitRequest}>
-        <div class="form-group">
-            <label for="reason">Reason for Day Off</label>
-            <textarea
-                id="reason"
-                name="reason"
-                rows="4"
-                bind:value={dayOffReason}
-                required
-                placeholder="Provide a reason for your request (e.g., sick, family emergency)"></textarea>
+    <div class="scroll-wrap">
+        <div class="days-summary">
+            <strong>Available Days Off:</strong>
+            <br>
+            <span>{availableDaysOff} day(s)</span>
         </div>
 
-        {#if errorMessage}
-            <p class="error-message">{errorMessage}</p>
+        <form onsubmit={submitRequest}>
+            <div class="form-group">
+                <label for="hours">Hours off (1-8)</label>
+                <input type="number" bind:value={inputHours} id="hours" name="hours" min="1" max="8" required>
+            </div>
+            <div class="form-group">
+                <label for="reason">Reason for Day Off</label>
+                <textarea
+                    id="reason"
+                    name="reason"
+                    rows="4"
+                    bind:value={dayOffReason}
+                    required
+                    placeholder="Provide a reason for your request (e.g., sick, family emergency)"></textarea>
+            </div>
+
+            {#if errorMessage}
+                <p class="error-message">{errorMessage}</p>
+            {/if}
+
+            <button type="submit" class="submit-button">Submit Request</button>
+        </form>
+
+        <!-- Display feedback message -->
+        {#if feedbackMessage}
+            <div class="feedback-message">{feedbackMessage}</div>
         {/if}
-
-        <button type="submit" class="submit-button">Submit Request</button>
-    </form>
-
-    <!-- Display feedback message -->
-    {#if feedbackMessage}
-        <div class="feedback-message">{feedbackMessage}</div>
-    {/if}
-</div>
+    </div>
 </div>
 
 <style>
@@ -72,113 +78,155 @@
     box-sizing: border-box;
 }
 
+/* Parent container */
 .day-off-request {
     flex-grow: 1;
     flex-shrink: 1;
-    background: var(--accent-color-two, #2a2a2a); /* Fallback dark gray */
+    background: var(--accent-color-two, #1e1e1e); /* Darker background */
     padding: 1rem;
-    border-radius: 12px;
-    border: 1px solid var(--border-color, #4a4a4a);
-    color: var(--text-color, #f0f0f0);
+    border-radius: 6px;
+    border: 1px solid var(--border-color, #333333); /* Darker border */
+    color: var(--text-color, #e0e0e0); /* Light gray text */
+    box-sizing: border-box;
     width: 100%;
     max-width: 320px;
     margin: 0 auto;
     text-align: center;
     max-height: 431px; /* Set explicit height */
+    box-shadow: 0 1px 3px rgba(27, 31, 35, 0.12), 0 8px 24px rgba(27, 31, 35, 0.12); /* Subtle shadow */
 }
 
+/* Title styling */
 .form-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 600;
     margin-top: 0.8rem;
-    color: var(--text-color, #f0f0f0);
     text-align: center;
-    border-bottom: 2px solid var(--highlight-color-one, #6a5acd);
-    padding-bottom: 0.9rem;
+    color: var(--text-color, #e0e0e0); /* Light gray text */
+    border-bottom: 1px solid var(--border-color, #333333); /* Darker border */
+    margin-bottom: 0.9rem; /* Reduced margin */
+    padding-bottom: 0.9rem; /* Reduced padding */
 }
 
+/* Days summary styling */
 .days-summary {
     font-size: 1rem;
-    margin-bottom: 1rem;
-    padding: 0.8rem;
-    background: #4a4a4a;
-    color: var(--text-color, #f0f0f0);
-    border-radius: 8px;
+    margin-bottom: 0.8rem;
+    padding: 0.4rem;
+    background: var(--interact-highlight-color, #2a2a2a); /* Darker background */
+    color: var(--text-color, #e0e0e0); /* Light gray text */
+    border-radius: 6px;
+    border: 1px solid var(--border-color, #333333); /* Darker border */
 }
 
+/* Form group styling */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Labels */
 label {
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    color: var(--text-color-muted, #c0c0c0);
-    margin-bottom: 0.75rem;
+    color: var(--text-color-muted, #888888); /* Muted gray text */
+    margin-bottom: 0.5rem;
     text-align: left;
 }
 
+/* Textarea */
 textarea {
     width: 100%;
-    padding: 1rem;
-    font-size: 1.2rem;
-    border: 1px solid var(--input-border, #555555);
-    border-radius: 8px;
-    color: var(--text-color, #f0f0f0);
-    margin-bottom: 1.7rem;
-    background-color: var(--input-bg, #333333);
+    padding: 0.7rem;
+    font-size: 1rem;
+    border: 1px solid var(--interact-border, #444444); /* Darker input border */
+    border-radius: 6px;
+    color: var(--text-color, #e0e0e0); /* Light gray text */
+    background-color: var(--interact-bg, #1e1e1e); /* Darker input background */
     transition: border-color 0.3s, box-shadow 0.3s;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: inset 0 1px 3px rgba(27, 31, 35, 0.12); /* Subtle shadow */
     resize: none;
 }
 
+/* Focus state for textarea */
 textarea:focus {
     outline: none;
-    border-color: var(--input-focus-border, #6a5acd);
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
+    border-color: var(--interact-focus-border, #6a5acd); /* Purple focus border */
+    box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3); /* Subtle purple shadow */
 }
 
+/* Input */
+input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--interact-border, #444444); /* Darker input border */
+    border-radius: 6px;
+    color: var(--text-color, #e0e0e0); /* Light gray text */
+    background-color: var(--interact-bg, #1e1e1e); /* Darker input background */
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: inset 0 1px 3px rgba(27, 31, 35, 0.12); /* Subtle shadow */
+    max-width: 320px;
+}
+
+/* Focus state for input */
+input:focus {
+    outline: none;
+    border-color: var(--interact-focus-border, #6a5acd); /* Purple focus border */
+    box-shadow: 0 0 0 2px rgba(106, 90, 205, 0.3); /* Subtle purple shadow */
+}
+
+/* Submit button */
 .submit-button {
     width: 100%;
-    padding: 1rem;
-    font-size: 1.125rem;
+    padding: 0.5rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #ffffff;
-    background-color: var(--highlight-color-one, #6a5acd);
+    background-color: var(--highlight-color-one, #4f46e5); /* Purple background */
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }
 
+/* Submit button hover effect */
 .submit-button:hover {
-    background-color: var(--highlight-color-two, #483d8b);
+    background-color: var(--highlight-color-two, #483d8b); /* Darker purple on hover */
     transform: scale(1.02);
 }
 
+/* Feedback message styling */
 .feedback-message {
     margin-top: 1.5rem;
     padding: 1rem;
-    background: #388e3c; /* Darker green for better contrast */
+    background: var(--highlight-color-one, #4f46e5); /* Purple background */
     color: #ffffff;
-    border-radius: 8px;
+    border-radius: 6px;
     font-size: 1rem;
 }
 
+/* Error message styling */
 .error-message {
     margin-top: 0.5rem;
     padding: 0.75rem;
-    background: #d32f2f; /* Darker red for better contrast */
+    background: #d32f2f; /* Red background */
     color: #ffffff;
-    border-radius: 8px;
+    border-radius: 6px;
     font-size: 1rem;
 }
+
+/* Scroll wrap */
 .scroll-wrap {
     height: calc(100% - 4.1rem);
     padding-left: 0.4rem;
     padding-right: 0.4rem;
 }
+
+/* Responsive styling */
 @media (max-width: 1340px) {
-.day-off-request {
-    display: none;
+    .day-off-request {
+        display: none;
     }
 }
 </style>

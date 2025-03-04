@@ -1,15 +1,15 @@
 <script>
   const DAYS_IN_TEN_DAYS = 10;
-  import { tick } from 'svelte';
   import { setContext } from 'svelte';
   import Popup from './widgets/Popup.svelte';
+  // @ts-ignore
+  import { todayAddedHours } from '$assets/store.svelte.js';
  
   let weekDays = $state([]);
   let { projects, sheetRecords } = $props();
 
-  let activeProjects = $state([]);
-
   let tableData = $state([]);
+  console.log($state.snapshot(projects))
   let noteText = $state('');
   let takingNote = $state(false);
 
@@ -18,7 +18,7 @@
   // Form an Array of the Time data totals
   let columnTotals = $derived.by(() => {
     return Array.from({ length: DAYS_IN_TEN_DAYS }, (_, colIndex) =>
-      tableData.reduce((sum, row) => sum + (parseFloat(row[colIndex]) || 0), 0)
+      tableData.reduce((sum, row) => sum + (parseFloat(row.entries[colIndex]) || 0), 0)
     );
   });
 
@@ -27,7 +27,7 @@
 
   let rowTotals = $derived.by(() => {
     return tableData.map(row =>
-      row.reduce((sum, value) => sum + (parseFloat(value) || 0), 0)
+      row.entries.reduce((sum, value) => sum + (parseFloat(value) || 0), 0)
     );
   });
 
@@ -80,15 +80,19 @@
   }
 
   function addRow() {
-    activeProjects.push({
-      name: '',
-      tasks: [""]
+    tableData.push({
+      projectName: '',
+      selectedTask: '',
+      entries: Array.from({ length: DAYS_IN_TEN_DAYS }, () => "")
     });
-    tick().then(() => tableData.push(Array.from({ length: DAYS_IN_TEN_DAYS }, () => "")));
   }
 
   function chooseProject(event, rowIndex) {
-    activeProjects[rowIndex] = projects[event.target.value];
+    tableData[rowIndex].projectName = projects[event.target.value].name;
+  }
+
+  function chooseTask(event, rowIndex) {
+    tableData[rowIndex].selectedTask = event.target.value;
   }
 
   function copyLastWeek(){
@@ -98,26 +102,34 @@
     takingNote = true;
   }
 
-  function addHoursToTable(date, hours, projectName) {
-    const dateObj = new Date(date);
-    const formattedDate = formatDate(dateObj);
+  function addHoursToTable(date, hours, projectName, task) {
+    console.log('Adding hours to table:', date, hours, projectName);
 
-    const dayIndex = weekDays.findIndex(day => day === formattedDate);
+    const dayIndex = weekDays.findIndex(day => day === date);
     if (dayIndex === -1) {
       console.error('Date not found in the current week range');
       return;
     }
 
-    const projectIndex = activeProjects.findIndex(project => project.name === projectName);
+    let projectIndex = tableData.findIndex(row => row.projectName === projectName);
     if (projectIndex === -1) {
-      console.error('Project not found');
-      return;
+      tableData.push({
+        projectName: projectName,
+        selectedTask: task,
+        entries: Array.from({ length: DAYS_IN_TEN_DAYS }, () => "")
+      });
+      projectIndex = tableData.length - 1;
     }
 
-    tableData[projectIndex][dayIndex] = (parseFloat(tableData[projectIndex][dayIndex]) || 0) + hours;
+    tableData[projectIndex].entries[dayIndex] = (parseFloat(tableData[projectIndex].entries[dayIndex]) || 0) + hours;
   }
 
   updateWeekRange();
+
+  for (let i = 0; i < todayAddedHours.length; ++i) {
+    addHoursToTable(todayAddedHours[i].date, todayAddedHours[i].hours, todayAddedHours[i].project, todayAddedHours[i].task);
+  }
+  console.log($state.snapshot(tableData))
 </script>
 
 {#snippet noteBox()}
@@ -131,7 +143,7 @@
     padding: 0.5rem;
     font-size: 1rem;
     color: #d1d1d1;
-    background-color: var(--input-bg, #2e2e2e); /* Default dark background for the input */
+    background-color: #2e2e2e; /* Default dark background for the input */
     border: 1px solid #3e3e3e; /* Subtle border for the input */
     border-radius: 8px;
     outline: none;
@@ -140,9 +152,9 @@
 }
 
 .minimal-textbox:focus {
-    border-color: var(--accent-color, #4f46e5); /* Accent color on focus*/
+    border-color: #4f46e5; /* Accent color on focus*/
     box-shadow: 0 0 5px rgba(86, 182, 194, 0.5); /* Subtle glow on focus */
-    background-color: var(--input-focus-bg, #3e3e3e); /* Slightly lighter background on focus */
+    background-color: #3e3e3e; /* Slightly lighter background on focus */
 }
   </style>
 {/snippet}
@@ -181,28 +193,28 @@
         </tr>
       </thead>
       <tbody>
-        {#each activeProjects as project, rowIndex}
+        {#each tableData as row, rowIndex}
           <tr>
             <td>
-              <select onchange={(event) => chooseProject(event, rowIndex)}>
+              <select bind:value={row.projectName} >
                 <option value="" disabled selected>Select a Project</option>
                 {#each projects as projectSelection, i}
-                  <option value={i}>{projectSelection.name}</option>
+                  <option>{projectSelection.name}</option>
                 {/each}
               </select>
             </td>
             <td>
-              <select disabled={project.name === ''}>
+              <select bind:value={row.selectedTask} disabled={row.projectName === ''}>
                 <option value="" disabled selected>Select a task</option>
-                {#each project.tasks as task}
+                {#each projects.find(p => p.name === row.projectName)?.tasks || [] as task}
                   <option>{task}</option>
                 {/each}
               </select>
             </td>
-            {#each tableData[rowIndex] as _, colIndex}
+            {#each row.entries as entry, colIndex}
               <td>
                 <input
-                  bind:value={tableData[rowIndex][colIndex]}
+                  bind:value={row.entries[colIndex]}
                   type="text"
                   placeholder="0"
                   min="0"
@@ -236,33 +248,16 @@
 
 <style>
 /* General Styles */
-:root {
-  --button-hover-bg: var(--highlight-color-one);
-  --button-active-bg: var(--highlight-color-two);
-  --input-bg: var(--input-bg);
-  --input-border: var(--input-border);
-  --input-focus-border: var(--input-focus-border);
-}
-
-/* Wrapper for Table to Enable Horizontal Scrolling */
-.table-wrapper {
-  overflow-x: auto;
-  width: 100%;
-}
-.left-side-buttons{
-  display: flex;
-  gap: 1rem;
-}
-/* Container */
 .project-table-container {
   background: var(--accent-color-two);
   padding: 1.8rem 2rem 0.4rem;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #333333; /* Darker border */
   margin: 2rem auto;
-  color: var(--text-color);
+  color: #e0e0e0; /* Light text */
   width: 95%;
   box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(27, 31, 35, 0.12), 0 8px 24px rgba(27, 31, 35, 0.12); /* Subtle shadow */
 }
 
 /* Title */
@@ -271,8 +266,8 @@
   font-weight: 700;
   margin-bottom: 1rem;
   text-align: center;
-  color: var(--text-color);
-  border-bottom: 2px solid var(--highlight-color-one);
+  color: #e0e0e0; /* Light text */
+  border-bottom: 2px solid #333333; /* Darker border */
   padding-bottom: 1rem;
 }
 
@@ -283,33 +278,31 @@
   gap: 1rem;
   margin-bottom: 1rem;
 }
+.left-side-buttons{
+  display: flex;
+  gap: 1rem;
+}
 
 .calendar-input {
   padding: 0.5rem 1rem;
-  border: 1px solid #3a3a3a;
+  border: 1px solid #444444; /* Darker border */
   border-radius: 6px;
-  background-color:#1e1e1e;
-  color: #e0e0e0;
+  background-color: #2e2e2e; /* Dark background */
+  color: #e0e0e0; /* Light text */
   font-size: 0.875rem;
   text-align: center;
   outline: none;
   cursor: pointer;
   transition: 0.2s;
 }
-/*
---button-hover-bg: #4f46e5;
-  --button-active-bg: #2a259a;
-  --input-bg: #1e1e1e;
-  --input-border: #3a3a3a;
-  --input-focus-border: #4f46e5;
-*/
+
 .calendar-input:hover {
-  background-color: #272727;
+  background-color: #3e3e3e;
 }
 
 .calendar-input:focus {
-  border-color: var(--input-focus-border);
-  box-shadow: 0 0 0 3px rgba(90, 84, 229, 0.3);
+  border-color: #4f46e5; /* Purple focus border */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3); /* Subtle purple shadow */
 }
 
 .calendar-input::-webkit-calendar-picker-indicator {
@@ -323,8 +316,8 @@ button, .arrow-button, .submit-button, .left-button {
   font-size: 0.875rem; /* Consistent font size */
   border: none;
   border-radius: 6px;
-  background-color: #272727;
-  color: var(--text-color);
+  background-color: #4f46e5; /* Purple background */
+  color: #ffffff;
   font-weight: 600;
   cursor: pointer;
   display: flex;
@@ -337,12 +330,12 @@ button, .arrow-button, .submit-button, .left-button {
   text-align: center;
 }
 button:hover, .arrow-button:hover, .submit-button:hover, .left-button:hover {
-  background-color: var(--button-hover-bg);
+  background-color: #6a5acd; /* Lighter purple on hover */
   transform: translateY(-2px);
 }
 
 button:active, .arrow-button:active, .submit-button:active, .left-button:active {
-  background-color: var(--button-active-bg);
+  background-color: #483d8b; /* Darker purple on active */
   transform: translateY(0);
 }
 /* Adjust Layout for Narrow Screens */
@@ -386,56 +379,59 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
   border-collapse: collapse;
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
-  background-color: var(--accent-color-two);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  background-color: #1e1e1e; /* Dark background */
+  box-shadow: 0 1px 3px rgba(27, 31, 35, 0.12), 0 8px 24px rgba(27, 31, 35, 0.12); /* Subtle shadow */
 }
-
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
 .project-table th {
-  background-color: var(--accent-color-one);
-  color: var(--text-color);
+  background-color: #2e2e2e; /* Darker background */
+  color: #e0e0e0; /* Light text */
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   padding: 0.5rem; /* Reduced padding */
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #444444; /* Darker border */
 }
 
 .project-table td {
   padding: 0.5rem; /* Reduced padding */
   text-align: center;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
+  color: #e0e0e0; /* Light text */
+  border: 1px solid #444444; /* Darker border */
 }
 
 /* Inputs in Table */
 .project-table input {
   width: 2rem; /* Reduced width */
   padding: 0.25rem; /* Reduced padding */
-  border: 1px solid var(--input-border);
+  border: 1px solid #444444; /* Darker border */
   border-radius: 6px;
   font-size: 0.75rem; /* Reduced font size */
   text-align: center;
-  background-color: var(--input-bg);
-  color: var(--text-color);
+  background-color: #2e2e2e; /* Dark background */
+  color: #e0e0e0; /* Light text */
   outline: none;
   transition: 0.2s;
 }
 
 .project-table input:focus {
-  border-color: var(--input-focus-border);
-  box-shadow: 0 0 0 3px rgba(90, 84, 229, 0.3);
+  border-color: #4f46e5; /* Purple focus border */
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3); /* Subtle purple shadow */
 }
 
 /* Totals Row */
 .project-table .total-row td {
   font-weight: 600;
-  background-color: var(--accent-color-one);
-  color: var(--text-color);
+  background-color: #2e2e2e; /* Darker background */
+  color: #e0e0e0; /* Light text */
 }
 
 /* Row Hover */
 .project-table tbody tr:hover {
-  background-color: #333333;
+  background-color: #333333; /* Slightly lighter background on hover */
   transition: background-color 0.3s ease;
 }
 

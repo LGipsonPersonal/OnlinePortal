@@ -1,3 +1,5 @@
+export const todayAddedHours = [];
+
 export const tabs = [
     {
       name: "Home",

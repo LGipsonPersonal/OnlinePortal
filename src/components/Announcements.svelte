@@ -36,32 +36,32 @@
         }
         .post-header {
             margin-bottom: 1.5rem;
-            border-bottom: 2px solid #4f46e5;
+            border-bottom: 1px solid #444;
             padding-bottom: 0.5rem;
         }
 
         .post-title {
             margin: 0;
-            font-size: 2rem;
-            color: #fff;
+            font-size: 1.5rem;
+            color: #e0e0e0;
         }
 
         .post-meta {
             margin-top: 0.5rem;
             font-size: 0.9rem;
-            color: #bbb;
+            color: #888;
         }
 
         .post-content p {
             margin: 1rem 0;
-            color: #ccc;
+            color: #e0e0e0;
         }
 
         .post-content blockquote {
             margin: 1rem 0;
             padding-left: 1rem;
             border-left: 4px solid #555;
-            color: #aaa;
+            color: #888;
             font-style: italic;
         }
 
@@ -108,89 +108,82 @@
         flex: 1 1 100%;
         background: var(--accent-color-two);
         padding: 1rem;
-        border-radius: 12px;
-        border: 1px solid var(--border-color);
-        color: var(--text-color);
+        border-radius: 6px;
+        border: 1px solid #444;
+        color: #e0e0e0;
     }
     .scroll-wrap {
         padding-right: 1rem;
         padding-left: 1rem;
         height: calc(100% - 4.5rem);
+        overflow-y: auto;
     }
     .board-title {
-        font-size: 1.5rem;
-        font-weight: 700;
+        font-size: 1.25rem;
+        font-weight: 600;
         margin-bottom: 1rem;
         margin-top: 0.8rem;
         text-align: center;
-        background: var(--accent-color-two);
-        width: 96%;
-        color: var(--text-color);
-        border-bottom: 2px solid var(--highlight-color-one);
+        color: #e0e0e0;
+        border-bottom: 1px solid #444;
         padding-bottom: 0.8rem;
-        margin-left: auto;
-        margin-right: auto;
-        max-height: 2rem;
     }
 
     .announcement {
         display: flex;
         align-items: center;
         padding: 1rem;
-        background-color: #2a2a2a;
-        border-radius: 8px;
-        border: 1px solid var(--interact-highlight-color);
+        background-color: #2e2e2e;
+        border-radius: 6px;
+        border: 1px solid #444;
         margin-bottom: 0.8rem;
-        transition:
-            background-color 0.3s,
-            transform 0.2s;
+        transition: background-color 0.3s, transform 0.2s;
         cursor: pointer;
-            }
+    }
 
     .announcement:hover {
-        background-color: var(--interact-highlight-color);
+        background-color: #3a3a3a;
         transform: scale(1.02);
     }
 
     .avatar-container {
         margin-right: 1rem;
-            }
+    }
 
     .avatar {
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         overflow: hidden;
-        border: 2px solid #444;
+        border: 1px solid #444;
     }
 
     .avatar img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border: 1px solid var(--border-color);
     }
 
     .announcement-content {
         flex: 1;
-        color: var(--text-color);
+        color: #e0e0e0;
     }
 
     .title {
         font-size: 1rem;
         font-weight: 600;
         margin: 0 0 0.5rem;
-        color: var(--text-color);
+        color: #e0e0e0;
     }
 
     .description {
-        font-size: 0.9rem;
+        font-size: 0.875rem;
         margin: 0 0 0.5rem;
-        color: var(--text-color-muted);
+        color: var(--text-color-muted, #c0c0c0);
     }
 
     .timestamp {
-        font-size: 0.8rem;
-        color: var(--text-color-muted);
+        font-size: 0.75rem;
+        color: #888;
     }
 </style>

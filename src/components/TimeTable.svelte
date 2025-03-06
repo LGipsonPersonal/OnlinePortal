@@ -376,7 +376,8 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
 /* Table */
 .project-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: seperate;
+  border-spacing: 0;
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
   background-color: #1e1e1e; /* Dark background */
@@ -393,7 +394,7 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
   text-transform: uppercase;
   font-size: 0.75rem;
   padding: 0.5rem; /* Reduced padding */
-  border-bottom: 1px solid #444444; /* Darker border */
+  border: 1px solid #444444; /* Darker border */
 }
 
 .project-table td {

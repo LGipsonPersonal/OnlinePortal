@@ -5,7 +5,6 @@ export const tabs = [
       name: "Home",
       key: '0',
       icon: 'home',
-      isOpener: false,
       subtabs: [
       ],
     },
@@ -13,7 +12,6 @@ export const tabs = [
       name: "Time Sheet",
       key: '1',
       icon: 'calendar-alt',
-      isOpener: false,
       subtabs: [
 
       ],
@@ -21,7 +19,6 @@ export const tabs = [
     {
       name: "Request Time Off",
       key: '2',
-      isOpener: false,
       icon: 'calendar-edit',
       subtabs: [
 
@@ -31,7 +28,6 @@ export const tabs = [
       name: "Documents",
       key: '3',
       icon: 'file-alt',
-      isOpener: true,
       subtabs: [
         { name: "Upload Document", key: "3-0" },
         { name: "View Documents", key: "3-1" },
@@ -41,7 +37,7 @@ export const tabs = [
       name: "Settings",
       key: '4',
       icon: 'cog',
-      isOpener: false,
+
       subtabs: [
 
       ],
@@ -49,20 +45,19 @@ export const tabs = [
     {
       name: "Your Projects",
       key: '5',
-      isOpener: true,
       icon: 'project-diagram',
       subtabs: [
-        { name: "Project X", key: "5-0" },
-        { name: "Project Y", key: "5-1" },
-        { name: "Project Z", key: "5-2" },
-        { name: "Project R", key: "5-3" },
+        { name: "Project Dashboard", key: "5-0" },
+        { name: "Project X", key: "5-1" },
+        { name: "Project Y", key: "5-2" },
+        { name: "Project Z", key: "5-3" },
+        { name: "Project R", key: "5-4" },
       ],
     },
     {
       name: "IT Helpdesk",
       key: '6',
       icon: 'headset',
-      isOpener: false,
       subtabs: [
 
       ],
@@ -71,7 +66,6 @@ export const tabs = [
       name: "Messages",
       key: '7',
       icon: 'message',
-      isOpener: false,
       subtabs: [
         { name: "Timesheet Reminder Bot", key: "7-0" },
         { name: "Fitness Challenge Group", key: "7-1" },
@@ -163,7 +157,7 @@ export const tabs = [
     },
     {
       name: 'Leave', 
-      tasks:["PTO", "Holdiay", "Unpaid"]
+      tasks:[ "Holiday", "Vacation", "Unpaid", "Sick"]
     } 
   ]
   

@@ -100,7 +100,7 @@ $inspect(projSubChoice)
         <ViewDocuments></ViewDocuments>
       {:else if choice === tabs[4].key}
         WIP
-        {:else if choice === tabs[5].key}
+        {:else if choice === tabs[5].subtabs[0].key}
         <div class="time-off-page">
           <ProjectsDashboard props={projectUpcoming}></ProjectsDashboard>
         </div>
@@ -111,7 +111,7 @@ $inspect(projSubChoice)
       {:else if choice === tabs[7].subtabs[0].key}
         <Conversation></Conversation>
     {/if}
-    {#each tabs[5].subtabs as proj, i}
+    {#each tabs[5].subtabs.slice(1) as proj, i}
         {#if choice === proj.key}
           <Projectheader projectTitle={proj.name} bind:selectedTab={projSubChoice}></Projectheader>
         {/if}

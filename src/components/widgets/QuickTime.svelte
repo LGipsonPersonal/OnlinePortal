@@ -4,14 +4,20 @@
     import { getContext } from 'svelte'
     // @ts-ignore
     import { todayAddedHours } from '$assets/store.svelte.js';
+    import CustomAlert from './Alert.svelte';
+
+    let showAlert = $state(false);
 
     let currDay = new Date("February 26, 2025")
     let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
-    let proj = $state('')
-    let task = $state('')
+    let proj = $state('');
+    let task = $state('');
+    let alertMessage = $state("");
 
     function addHours(event) {
         event.preventDefault()
+        alertMessage = `You have added ${inputHours} hours to ${proj} for ${task} on ${currDayString}`
+        showAlert = true;
         totalHoursWorkedThisDay+=inputHours
         todayAddedHours.push({date: currDayString, hours: inputHours, project: proj, task})
         console.log(todayAddedHours)
@@ -19,6 +25,9 @@
 </script>
 
 <div class="work-hours-tracker box-shadow">
+    {#if showAlert}
+        <CustomAlert bind:visible={showAlert} message={alertMessage} />
+    {/if}
     <h2 class="form-title">Add Today's Hours</h2>
 
     <!-- Display total hours worked this week -->

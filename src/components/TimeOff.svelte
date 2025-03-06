@@ -1,11 +1,40 @@
 <script>
-    import Tooltip from "./widgets/Tooltip.svelte";
+    import { todayAddedHours } from '$assets/store.svelte.js';
+    import CustomAlert from './widgets/Alert.svelte';
+
+    let showAlert = $state(false);
+    let alertMessage = $state("");
+    let type = $state("");
+    let inputHours = $state(0);
+    $inspect(type)
+
+    let currDay = new Date("February 26, 2025")
+    let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    
+    function submitRequest(event) {
+        event.preventDefault();
+
+        alertMessage = `You have used type ${type} to request ${inputHours} hours off on February 26, 2025.`;
+        showAlert = true;
+
+        todayAddedHours.push({
+            date: currDayString,
+            hours: inputHours,
+            project: "Leave",
+            task: type
+        });
+
+        console.log(todayAddedHours);
+    }
 </script>
 
 <div class="request-time-off">
+    {#if showAlert}
+        <CustomAlert bind:visible={showAlert} message={alertMessage} />
+    {/if}
     <h2 class="form-title">Request Time Off</h2>
     <div class="scroll-wrap">
-    <form>
+        <form onsubmit={submitRequest}>
             <!-- PTO Information Row -->
             <div class="pto-info-row">
                 <div class="pto-info">
@@ -30,18 +59,17 @@
             </div>
             <div class="form-group">
                 <label for="type">Type</label>
-                <select id="type" name="type" required>
+                <select bind:value={type} id="type" name="type" required>
                     <option value="" disabled selected>Select type</option>
-                    <option value="holiday">Holiday</option>
-                    <option value="pto">Vacation</option>
-                    <option value="pto">Sick</option>
-                    <option value="emergency">Emergency</option>
-                    <option value="emergency">Unpaid</option>
+                    <option>Holiday</option>
+                    <option>Vacation</option>
+                    <option>Unpaid</option>
+                    <option>Sick</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="amount">Amount (hours)</label>
-                <input type="number" id="amount" name="amount" min="0" step="0.5" required>
+                <input type="number" id="amount" name="amount" min="0" step="0.5" bind:value={inputHours} required>
             </div>
             <div class="form-group">
                 <label for="note">Note (optional)</label>
@@ -50,10 +78,9 @@
             <label for="password">Password</label>
             <input type="password" class="password-field form-group" id="password"/>
             <button type="submit" class="submit-button">Submit</button>
-    </form>
+        </form>
+    </div>
 </div>
-</div>
-
 
 <style>
 input {
@@ -63,7 +90,7 @@ input {
 .request-time-off {
     flex: 1 1 auto;
     background: var(--accent-color-two);
-	padding: 1.8rem 1rem 1.2rem;
+    padding: 1.8rem 1rem 1.2rem;
     border-radius: 12px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     min-width: 600px;
@@ -144,7 +171,7 @@ input {
 }
 /* Form groups in a row */
 
-	
+    
 
 .request-time-off .form-row .form-group {
     flex: 1;

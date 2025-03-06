@@ -32,15 +32,16 @@
   }
 
   function handleKeyPress(event) {
-    if (event.key === "Enter" && newCategory.trim() !== "") {
-      event.preventDefault();
-      if (!selectedCategories.includes(newCategory.trim())) {
-        selectedCategories.push(newCategory.trim());
-        categories.push({ value: newCategory.trim(), label: newCategory.trim() });
-      }
-      newCategory = "";
+  if (event.key === "Enter" && newCategory.trim() !== "") {
+    event.preventDefault();
+    if (!selectedCategories.includes(newCategory.trim())) {
+      selectedCategories.unshift(newCategory.trim()); // Add to the start
+      categories.unshift({ value: newCategory.trim(), label: newCategory.trim() }); // Add to the start
     }
+    newCategory = "";
   }
+}
+
 
   function handleSubmit(event) {
     event.preventDefault();

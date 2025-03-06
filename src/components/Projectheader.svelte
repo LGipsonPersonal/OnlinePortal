@@ -2,7 +2,8 @@
    let { projectTitle, selectedTab  = $bindable()} = $props();
   
     let tabs = [
-      { name: "Tasks", key: "tasks" },
+      { name: "Timeline", key: "timeline" },
+      { name: "Issue Board", key: "Issues" },
       { name: "Resources", key: "resources" },
       { name: "People of Contact", key: "people" },
       { name: "Discussions", key: "discussions" }

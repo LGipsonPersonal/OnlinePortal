@@ -6,7 +6,6 @@
   const DEFAULT_TAB_STATE = true; // open the page with all the tabs open
 
   let openTabs = $state(Array.from({ length: documentCategories.length }, () => DEFAULT_TAB_STATE));
-  let downloadLink = null;
   let showingDocument = $state(false);
   let documentContent = $state(null);
 
@@ -14,55 +13,30 @@
     openTabs[index] = !openTabs[index];
   }
 
-  async function downloadDoc(section, doc) {
-    const fileName = documentCategories[section].documents[doc];
-    const fileUrl = `./sample.pdf`; // Adjust the path as needed
-
-    try {
-      const response = await fetch(fileUrl);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      downloadLink.href = url;
-      downloadLink.click();
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('There was a problem with the fetch operation:', error);
-    }
-  }
-
-  function viewDoc(section, doc) {
-    const fileUrl = `./sample.pdf`; // Adjust the path as needed
+  function viewDoc(fileUrl) {
     documentContent = fileUrl;
     showingDocument = true;
   }
 </script>
 
-
 <div class="documents-container">
   {#each documentCategories as section, i (section.category)}
     <div class="category-section">
-      <div class="category-header">
+      <div class="category-header" on:click={() => toggleSubmenu(i)}>
         {section.category}
-        <button class="submenu-toggle" onclick={() => toggleSubmenu(i)}>
+        <span class="submenu-toggle">
           {#if !openTabs[i]}
             <i class="fas fa-chevron-up"></i>
           {:else}
             <i class="fas fa-chevron-down"></i>
           {/if}
-        </button>
+        </span>
       </div>
       {#if openTabs[i]}
         <div class="doc-section" transition:slide>
           {#each section.documents as doc, j (doc)}
             <div class="document-row">
-              <span class="document-name">{doc}</span>
-              <div class="buttons">
-                <button class="btn" onclick={() => downloadDoc(i, j)}>Download</button>
-                <button class="btn" onclick={() => viewDoc(i, j)}>View</button>
-            </div>
+              <a href={`./sample.pdf`} class="link" download>{doc}</a>
             </div>
           {/each}
         </div>
@@ -70,9 +44,6 @@
     </div>
   {/each}
 </div>
-
-<!-- Hidden download link -->
-<a bind:this={downloadLink} style="display: none;" download></a>
 
 {#snippet documentViewer(documentContent)}
   <iframe src={documentContent} width="100%" height="800px"></iframe>
@@ -109,12 +80,10 @@
     border-radius: 4px;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
   }
 
   .document-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: #252525;
     padding: 0.75rem 1rem;
     margin-bottom: 0.5rem;
@@ -126,35 +95,27 @@
     background-color: #3a3a3a;
   }
 
-  .document-name {
-    color: #d4d4d4;
-  }
-
-  .btn {
-    padding: 0.5rem 0.75rem;
+  .link {
     font-size: 0.875rem;
     font-weight: 600;
     color: white;
-    background-color: var(--highlight-color-one); /* Purple base */
+    background-color: #4f46e5; /* Purple base */
     border: 1px solid #372fa1;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s, border-color 0.2s;
+    text-decoration: none; /* Remove underline from links */
+    display: inline-block; /* Ensure proper padding */
+    padding: 0.5rem 0.75rem;
   }
 
-  .btn:hover {
-    background-color: var(--highlight-color-two); /* Darker purple on hover */
+  .link:hover {
+    background-color: #6a5acd; /* Lighter purple on hover */
     border-color: #282177;
   }
-  .buttons {
-    display: flex;
-    gap: 1rem;
-  }
+
   .submenu-toggle {
-    background: none;
-    border: none;
     color: #ddd; /* Higher contrast */
-    cursor: pointer;
     transition: color 0.2s;
   }
 

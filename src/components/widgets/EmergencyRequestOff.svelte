@@ -1,15 +1,20 @@
 <script>
-    let { availableDaysOff = 5 } = $props(); // Accessing props using Svelte 5 syntax
+    let { availableDaysOff = 5 } = $props();
+    import { todayAddedHours } from '$assets/store.svelte.js';
+    import CustomAlert from './Alert.svelte';
     let dayOffReason = "";
     let errorMessage = "";
+    let currDay = new Date("February 26, 2025")
+    let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
 
     // Reactive state for feedback
-    let feedbackMessage = $state("");
+    let alertMessage = $state("");
+    let showAlert = $state(false);
     
     let inputHours = $state(8)
 
     function submitRequest(event) {
-        event.preventDefault(); // Prevent form submission from reloading the page
+        event.preventDefault();
 
         if (!dayOffReason.trim()) {
             errorMessage = "Please provide a reason for requesting the day off.";
@@ -23,13 +28,23 @@
 
         // Simulate request submission
         availableDaysOff -= 1;
-        feedbackMessage = `Your request for the current day off has been submitted. Remaining days off: ${availableDaysOff}`;
-        dayOffReason = "";
-        errorMessage = ""; // Clear any existing error messages
+        alertMessage = `Your request for the current day off has been submitted. Remaining days off: ${availableDaysOff}`;
+
+        showAlert = true;
+        todayAddedHours.push({
+            date: currDayString,
+            hours: inputHours,
+            project: "Leave",
+            task: "Vacation"
+        });
+
     }
 </script>
 
 <div class="day-off-request box-shadow">
+    {#if showAlert}
+        <CustomAlert bind:visible={showAlert} message={alertMessage} />
+    {/if}
     <h2 class="form-title">Request Today Off</h2>
 
     <!-- Display available days off -->
@@ -64,8 +79,8 @@
         </form>
 
         <!-- Display feedback message -->
-        {#if feedbackMessage}
-            <div class="feedback-message">{feedbackMessage}</div>
+        {#if alertMessage}
+            <div class="feedback-message">{alertMessage}</div>
         {/if}
     </div>
 </div>

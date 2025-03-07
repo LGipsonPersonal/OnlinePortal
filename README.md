@@ -1,6 +1,6 @@
 # What this is
 
-This is a personel project meant to mimic a typical company portal with the ability to input a time sheet, request time off, manage documents, etc etc. It is still very much a work in progress, but feel free to use it as you please.
+This is a personel project meant to mimic a typical company portal with the ability to input a time sheet, request time off, manage documents, etc etc. It also will eventually have project management features, similar to Jira and some messaging features. It is still very much a work in progress, but feel free to use it as you please.
 
 # Svelte + Vite
 

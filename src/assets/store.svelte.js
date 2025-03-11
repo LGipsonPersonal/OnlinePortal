@@ -1,5 +1,7 @@
 export const todayAddedHours = [];
 
+export const startingBoards = ['Design', 'Development', 'Testing', 'QA']
+
 export const tabs = [
     {
       name: "Home",

@@ -96,11 +96,12 @@
     font-weight: 500;
     transition: color 0.3s;
 }
-
+/*
 .breadcrumb-item div:hover {
     color: #4338ca;
     cursor: pointer;
 }
+*/
 
 .right {
     display: flex;

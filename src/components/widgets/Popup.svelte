@@ -72,8 +72,7 @@
     line-height: 1;
     border-radius: 50%;
     transition: background 0.2s, color 0.2s;
-    display: flex;
-    justify-content: center;
+
 }
 
 .close-btn:hover {

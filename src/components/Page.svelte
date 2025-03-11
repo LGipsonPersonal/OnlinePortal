@@ -21,6 +21,7 @@
   import ProjectsDashboard from "./ProjectsDashboard.svelte";
   import Projectheader from "./Projectheader.svelte";
   import ProjectTimeline from "./ProjectTimeline.svelte"
+  import IssueBoard from "./IssueBoard.svelte";
   import Conversation from "./Conversation.svelte";
 
   setContext('MainPage', {updateChoice})
@@ -118,7 +119,7 @@ $inspect(projSubChoice)
           {#if projSubChoice === "Timeline"}
             <ProjectTimeline></ProjectTimeline>
           {:else if projSubChoice === "Issue Board"}
-            <p>Issue Board</p>
+            <IssueBoard></IssueBoard>
           {:else if projSubChoice === "Resources"}
             <p>Resources</p>
           {:else if projSubChoice === "People of Contact"}

@@ -56,7 +56,7 @@
     width: 94%;
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
-    background-color: var(--accent-color-two);
+    background-color: #1e1e1e; /* Dark background */
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
@@ -98,20 +98,14 @@
   .link {
     font-size: 0.875rem;
     font-weight: 600;
-    color: white;
-    background-color: #4f46e5; /* Purple base */
-    border: 1px solid #372fa1;
-    border-radius: 4px;
+    color: #4f46e5; /* Purple text */
+    text-decoration: underline; /* Underline to indicate hyperlink */
     cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-    text-decoration: none; /* Remove underline from links */
-    display: inline-block; /* Ensure proper padding */
-    padding: 0.5rem 0.75rem;
+    transition: color 0.2s;
   }
 
   .link:hover {
-    background-color: #6a5acd; /* Lighter purple on hover */
-    border-color: #282177;
+    color: #6a5acd; /* Lighter purple on hover */
   }
 
   .submenu-toggle {

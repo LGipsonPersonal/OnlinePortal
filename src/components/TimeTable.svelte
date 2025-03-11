@@ -115,7 +115,7 @@
     if (projectIndex === -1) {
       tableData.push({
         projectName: projectName,
-        selectedTask: task,6
+        selectedTask: task,
         entries: Array.from({ length: DAYS_IN_TEN_DAYS }, () => "")
       });
       projectIndex = tableData.length - 1;

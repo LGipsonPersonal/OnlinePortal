@@ -6,11 +6,10 @@
     let alertMessage = $state("");
     let type = $state("");
     let inputHours = $state(0);
-    $inspect(type)
 
-    let currDay = new Date("February 26, 2025")
+    let currDay = new Date("February 26, 2025");
     let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
-    
+
     function submitRequest(event) {
         event.preventDefault();
 
@@ -90,40 +89,39 @@ input {
 .request-time-off {
     flex: 1 1 auto;
     background: var(--accent-color-two);
-    padding: 1.8rem 1rem 1.2rem;
-    border-radius: 12px;
+    padding: 1.5rem 1rem 1.2rem;
+    border-radius: 6px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     min-width: 600px;
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
+    border: 1px solid #30363d; /* GitHub darker border */
+    color: #c9d1d9; /* GitHub light text */
     box-sizing: border-box; /* Ensures all child elements respect padding */ 
     height: 100%;
 }
 
+.scroll-wrap {
+    padding-right: 1rem;
+    padding-left: 1rem;
+    height: calc(100% - 3rem);
+    overflow-y: auto;
+}
+
 /* Title styling */
 .request-time-off .form-title {
-    width:96%;
-    margin-right: auto;
-    margin-left: auto;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
     margin-top: 0;
     text-align: center;
-    color: var(--text-color);
-    border-bottom: 2px solid var(--highlight-color-one);
-    padding-bottom: 1rem;
+    color: #e0e0e0; /* Light text */
+    border-bottom: 1px solid #444; /* Darker border */
+    padding-bottom: 0.8rem;
 }
 
 /* Flex row for Start Date and End Date */
 .request-time-off .form-row {
     display: flex;
     gap: 1.5rem;
-
-}
-.scroll-wrap {
-    height: calc(100% - 3.8rem);
-
 }
 /* Form groups */
 .request-time-off .form-group {
@@ -136,7 +134,7 @@ input {
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    color: var(--text-color-muted);
+    color: #8b949e; /* Muted text */
     margin-bottom: 0.5rem;
     text-wrap: nowrap;
 }
@@ -148,10 +146,10 @@ input {
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    border: 1px solid var(--interact-border);
+    border: 1px solid #444; /* Darker border */
     border-radius: 6px;
-    color: var(--text-color);
-    background-color: var(--interact-bg);
+    color: #e0e0e0; /* Light text */
+    background-color: #2e2e2e; /* Darker background */
     transition: border-color 0.3s, box-shadow 0.3s;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
     box-sizing: border-box; /* Ensures input paddings are accounted for */ 
@@ -166,13 +164,10 @@ input {
 .request-time-off select:focus,
 .request-time-off textarea:focus {
     outline: none;
-    border-color: var(--interact-focus-border);
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.4);
+    border-color: #58a6ff; /* Blue focus border */
+    box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.4);
 }
 /* Form groups in a row */
-
-    
-
 .request-time-off .form-row .form-group {
     flex: 1;
     min-width: 0;
@@ -184,7 +179,6 @@ input {
     height: 100px;
 }
 
-
 /* Submit button */
 .request-time-off .submit-button {
     width: 100%;
@@ -192,7 +186,7 @@ input {
     font-size: 1rem;
     font-weight: 600;
     color: #ffffff;
-    background-color: var(--highlight-color-one);
+    background-color: #238636; /* Green background */
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -207,11 +201,11 @@ input {
 .request-time-off .pto-info {
     flex: 1;
     text-align: center;
-    background-color: #333333;
+    background-color: #2e2e2e; /* Darker background */
     padding: 1rem;
     border-radius: 6px;
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
+    border: 1px solid #444; /* Darker border */
+    color: #e0e0e0; /* Light text */
 }
 
 .request-time-off .pto-info label {
@@ -219,18 +213,18 @@ input {
     font-size: 1rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
-    color: var(--text-color-muted);
+    color: #8b949e; /* Muted text */
 }
 
 .request-time-off .pto-info p {
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0;
-    color: var(--text-color);
+    color: #e0e0e0; /* Light text */
 }
 /* Submit button hover effect */
 .request-time-off .submit-button:hover {
-    background-color: var(--highlight-color-two);
+    background-color: #2ea043; /* Lighter green on hover */
     transform: scale(1.02);
 }
 

@@ -5,8 +5,8 @@
   import { startingBoards } from '$assets/store.svelte.js';
 
   let backlog = $state([
-    { id: "id" + Math.random().toString(16).slice(2), title: "Issue 1", description: "Description for Issue 1" },
-    { id: "id" + Math.random().toString(16).slice(2), title: "Issue 2", description: "Description for Issue 2" }
+    { id: "id" + Math.random().toString(16).slice(2), title: "Issue 1", description: "Description for Issue 1", dueDate: "2025-03-20", originator: "User A" },
+    { id: "id" + Math.random().toString(16).slice(2), title: "Issue 2", description: "Description for Issue 2", dueDate: "2025-03-25", originator: "User B" }
   ]);
 
   let boards = $state([{ name: "Backlog", issues: backlog }, ...startingBoards.map(name => ({ name, issues: [] }))]);
@@ -18,6 +18,9 @@
   let showAddIssuePopup = $state(false);
   let searchQuery = $state("");
   let selectedBoard = $state("All Boards");
+  let selectedIssue = $state(null);
+  let showIssueDetails = $state(false);
+  let dragOverBoard = $state(null);
 
   function addIssue() {
     if (newIssueTitle.trim() && newIssueDescription.trim()) {
@@ -26,7 +29,9 @@
           board.issues.push({
             id: "id" + Math.random().toString(16).slice(2),
             title: newIssueTitle,
-            description: newIssueDescription
+            description: newIssueDescription,
+            dueDate: "2025-03-30", // Example due date
+            originator: "User C" // Example originator
           });
         }
         return board;
@@ -64,10 +69,12 @@
       }
       return board;
     });
+    dragOverBoard = null;
   }
 
-  function allowDrop(event) {
+  function allowDrop(event, boardName) {
     event.preventDefault();
+    dragOverBoard = boardName;
   }
 
   function searchIssues() {
@@ -84,6 +91,15 @@
   function jumpToSettings() {
     // Stub function for jumping to settings
     console.log("Jumping to settings");
+  }
+
+  function selectIssue(issue) {
+    selectedIssue = issue;
+    showIssueDetails = true;
+  }
+
+  function closeIssueDetails() {
+    showIssueDetails = false;
   }
 </script>
 
@@ -105,30 +121,43 @@
     <button onclick={() => showAddIssuePopup = true}>Add Issue</button>
     <button onclick={() => showAddBoardPopup = true}>Add Board</button>
   </div>
-  <div class="boards">
-    {#each boards as board}
-      {#if selectedBoard === "All Boards" || selectedBoard === board.name}
-        <div
-          class="board"
-          ondrop={(event) => handleDrop(event, board.name)}
-          ondragover={allowDrop}
-        >
-          <h2>{board.name}</h2>
-          <div class="issue-list">
-            {#each board.issues as issue}
-              <div
-                class="issue"
-                draggable="true"
-                ondragstart={(event) => handleDragStart(event, issue, board.name)}
-              >
-                <h3>{issue.title}</h3>
-                <p>{issue.description}</p>
-              </div>
-            {/each}
+  <div class="main-content">
+    <div class="boards">
+      {#each boards as board}
+        {#if selectedBoard === "All Boards" || selectedBoard === board.name}
+          <div
+            class="board {dragOverBoard === board.name ? 'drag-over' : ''}"
+            ondrop={(event) => handleDrop(event, board.name)}
+            ondragover={(event) => allowDrop(event, board.name)}
+          >
+            <h2>{board.name}</h2>
+            <div class="issue-list">
+              {#each board.issues as issue}
+                <div
+                  class="issue"
+                  draggable="true"
+                  ondragstart={(event) => handleDragStart(event, issue, board.name)}
+                  onclick={() => selectIssue(issue)}
+                >
+                  <h3>{issue.title}</h3>
+                  <p>{issue.description}</p>
+                </div>
+              {/each}
+            </div>
           </div>
-        </div>
-      {/if}
-    {/each}
+        {/if}
+      {/each}
+    </div>
+    {#if showIssueDetails}
+      <div class="issue-details">
+        <button class="close-button" onclick={closeIssueDetails}>Close</button>
+        <h2>Issue Details</h2>
+        <p><strong>Title:</strong> {selectedIssue.title}</p>
+        <p><strong>Description:</strong> {selectedIssue.description}</p>
+        <p><strong>Due Date:</strong> {selectedIssue.dueDate}</p>
+        <p><strong>Originator:</strong> {selectedIssue.originator}</p>
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -188,9 +217,7 @@
     gap: 1rem;
     padding: 1rem;
     background-color: #2e2e2e; /* Darker background */
-    border-radius: 4px;
     border: 1px solid #444444; /* Darker border */
-    margin-bottom: 1rem;
   }
 
   .top-bar input,
@@ -215,6 +242,12 @@
 
   .top-bar button:hover {
     background-color: #6a5acd; /* Lighter purple on hover */
+  }
+
+  .main-content {
+    display: flex;
+    flex-grow: 1;
+    position: relative;
   }
 
   .boards {
@@ -248,10 +281,43 @@
     border-radius: 4px;
     border: 1px solid #444444;
     min-width: 250px;
+    flex: 0 0 250px; /* Fixed width */
+  }
+
+  .board.drag-over {
+    border: 2px dashed #4f46e5; /* Highlight border */
   }
 
   .board h2 {
     margin-top: 0;
+  }
+
+  .issue-details {
+    width: 300px;
+    height: 100%;
+    padding: 1rem;
+    margin: 0;
+    background-color: #2e2e2e;
+    border-left: 1px solid #444444;
+    overflow-y: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .close-button {
+    background-color: #4f46e5; /* Purple background */
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.2s;
+  }
+
+  .close-button:hover {
+    background-color: #6a5acd; /* Lighter purple on hover */
   }
 
   .popup-content {

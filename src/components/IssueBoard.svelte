@@ -60,15 +60,25 @@
     const issue = JSON.parse(event.dataTransfer.getData("issue"));
     const source = event.dataTransfer.getData("source");
 
-    boards = boards.map(board => {
-      if (board.name === source) {
-        board.issues = board.issues.filter(i => i.id !== issue.id);
-      }
-      if (board.name === targetBoard) {
-        board.issues.push(issue);
-      }
-      return board;
-    });
+    // Hardcoded rules for state transitions
+    const allowedTransitions = {
+      "Backlog": ["Design", "Development"],
+      "Design": ["Development"],
+      "Development": ["Done"],
+      "Done": []
+    };
+
+    if (allowedTransitions[source].includes(targetBoard)) {
+      boards = boards.map(board => {
+        if (board.name === source) {
+          board.issues = board.issues.filter(i => i.id !== issue.id);
+        }
+        if (board.name === targetBoard) {
+          board.issues.push(issue);
+        }
+        return board;
+      });
+    }
     dragOverBoard = null;
   }
 
@@ -105,18 +115,18 @@
 
 <div class="issue-board-container">
   <div class="top-bar">
+    <select class="boards-selection" bind:value={selectedBoard} onchange={() => selectBoard(selectedBoard)}>
+      <option value="All Boards">All Boards</option>
+      {#each boards as board}
+        <option value={board.name}>{board.name}</option>
+      {/each}
+    </select>
     <input
       type="text"
       placeholder="Search issues..."
       bind:value={searchQuery}
       oninput={searchIssues}
     />
-    <select bind:value={selectedBoard} onchange={() => selectBoard(selectedBoard)}>
-      <option value="All Boards">All Boards</option>
-      {#each boards as board}
-        <option value={board.name}>{board.name}</option>
-      {/each}
-    </select>
     <button onclick={jumpToSettings}>Settings</button>
     <button onclick={() => showAddIssuePopup = true}>Add Issue</button>
     <button onclick={() => showAddBoardPopup = true}>Add Board</button>
@@ -222,7 +232,6 @@
 
   .top-bar input,
   .top-bar select {
-    flex: 1;
     padding: 0.5rem;
     background-color: #2e2e2e; /* Darker background */
     color: #e0e0e0; /* Light text */
@@ -352,5 +361,14 @@
 
   .popup-content button:hover {
     background-color: #6a5acd; /* Lighter purple on hover */
+  }
+
+  .boards-selection {
+    flex: 0 0 150px; /* Fixed width for the select element */
+    padding: 0.5rem;
+    background-color: #2e2e2e; /* Darker background */
+    color: #e0e0e0; /* Light text */
+    border: 1px solid #444444;
+    border-radius: 4px;
   }
 </style>

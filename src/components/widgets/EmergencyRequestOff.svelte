@@ -1,5 +1,6 @@
 <script>
     let { availableDaysOff = 5 } = $props();
+    // @ts-ignore
     import { todayAddedHours } from '$assets/store.svelte.js';
     import CustomAlert from './Alert.svelte';
     let dayOffReason = "";

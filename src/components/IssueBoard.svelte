@@ -60,15 +60,7 @@
     const issue = JSON.parse(event.dataTransfer.getData("issue"));
     const source = event.dataTransfer.getData("source");
 
-    // Hardcoded rules for state transitions
-    const allowedTransitions = {
-      "Backlog": ["Design", "Development"],
-      "Design": ["Development"],
-      "Development": ["Done"],
-      "Done": []
-    };
-
-    if (allowedTransitions[source].includes(targetBoard)) {
+    
       boards = boards.map(board => {
         if (board.name === source) {
           board.issues = board.issues.filter(i => i.id !== issue.id);
@@ -78,7 +70,6 @@
         }
         return board;
       });
-    }
     dragOverBoard = null;
   }
 
@@ -96,6 +87,37 @@
     selectedBoard = boardName;
     // Stub function for selecting a board
     console.log("Selected board:", boardName);
+
+    // Hardcoded sample data for new boards/issues
+    if (boardName === "Project A") {
+      backlog = [
+        { id: "id" + Math.random().toString(16).slice(2), title: "Project A Issue 1", description: "Description for Project A Issue 1", dueDate: "2025-04-01", originator: "User D" },
+        { id: "id" + Math.random().toString(16).slice(2), title: "Project A Issue 2", description: "Description for Project A Issue 2", dueDate: "2025-04-05", originator: "User E" }
+      ];
+      boards = [
+        { name: "Backlog", issues: backlog },
+        { name: "Design", issues: [] },
+        { name: "Development", issues: [] },
+        { name: "Done", issues: [] }
+      ];
+    } else if (boardName === "Project B") {
+      backlog = [
+        { id: "id" + Math.random().toString(16).slice(2), title: "Project B Issue 1", description: "Description for Project B Issue 1", dueDate: "2025-05-01", originator: "User F" },
+        { id: "id" + Math.random().toString(16).slice(2), title: "Project B Issue 2", description: "Description for Project B Issue 2", dueDate: "2025-05-10", originator: "User G" }
+      ];
+      boards = [
+        { name: "Backlog", issues: backlog },
+        { name: "Planning", issues: [] },
+        { name: "Execution", issues: [] },
+        { name: "Review", issues: [] }
+      ];
+    } else {
+      backlog = [
+        { id: "id" + Math.random().toString(16).slice(2), title: "Issue 1", description: "Description for Issue 1", dueDate: "2025-03-20", originator: "User A" },
+        { id: "id" + Math.random().toString(16).slice(2), title: "Issue 2", description: "Description for Issue 2", dueDate: "2025-03-25", originator: "User B" }
+      ];
+      boards = [{ name: "Backlog", issues: backlog }, ...startingBoards.map(name => ({ name, issues: [] }))];
+    }
   }
 
   function jumpToSettings() {
@@ -117,9 +139,8 @@
   <div class="top-bar">
     <select class="boards-selection" bind:value={selectedBoard} onchange={() => selectBoard(selectedBoard)}>
       <option value="All Boards">All Boards</option>
-      {#each boards as board}
-        <option value={board.name}>{board.name}</option>
-      {/each}
+      <option value="Project A">UI-UX</option>
+      <option value="Project B">AI features</option>
     </select>
     <input
       type="text"
@@ -134,7 +155,6 @@
   <div class="main-content">
     <div class="boards">
       {#each boards as board}
-        {#if selectedBoard === "All Boards" || selectedBoard === board.name}
           <div
             class="board {dragOverBoard === board.name ? 'drag-over' : ''}"
             ondrop={(event) => handleDrop(event, board.name)}
@@ -155,7 +175,6 @@
               {/each}
             </div>
           </div>
-        {/if}
       {/each}
     </div>
     {#if showIssueDetails}

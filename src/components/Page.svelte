@@ -20,6 +20,7 @@
   import { tabs, requests, docs, images, profile, projectUpcoming, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
   import ProjectsDashboard from "./ProjectsDashboard.svelte";
   import Projectheader from "./Projectheader.svelte";
+  import ProjectContacts from "./ProjectContacts.svelte";
   import ProjectTimeline from "./ProjectTimeline.svelte"
   import IssueBoard from "./IssueBoard.svelte";
   import Conversation from "./Conversation.svelte";
@@ -123,7 +124,7 @@ $inspect(projSubChoice)
           {:else if projSubChoice === "Resources"}
             <p>Resources</p>
           {:else if projSubChoice === "People of Contact"}
-            <p>People of Contact</p>
+            <ProjectContacts></ProjectContacts>
           {:else if projSubChoice === "Discussions"}
             <p>Discussions</p>
           {/if}

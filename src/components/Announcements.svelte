@@ -87,11 +87,9 @@
                 class="announcement"
                 onclick={() => handleAnnouncementClick(announcement.id)}
             >
-                <div class="avatar-container">
-                    <div class="avatar">
+                    <div class="avatar avatar-container">
                         <img src={announcement.avatar} alt="User Avatar" />
                     </div>
-                </div>
                 <div class="announcement-content">
                     <p class="title">{announcement.title}</p>
                     <p class="description">{announcement.description}</p>

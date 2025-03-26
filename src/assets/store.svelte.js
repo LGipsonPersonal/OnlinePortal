@@ -7,24 +7,19 @@ export const tabs = [
       name: "Home",
       key: '0',
       icon: 'home',
-      subtabs: [
-      ],
+      subtabs: [],
     },
     {
       name: "Time Sheet",
       key: '1',
       icon: 'calendar-alt',
-      subtabs: [
-
-      ],
+      subtabs: [],
     },
     {
       name: "Request Time Off",
       key: '2',
       icon: 'calendar-edit',
-      subtabs: [
-
-      ],
+      subtabs: [],
     },
     {
       name: "Documents",
@@ -39,10 +34,7 @@ export const tabs = [
       name: "Settings",
       key: '4',
       icon: 'cog',
-
-      subtabs: [
-
-      ],
+      subtabs: [],
     },
     {
       name: "Your Projects",
@@ -50,19 +42,41 @@ export const tabs = [
       icon: 'project-diagram',
       subtabs: [
         { name: "Project Dashboard", key: "5-0" },
-        { name: "Project X", key: "5-1" },
-        { name: "Project Y", key: "5-2" },
-        { name: "Project Z", key: "5-3" },
-        { name: "Project R", key: "5-4" },
+        { name: "Project X", key: "5-1", subtabs: [
+          { name: "Timeline", key: "5-1-0" },
+          { name: "Issue Board", key: "5-1-1" },
+          { name: "Resources", key: "5-1-2" },
+          { name: "People of Contact", key: "5-1-3" },
+          { name: "Discussions", key: "5-1-4" }
+        ]},
+        { name: "Project Y", key: "5-2", subtabs: [
+          { name: "Timeline", key: "5-2-0" },
+          { name: "Issue Board", key: "5-2-1" },
+          { name: "Resources", key: "5-2-2" },
+          { name: "People of Contact", key: "5-2-3" },
+          { name: "Discussions", key: "5-2-4" }
+        ]},
+        { name: "Project Z", key: "5-3", subtabs: [
+          { name: "Timeline", key: "5-3-0" },
+          { name: "Issue Board", key: "5-3-1" },
+          { name: "Resources", key: "5-3-2" },
+          { name: "People of Contact", key: "5-3-3" },
+          { name: "Discussions", key: "5-3-4" }
+        ]},
+        { name: "Project R", key: "5-4", subtabs: [
+          { name: "Timeline", key: "5-4-0" },
+          { name: "Issue Board", key: "5-4-1" },
+          { name: "Resources", key: "5-4-2" },
+          { name: "People of Contact", key: "5-4-3" },
+          { name: "Discussions", key: "5-4-4" }
+        ]}
       ],
     },
     {
       name: "IT Helpdesk",
       key: '6',
       icon: 'headset',
-      subtabs: [
-
-      ],
+      subtabs: [],
     },
     {
       name: "Messages",
@@ -348,7 +362,8 @@ export const projectUpcoming = [
     description: "Update UI/UX for better user experience.",
     timestamp: "Feb 18, 2025",
     date: "Feb 25, 2025",
-    project: "Project X"
+    project: "Project X",
+    priority: "High"
   },
   {
     id: 2,
@@ -357,7 +372,8 @@ export const projectUpcoming = [
     description: "Move database to cloud infrastructure.",
     timestamp: "Feb 16, 2025",
     date: "Mar 5, 2025",
-    project: "Project Y"
+    project: "Project Y",
+    priority: "High"
   },
   {
     id: 3,
@@ -366,7 +382,8 @@ export const projectUpcoming = [
     description: "Review and patch vulnerabilities.",
     timestamp: "Feb 16, 2025",
     date: "Mar 1, 2025",
-    project: "Project Z"
+    project: "Project Z",
+    priority: "Low"
   },
   {
     id: 4,
@@ -385,9 +402,8 @@ export const projectUpcoming = [
     timestamp: "Feb 14, 2025",
     date: "Mar 10, 2025",
     project: "Project X"
-  }
+  },
 ];
 
-  
-  
-    
+
+

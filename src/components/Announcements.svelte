@@ -74,7 +74,7 @@
     </style>
 {/snippet}
 
-<div class="announcement-board box-shadow">
+<div class="announcement-board">
     <Popup
         popupContent={shownAnnouncement}
         bind:active={showingAnnouncement}

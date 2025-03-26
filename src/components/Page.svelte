@@ -18,12 +18,12 @@
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
   import { tabs, requests, docs, images, profile, projectUpcoming, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
-  import ProjectsDashboard from "./ProjectsDashboard.svelte";
   import Projectheader from "./Projectheader.svelte";
   import ProjectContacts from "./ProjectContacts.svelte";
   import ProjectTimeline from "./ProjectTimeline.svelte"
   import IssueBoard from "./IssueBoard.svelte";
   import Conversation from "./Conversation.svelte";
+    import ProjectsDashboard from "./ProjectsDashboard.svelte";
 
   setContext('MainPage', {updateChoice})
 
@@ -43,29 +43,25 @@
   let choice = $state('0');
   history.pushState( {choice}, '', `/${choice}`)
 
-  let currentTabs = $derived.by(() => {
-  if (!choice.includes('-')) {
-    // Default behavior: Return the matching tab
-    return [tabs.find(tab => tab.key === choice)];
-  } else {
-    // Extract digits before and after '-' in choice
-    const [tabKey, subtabIndex] = choice.split('-');
-    
-    // Find the matching tab using the key
-    const selectedTab = tabs.find(tab => tab.key === tabKey);
-    
-    // Ensure the tab and its subtabs exist
-    if (selectedTab && selectedTab.subtabs?.[subtabIndex]) {
-      if(tabKey === '5'){
-        return [selectedTab, selectedTab.subtabs[+subtabIndex], {name: projSubChoice}];
-      }
-      return [selectedTab, selectedTab.subtabs[+subtabIndex]];
-    }
-    
-    // Return empty array if no match is found
-    return [];
+let currentTabs = $derived.by(() => {
+  const parts = choice.split('-');
+  const selectedTab = tabs.find(tab => tab.key === parts[0]);
+
+  if (!selectedTab) return [];
+  if (parts.length === 1) return [selectedTab];
+
+  let result = [selectedTab];
+  let subtabs = selectedTab.subtabs;
+
+  for (let i = 1; i < parts.length; i++) {
+    subtabs = subtabs?.[parts[i]];
+    if (!subtabs) break;
+    result.push(subtabs);
   }
+
+  return result;
 });
+
 let projSubChoice = $state("Timeline");
 
 $inspect(projSubChoice)
@@ -79,55 +75,51 @@ $inspect(projSubChoice)
     {#if choice === tabs[0].key}
       <div class="homePage">
         <div class="main-row">
-            <Announcements props={announcements}></Announcements>
-            <Announcements props={events}></Announcements>
-            <QuickTime></QuickTime>
+          <Announcements props={announcements}></Announcements>
+          <Announcements props={events}></Announcements>
+          <QuickTime></QuickTime>
         </div>
         <div class="main-row">
           <Announcements props={deadlines}></Announcements>
           <Announcements props={meetings}></Announcements>
           <EmergencyRequestOff></EmergencyRequestOff>
         </div>
-          <!--<Carousel {images}></Carousel>-->
       </div>
     {:else if choice === tabs[1].key}
-      <TimeTable {projects} sheetRecords={[{startDate: "Feburary 17, 2025"}]}></TimeTable>
+      <TimeTable {projects} sheetRecords={[{ startDate: "February 17, 2025" }]}></TimeTable>
     {:else if choice === tabs[2].key}
       <div class="time-off-page">
         <TimeOff></TimeOff>
         <RequestHistory {requests}></RequestHistory>
       </div>
-      {:else if choice === tabs[3].subtabs[0].key}
-        <UploadDocs {docs}></UploadDocs>
-      {:else if choice === tabs[3].subtabs[1].key}
-        <ViewDocuments></ViewDocuments>
-      {:else if choice === tabs[4].key}
-        WIP
-        {:else if choice === tabs[5].subtabs[0].key}
-        <div class="time-off-page">
-          <ProjectsDashboard props={projectUpcoming}></ProjectsDashboard>
-        </div>
-      {:else if choice === tabs[6].key}
-        <div class="time-off-page">
-          <ItSupportTicket></ItSupportTicket>
-        </div>
-      {:else if choice === tabs[7].subtabs[0].key}
-        <Conversation></Conversation>
+    {:else if choice === tabs[3].subtabs[0].key}
+      <UploadDocs {docs}></UploadDocs>
+    {:else if choice === tabs[3].subtabs[1].key}
+      <ViewDocuments></ViewDocuments>
+    {:else if choice === tabs[4].key}
+      WIP
+    {:else if choice === tabs[5].subtabs[0].key}
+      <div class="time-off-page">
+        <ProjectsDashboard props={projectUpcoming}></ProjectsDashboard>
+      </div>
+    {:else if choice === tabs[6].key}
+      <div class="time-off-page">
+        <ItSupportTicket></ItSupportTicket>
+      </div>
+    {:else if choice === tabs[7].subtabs[0].key}
+      <Conversation></Conversation>
     {/if}
-    {#each tabs[5].subtabs.slice(1) as proj, i}
-        {#if choice === proj.key}
-          <Projectheader projectTitle={proj.name} bind:selectedTab={projSubChoice}></Projectheader>
-          {#if projSubChoice === "Timeline"}
-            <ProjectTimeline></ProjectTimeline>
-          {:else if projSubChoice === "Issue Board"}
-            <IssueBoard></IssueBoard>
-          {:else if projSubChoice === "Resources"}
-            <p>Resources</p>
-          {:else if projSubChoice === "People of Contact"}
-            <ProjectContacts></ProjectContacts>
-          {:else if projSubChoice === "Discussions"}
-            <p>Discussions</p>
-          {/if}
+    {#each tabs[5].subtabs as proj, i}
+        {#if choice === `${proj.key}-0`}
+          <ProjectTimeline></ProjectTimeline>
+        {:else if choice === `${proj.key}-1`}
+          <IssueBoard></IssueBoard>
+        {:else if choice === `${proj.key}-2`}
+          <p>Resources</p>
+        {:else if choice === `${proj.key}-3`}
+          <ProjectContacts></ProjectContacts>
+        {:else if choice === `${proj.key}-4`}
+          <p>Discussions</p>
         {/if}
     {/each}
   </div>

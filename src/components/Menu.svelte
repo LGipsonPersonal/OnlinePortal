@@ -72,13 +72,47 @@
         {#if openTabs.includes(i)}
         <div transition:slide class="sidebar-submenu">
           {#each tab.subtabs as subTab, j}
-          <div
-            onclick={() => {
-              selectChoice(subTab.key);
-            }}
-            class="sidebar-submenu-item {choice === subTab.key ? 'selected-tab selected-content-wrapper' : ''}"
-          >
-            {subTab.name}
+          <div class="tab-item">
+            <div class="tab-content-wrapper {choice === subTab.key ? 'selected-content-wrapper' : ''}">
+              <button
+                class="tab-button {choice === subTab.key ? 'selected-tab' : ''}"
+                onclick={() => {
+                  if (!subTab.subtabs) {
+                    selectChoice(subTab.key);
+                  } else {
+                    toggleSubmenu(`${i}-${j}`);
+                  }
+                }}
+              >
+                {subTab.name}
+              </button>
+              {#if subTab.subtabs}
+              <button
+                class="submenu-toggle"
+                onclick={() => toggleSubmenu(`${i}-${j}`)}
+              >
+                {#if openTabs.includes(`${i}-${j}`)}
+                  <i class="fas fa-chevron-up"></i>
+                {:else}
+                  <i class="fas fa-chevron-down"></i>
+                {/if}
+              </button>
+              {/if}
+            </div>
+            {#if openTabs.includes(`${i}-${j}`)}
+            <div transition:slide class="sidebar-submenu">
+              {#each subTab.subtabs as subSubTab}
+              <div
+                onclick={() => {
+                  selectChoice(subSubTab.key);
+                }}
+                class="sidebar-submenu-item {choice === subSubTab.key ? 'selected-tab selected-content-wrapper' : ''}"
+              >
+                {subSubTab.name}
+              </div>
+              {/each}
+            </div>
+            {/if}
           </div>
           {/each}
         </div>
@@ -272,6 +306,13 @@
   .tab-button:active {
     background-color: #555;
   }
+
+  /* Indentation for nested tabs */
+  .sidebar-submenu  {
+    padding-left: 0.8rem; /* Indent nested submenu */
+  }
+
+
 
   /* Add this at the end of the file */
   @media (max-width: 768px) {

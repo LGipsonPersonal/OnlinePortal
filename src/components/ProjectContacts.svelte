@@ -64,7 +64,6 @@
     background-color: #1e1e1e; /* Dark background */
     padding: 1rem;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     color: #e0e0e0; /* Light text */
   }
 

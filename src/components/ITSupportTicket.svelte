@@ -131,7 +131,6 @@
     background: var(--accent-color-two);
     padding: 1.8rem 1.5rem 1.2rem;
     border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     min-width: 600px;
     border: 1px solid var(--border-color);
     color: var(--text-color);
@@ -188,7 +187,7 @@
     color: var(--text-color);
     background-color: var(--interact-bg);
     transition: border-color 0.3s, box-shadow 0.3s;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+
     box-sizing: border-box;
   }
 
@@ -280,7 +279,6 @@
     background-color: var(--interact-bg);
     border: 1px solid var(--interact-border);
     border-radius: 6px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 10;
     max-height: 200px;
     overflow-y: auto;

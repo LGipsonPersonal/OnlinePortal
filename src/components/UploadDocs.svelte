@@ -47,7 +47,6 @@
     font-size: 0.875rem;
     background-color: var(--accent-color-two);
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 
   }
 

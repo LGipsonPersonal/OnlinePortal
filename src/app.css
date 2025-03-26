@@ -41,9 +41,7 @@
     background-color: #888; /* Slightly darker on hover */
   }
 }
-.box-shadow {
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-}
+
 .scroll-wrap {
   height: calc(100% - 4.5rem);
   overflow-y: auto;

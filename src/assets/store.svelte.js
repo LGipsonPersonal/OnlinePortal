@@ -1,7 +1,5 @@
 export const todayAddedHours = [];
 
-export const startingBoards = ['Design', 'Development', 'Testing', 'QA']
-
 export const tabs = [
     {
       name: "Home",
@@ -404,6 +402,189 @@ export const projectUpcoming = [
     project: "Project X"
   },
 ];
+
+export let boardGroups = $state([
+  {
+    name: "UI/UX",
+    boards: [
+      {
+        name: "Design",
+        issues: [
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Redesign Homepage",
+            description: "Update the homepage layout for better usability.",
+            dueDate: "2025-04-01",
+            originator: "User C",
+            tags: [
+              { name: "UI", color: "#4f46e5" },
+              { name: "High Priority", color: "#ff6b6b" }
+            ]
+          },
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Create Style Guide",
+            description: "Develop a consistent style guide for the application.",
+            dueDate: "2025-04-10",
+            originator: "User F",
+            tags: [
+              { name: "Design", color: "#34d399" },
+              { name: "Documentation", color: "#fbbf24" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Development",
+        issues: [
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Implement Dark Mode",
+            description: "Add a dark mode toggle to the application.",
+            dueDate: "2025-04-15",
+            originator: "User G",
+            tags: [
+              { name: "Feature", color: "#4f46e5" },
+              { name: "UI", color: "#34d399" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Testing",
+        issues: [
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Test Navigation Bar",
+            description: "Ensure the navigation bar works on all screen sizes.",
+            dueDate: "2025-04-20",
+            originator: "User H",
+            tags: [
+              { name: "Testing", color: "#fbbf24" },
+              { name: "UI", color: "#4f46e5" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "QA",
+        issues: []
+      }
+    ]
+  },
+  {
+    name: "AI Features",
+    boards: [
+      {
+        name: "Model Training",
+        issues: [
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Train Recommendation Model",
+            description: "Improve recommendation accuracy by 10%.",
+            dueDate: "2025-05-15",
+            originator: "User D",
+            tags: [
+              { name: "AI", color: "#34d399" },
+              { name: "Backend", color: "#fbbf24" }
+            ]
+          },
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Optimize Model Performance",
+            description: "Reduce model inference time by 20%.",
+            dueDate: "2025-05-20",
+            originator: "User I",
+            tags: [
+              { name: "Optimization", color: "#ff6b6b" },
+              { name: "AI", color: "#34d399" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Feature Integration",
+        issues: [
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Integrate Chatbot",
+            description: "Add chatbot functionality to the support page.",
+            dueDate: "2025-05-25",
+            originator: "User J",
+            tags: [
+              { name: "AI", color: "#34d399" },
+              { name: "Feature", color: "#4f46e5" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Testing",
+        issues: []
+      },
+      {
+        name: "QA",
+        issues: []
+      }
+    ]
+  },
+  {
+    name: "Backend",
+    boards: [
+      {
+        name: "API Development",
+        issues: [
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Create Authentication API",
+            description: "Develop a secure authentication API.",
+            dueDate: "2025-03-30",
+            originator: "User E",
+            tags: [
+              { name: "Backend", color: "#fbbf24" },
+              { name: "Security", color: "#ff6b6b" }
+            ]
+          },
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Build Payment Gateway",
+            description: "Integrate a payment gateway for subscriptions.",
+            dueDate: "2025-04-05",
+            originator: "User K",
+            tags: [
+              { name: "Backend", color: "#fbbf24" },
+              { name: "Finance", color: "#34d399" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Database Migration",
+        issues: [
+          {
+            id: "id" + Math.random().toString(16).slice(2),
+            title: "Migrate to PostgreSQL",
+            description: "Move the database from MySQL to PostgreSQL.",
+            dueDate: "2025-04-10",
+            originator: "User L",
+            tags: [
+              { name: "Database", color: "#4f46e5" },
+              { name: "Backend", color: "#fbbf24" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Testing",
+        issues: []
+      },
+      {
+        name: "QA",
+        issues: []
+      }
+    ]
+  }
+]);
 
 
 

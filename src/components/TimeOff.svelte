@@ -1,5 +1,6 @@
 <script>
-    import { todayAddedHours } from '$assets/store.svelte.js';
+    // @ts-ignore
+    import { tableData } from '$assets/store.svelte.js';
     import CustomAlert from './widgets/Alert.svelte';
 
     let showAlert = $state(false);
@@ -8,7 +9,7 @@
     let inputHours = $state(0);
 
     let currDay = new Date("February 26, 2025");
-    let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    //let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
 
     function submitRequest(event) {
         event.preventDefault();
@@ -16,14 +17,23 @@
         alertMessage = `You have used type ${type} to request ${inputHours} hours off on February 26, 2025.`;
         showAlert = true;
 
-        todayAddedHours.push({
-            date: currDayString,
-            hours: inputHours,
-            project: "Leave",
-            task: type
-        });
+        // Find the "Leave" project row in tableData
+        let leaveRow = tableData.find(row => row.projectName === "Leave" && row.selectedTask === type);
+        if (!leaveRow) {
+            // If the leave type doesn't exist, add a new row
+            leaveRow = {
+                projectName: "Leave",
+                selectedTask: type,
+                entries: Array.from({ length: 10 }, () => 0),
+            };
+            tableData.push(leaveRow);
+        }
 
-        console.log(todayAddedHours);
+        // Update the hours for the current day
+        const dayIndex = new Date(currDay).getDay() - 1; // Adjust for weekday index
+        leaveRow.entries[dayIndex] += inputHours;
+
+        console.log(tableData);
     }
 </script>
 

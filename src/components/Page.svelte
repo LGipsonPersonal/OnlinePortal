@@ -77,7 +77,7 @@ $inspect(projSubChoice)
         <div class="main-row">
           <Announcements props={announcements}></Announcements>
           <Announcements props={events}></Announcements>
-          <QuickTime></QuickTime>
+          <QuickTime {projects} ></QuickTime>
         </div>
         <div class="main-row">
           <Announcements props={deadlines}></Announcements>

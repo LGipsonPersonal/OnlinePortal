@@ -1,9 +1,9 @@
 <script>
     let { availableDaysOff = 5 } = $props();
     // @ts-ignore
-    import { todayAddedHours } from '$assets/store.svelte.js';
+    import { tableData } from '$assets/store.svelte.js';
     import CustomAlert from './Alert.svelte';
-    let dayOffReason = "";
+    let dayOffReason = ""; // TODO include as note
     let errorMessage = "";
     let currDay = new Date("February 26, 2025")
     let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
@@ -15,31 +15,24 @@
     let inputHours = $state(8)
 
     function submitRequest(event) {
-        event.preventDefault();
+    event.preventDefault();
 
-        if (!dayOffReason.trim()) {
-            errorMessage = "Please provide a reason for requesting the day off.";
-            return;
-        }
-
-        if (availableDaysOff <= 0) {
-            errorMessage = "You have no available days off.";
-            return;
-        }
-
-        // Simulate request submission
-        availableDaysOff -= 1;
-        alertMessage = `Your request for the current day off has been submitted. Remaining days off: ${availableDaysOff}`;
-
-        showAlert = true;
-        todayAddedHours.push({
-            date: currDayString,
-            hours: inputHours,
-            project: "Leave",
-            task: "Vacation"
-        });
-
+    // Find the "Leave" project row in tableData
+    let leaveRow = tableData.find(row => row.projectName === "Leave" && row.selectedTask === "Vacation");
+    if (!leaveRow) {
+      // If the leave type doesn't exist, add a new row
+      leaveRow = {
+        projectName: "Leave",
+        selectedTask: "Vacation",
+        entries: Array.from({ length: 10 }, () => 0),
+      };
+      tableData.push(leaveRow);
     }
+
+    // Update the hours for the current day
+    const dayIndex = new Date(currDay).getDay() - 1; // Adjust for weekday index
+    leaveRow.entries[dayIndex] += inputHours;
+  }
 </script>
 
 <div class="day-off-request box-shadow">

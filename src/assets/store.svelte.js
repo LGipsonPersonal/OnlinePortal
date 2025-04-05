@@ -1,4 +1,4 @@
-export const todayAddedHours = [];
+export let tableData = $state([]);
 
 export const tabs = [
     {

@@ -56,7 +56,7 @@
     width: 94%;
     font-family: 'Inter', sans-serif;
     font-size: 0.875rem;
-    background-color: #1e1e1e; /* Dark background */
+    background-color: var(--accent-color-two); /* Dark background */
     border-radius: 4px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);

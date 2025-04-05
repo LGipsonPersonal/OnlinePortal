@@ -1,26 +1,50 @@
 <script>
-    let totalHoursWorkedThisDay = $state(0)
-    let inputHours = $state(0)
-    import { getContext } from 'svelte'
-    // @ts-ignore
-    import { todayAddedHours } from '$assets/store.svelte.js';
+    import { tableData } from '$assets/store.svelte.js';
     import CustomAlert from './Alert.svelte';
 
-    let showAlert = $state(false);
+    // Simulated project data (replace this with actual data from your store or API)
+    let { projects } = $props();
+    
+    //TODO bug the days are a week off.
 
-    let currDay = new Date("February 26, 2025")
-    let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    let totalHoursWorkedThisDay = $state(0);
+    let inputHours = $state(0);
     let proj = $state('');
     let task = $state('');
-    let alertMessage = $state("");
+    let alertMessage = $state('');
+    let showAlert = $state(false);
+    let currDay = new Date("February 26, 2025");
+    let currDayString = currDay.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
 
     function addHours(event) {
-        event.preventDefault()
-        alertMessage = `You have added ${inputHours} hours to ${proj} for ${task} on ${currDayString}`
+        event.preventDefault();
+
+        if (!proj || !task || inputHours <= 0) {
+            alertMessage = 'Please fill in all fields and ensure hours are greater than 0.';
+            showAlert = true;
+            return;
+        }
+
+        alertMessage = `You have added ${inputHours} hours to ${proj} for ${task} on ${currDayString}`;
         showAlert = true;
-        totalHoursWorkedThisDay+=inputHours
-        todayAddedHours.push({date: currDayString, hours: inputHours, project: proj, task})
-        console.log(todayAddedHours)
+
+        // Find the project row in tableData
+        let projectRow = tableData.find(row => row.projectName === proj && row.selectedTask === task);
+        if (!projectRow) {
+            // If the project/task doesn't exist, add a new row
+            projectRow = {
+                projectName: proj,
+                selectedTask: task,
+                entries: Array.from({ length: 10 }, () => 0), // Initialize 10 days of entries
+            };
+            tableData.push(projectRow);
+        }
+
+        // Update the hours for the current day
+        const dayIndex = new Date(currDay).getDay() - 1; // Adjust for weekday index (0-based)
+        projectRow.entries[dayIndex] += inputHours;
+
+        totalHoursWorkedThisDay += inputHours;
     }
 </script>
 
@@ -30,44 +54,51 @@
     {/if}
     <h2 class="form-title">Add Today's Hours</h2>
 
-    <!-- Display total hours worked this week -->
+    <!-- Display total hours worked this day -->
     <div class="scroll-wrap">
-    <div class="hours-summary">
-        <strong>Total Hours Worked This Day:</strong>
-        <br>
-        <span>{totalHoursWorkedThisDay} hour(s)</span>
-    </div>
+        <div class="hours-summary">
+            <strong>Total Hours Worked This Day:</strong>
+            <br />
+            <span>{totalHoursWorkedThisDay} hour(s)</span>
+        </div>
 
-    <form id="hoursForm">
-        <div class="form-group">
-            <label for="project">Project Name</label>
-            <select id="project" name="project" bind:value={proj} required>
-                <option value="" disabled selected>Select a project</option>
-                <option value="Project X">Project X</option>
-                <option value="Project Y">Project Y</option>
-                <option value="Project X">Project Z</option>
-                <option value="Project R">Project R</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="task">Task</label>
-            <select id="task" name="project" bind:value={task} required>
-                <option value="" disabled selected>Select a task</option>
-                <option value="Task 1">Task 1</option>
-                <option value="Task 2">Task 2</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="hours">Hours Worked (1-8)</label>
-            <input type="number" bind:value={inputHours} id="hours" name="hours" min="1" max="8" required>
-        </div>
-        <button type="submit" onclick={addHours} class="submit-button">Add Hours</button>
-    </form>
-
+        <form id="hoursForm">
+            <div class="form-group">
+                <label for="project">Project Name</label>
+                <select id="project" name="project" bind:value={proj} required>
+                    <option value="" disabled selected>Select a project</option>
+                    {#each projects as project}
+                        <option value={project.name}>{project.name}</option>
+                    {/each}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="task">Task</label>
+                <select id="task" name="task" bind:value={task} required>
+                    <option value="" disabled selected>Select a task</option>
+                    {#if proj}
+                        {#each projects.find(p => p.name === proj)?.tasks || [] as taskOption}
+                            <option value={taskOption}>{taskOption}</option>
+                        {/each}
+                    {/if}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hours">Hours Worked (1-8)</label>
+                <input
+                    type="number"
+                    bind:value={inputHours}
+                    id="hours"
+                    name="hours"
+                    min="1"
+                    max="8"
+                    required
+                />
+            </div>
+            <button type="submit" onclick={addHours} class="submit-button">Add Hours</button>
+        </form>
     </div>
 </div>
-
-
 
 <style>
 /* Universal box-sizing fix */

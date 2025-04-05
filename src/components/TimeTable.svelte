@@ -1,35 +1,25 @@
 <script>
-  const DAYS_IN_TEN_DAYS = 10;
-  import { setContext } from 'svelte';
   import Popup from './widgets/Popup.svelte';
   // @ts-ignore
-  import { todayAddedHours } from '$assets/store.svelte.js';
+  import { tableData } from '$assets/store.svelte.js';
  
   let weekDays = $state([]);
   let { projects, sheetRecords } = $props();
 
-  let tableData = $state([]);
   console.log($state.snapshot(projects))
   let noteText = $state('');
   let takingNote = $state(false);
 
-  setContext('TimeSheet', { addHoursToTable });
 
   // Form an Array of the Time data totals
   let columnTotals = $derived.by(() => {
-    return Array.from({ length: DAYS_IN_TEN_DAYS }, (_, colIndex) =>
+    return Array.from({ length: 10 }, (_, colIndex) =>
       tableData.reduce((sum, row) => sum + (parseFloat(row.entries[colIndex]) || 0), 0)
     );
   });
 
   // @ts-ignore
   let tableTotal = $derived(columnTotals.reduce((sum, value) => sum + (parseFloat(value) || 0), 0));
-
-  let rowTotals = $derived.by(() => {
-    return tableData.map(row =>
-      row.entries.reduce((sum, value) => sum + (parseFloat(value) || 0), 0)
-    );
-  });
 
   let startDate = new Date(sheetRecords[0].startDate);
   let weekStart = $state(null);
@@ -83,17 +73,10 @@
     tableData.push({
       projectName: '',
       selectedTask: '',
-      entries: Array.from({ length: DAYS_IN_TEN_DAYS }, () => "")
+      entries: Array.from({ length: 10 }, () => "")
     });
   }
 
-  function chooseProject(event, rowIndex) {
-    tableData[rowIndex].projectName = projects[event.target.value].name;
-  }
-
-  function chooseTask(event, rowIndex) {
-    tableData[rowIndex].selectedTask = event.target.value;
-  }
 
   function copyLastWeek(){
     console.log('Stub')
@@ -102,33 +85,8 @@
     takingNote = true;
   }
 
-  function addHoursToTable(date, hours, projectName, task) {
-    console.log('Adding hours to table:', date, hours, projectName);
-
-    const dayIndex = weekDays.findIndex(day => day === date);
-    if (dayIndex === -1) {
-      console.error('Date not found in the current week range');
-      return;
-    }
-
-    let projectIndex = tableData.findIndex(row => row.projectName === projectName);
-    if (projectIndex === -1) {
-      tableData.push({
-        projectName: projectName,
-        selectedTask: task,
-        entries: Array.from({ length: DAYS_IN_TEN_DAYS }, () => "")
-      });
-      projectIndex = tableData.length - 1;
-    }
-
-    tableData[projectIndex].entries[dayIndex] = (parseFloat(tableData[projectIndex].entries[dayIndex]) || 0) + hours;
-  }
-
   updateWeekRange();
 
-  for (let i = 0; i < todayAddedHours.length; ++i) {
-    addHoursToTable(todayAddedHours[i].date, todayAddedHours[i].hours, todayAddedHours[i].project, todayAddedHours[i].task);
-  }
   console.log($state.snapshot(tableData))
 </script>
 
@@ -196,9 +154,9 @@
         {#each tableData as row, rowIndex}
           <tr>
             <td>
-              <select bind:value={row.projectName} >
+              <select bind:value={row.projectName}>
                 <option value="" disabled selected>Select a Project</option>
-                {#each projects as projectSelection, i}
+                {#each projects as projectSelection}
                   <option>{projectSelection.name}</option>
                 {/each}
               </select>
@@ -222,7 +180,7 @@
                 />
               </td>
             {/each}
-            <td>{rowTotals[rowIndex]}</td>
+            <td>{row.entries.reduce((sum, value) => sum + (parseFloat(value) || 0), 0)}</td>
           </tr>
         {/each}
         <tr class="total-row">

@@ -1,7 +1,30 @@
 <script>
+  import TaskSearchBar from "./TaskSearchbar.svelte";
   let { props } = $props();
 
   let deadlineContent = $state(null);
+
+  let searchResults = $state([]);
+
+  let tasks = [
+    {
+      name: "Fix Bug #123",
+      tags: [{ name: "bug" }, { name: "urgent" }],
+      dueDate: "2025-03-30",
+    },
+    {
+      name: "Implement Feature X",
+      tags: [{ name: "feature" }, { name: "high-priority" }],
+      dueDate: "2025-04-05",
+    },
+    {
+      name: "Code Review",
+      tags: [{ name: "review" }],
+      dueDate: "2025-03-28",
+    },
+  ];
+
+  $inspect(searchResults)
 
   function handleDeadlineClick(id) {
     console.log(id);
@@ -29,6 +52,7 @@
 
 <div class="deadline-board">
   <h2 class="board-title">Projects Dashboard</h2>
+  <TaskSearchBar tasks={tasks} bind:results={searchResults} />
   <div class="scroll-wrap">
     {#each sortedDates as timestamp, index}
       {#if index !== 0}

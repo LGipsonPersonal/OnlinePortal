@@ -331,71 +331,118 @@ button:active, .arrow-button:active, .submit-button:active, .left-button:active 
   }
 }
 
-/* Table */
-.project-table {
-  width: 100%;
-  border-collapse: seperate;
-  border-spacing: 0;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  background-color: #1e1e1e; /* Dark background */
-  box-shadow: 0 1px 3px rgba(27, 31, 35, 0.12), 0 8px 24px rgba(27, 31, 35, 0.12); /* Subtle shadow */
-}
-.table-wrapper {
-  overflow-x: auto;
-  width: 100%;
-}
-.project-table th {
-  background-color: #2e2e2e; /* Darker background */
-  color: #e0e0e0; /* Light text */
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  padding: 0.5rem; /* Reduced padding */
-  border: 1px solid #444444; /* Darker border */
-}
+  /* General Table Styles */
+  .project-table {
+    width: 100%;
+    border-collapse: collapse; /* Remove spacing between table cells */
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    background-color: #1e1e1e; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    border: 1px solid #2e2e2e; /* Subtle border around the table */
+    border-radius: 8px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensure rounded corners apply to the entire table */
+  }
 
-.project-table td {
-  padding: 0.5rem; /* Reduced padding */
-  text-align: center;
-  color: #e0e0e0; /* Light text */
-  border: 1px solid #444444; /* Darker border */
-}
+  .table-wrapper {
+    overflow-x: auto; /* Allow horizontal scrolling for smaller screens */
+    width: 100%;
+    border-radius: 8px; /* Match table's rounded corners */
+    background-color: #1e1e1e; /* Match table background */
+    padding: 0.5rem; /* Padding around the table */
+    margin: 0 auto; /* Center the table wrapper */
+    box-sizing: border-box;
+    
+  }
 
-/* Inputs in Table */
-.project-table input {
-  width: 2rem; /* Reduced width */
-  padding: 0.25rem; /* Reduced padding */
-  border: 1px solid #444444; /* Darker border */
-  border-radius: 6px;
-  font-size: 0.75rem; /* Reduced font size */
-  text-align: center;
-  background-color: #2e2e2e; /* Dark background */
-  color: #e0e0e0; /* Light text */
-  outline: none;
-  transition: 0.2s;
-}
+  /* Table Header */
+  .project-table th {
+    background-color: #2e2e2e; /* Slightly darker background for headers */
+    color: #e0e0e0; /* Light text */
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.75rem; /* Consistent padding */
+    border-bottom: 1px solid #444444; /* Subtle border below headers */
+    text-align: center; /* Align text to the left */
+  }
 
-.project-table input:focus {
-  border-color: #4f46e5; /* Purple focus border */
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3); /* Subtle purple shadow */
-}
+  /* Table Body */
+  .project-table td {
+    padding: 0.75rem; /* Consistent padding */
+    text-align: center; /* Align text to the left */
+    border-bottom: 1px solid #2e2e2e; /* Subtle border between rows */
+    color: #d1d1d1; /* Muted text color for table cells */
+  }
 
-/* Totals Row */
-.project-table .total-row td {
-  font-weight: 600;
-  background-color: #2e2e2e; /* Darker background */
-  color: #e0e0e0; /* Light text */
-}
+  /* Inputs in Table */
+  .project-table input {
+    width: 5rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    border: 1px solid #444444; /* Subtle border for inputs */
+    border-radius: 4px; /* Slightly rounded corners */
+    background-color: #2e2e2e; /* Darker background for inputs */
+    color: #e0e0e0; /* Light text */
+    outline: none;
+    text-align: center; /* Center text in inputs */
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
 
-/* Row Hover */
-.project-table tbody tr:hover {
-  background-color: #333333; /* Slightly lighter background on hover */
-  transition: background-color 0.3s ease;
-}
+  .project-table input:focus {
+    border-color: #4f46e5; /* Purple focus border */
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3); /* Subtle purple shadow */
+  }
+
+  /* Totals Row */
+  .project-table .total-row td {
+    font-weight: 600;
+    background-color: #2e2e2e; /* Match header background */
+    color: #e0e0e0; /* Light text */
+    border-top: 1px solid #444444; /* Subtle border above totals row */
+  }
+  .project-table tbody tr {
+    border-left: 2px solid #444444; /* Subtle left border for rows */
+    border-right: 2px solid #444444; /* Subtle left border for rows */
+  }
+
+  /* Row Hover Effect */
+  .project-table tbody tr:hover {
+    background-color: #2a2a2a; /* Slightly lighter background on hover */
+    transition: background-color 0.3s ease;
+  }
+
+  /* Dropdown Styling */
+  .project-table select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    border: 1px solid #444444; /* Subtle border for dropdowns */
+    border-radius: 4px; /* Slightly rounded corners */
+    background-color: #2e2e2e; /* Darker background for dropdowns */
+    color: #e0e0e0; /* Light text */
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .project-table select:focus {
+    border-color: #4f46e5; /* Purple focus border */
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3); /* Subtle purple shadow */
+  }
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .project-table th,
+  .project-table td {
+    font-size: 0.75rem; /* Smaller font size for smaller screens */
+    padding: 0.5rem; /* Reduced padding */
+  }
+
+    .table-wrapper {
+      padding: 0.5rem; /* Reduced padding around the table */
+    }
   .controls {
     flex-direction: column;
     align-items: center;

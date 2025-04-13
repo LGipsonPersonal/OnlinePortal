@@ -1,7 +1,32 @@
 <script>
   import { onMount } from 'svelte';
   import Popup from './widgets/Popup.svelte';
-  import { boardGroups } from '$assets/store.svelte.js';
+  // @ts-ignore
+  import { issues } from '$assets/store.svelte.js';
+
+  let boardGroups = $state(transformIssuesToBoardGroups(issues))
+
+  function transformIssuesToBoardGroups(issues) {
+  const groups = {};
+
+  issues.forEach((issue) => {
+    if (!groups[issue.group]) {
+      groups[issue.group] = { name: issue.group, boards: [] };
+    }
+
+    const group = groups[issue.group];
+    let board = group.boards.find((b) => b.name === issue.board);
+
+    if (!board) {
+      board = { name: issue.board, issues: [] };
+      group.boards.push(board);
+    }
+
+    board.issues.push(issue);
+  });
+
+  return Object.values(groups);
+}
 
   let newIssueTitle = $state("");
   let newIssueDescription = $state("");
@@ -294,7 +319,7 @@
 
   .board {
     background-color: #2e2e2e;
-    padding: 1rem;
+    padding: 0.86rem;
     border-radius: 4px;
     border: 1px solid #444444;
     min-width: 300px;
@@ -306,7 +331,7 @@
   }
   .board h2 {
     font-size: 1.2rem;
-    margin-top: 0.5rem;
+    margin-top: 0;
     color: #ffffff; /* White text for the board title */
   }
   .issue {

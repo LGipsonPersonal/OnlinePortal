@@ -1,211 +1,164 @@
 <script>
   import TaskSearchBar from "./TaskSearchbar.svelte";
-  let { props } = $props();
-
-  let deadlineContent = $state(null);
+  // Import the `issues` array from the store
+  import { issues } from "$assets/store.svelte.js";
 
   let searchResults = $state([]);
 
-  let tasks = [
-    {
-      name: "Fix Bug #123",
-      tags: [{ name: "bug" }, { name: "urgent" }],
-      dueDate: "2025-03-30",
-    },
-    {
-      name: "Implement Feature X",
-      tags: [{ name: "feature" }, { name: "high-priority" }],
-      dueDate: "2025-04-05",
-    },
-    {
-      name: "Code Review",
-      tags: [{ name: "review" }],
-      dueDate: "2025-03-28",
-    },
-  ];
+  // Extract unique states (boards) from the issues array
+  let states = $derived.by(() => [...new Set(issues.map((issue) => issue.board))]);
 
-  $inspect(searchResults)
-
-  function handleDeadlineClick(id) {
-    console.log(id);
-    deadlineContent = props.announcements.find(
-      (announcement) => announcement.id === id,
-    );
-  }
-
-  // Group announcements by posted date
-  let groupedAnnouncements = $state({});
-
-  props.forEach((announcement) => {
-    if (!groupedAnnouncements[announcement.timestamp]) {
-      groupedAnnouncements[announcement.timestamp] = [];
+  // Function to update the state (board) of an issue
+  function updateTaskState(task, newState) {
+    const issue = issues.find((i) => i.id === task.id);
+    if (issue) {
+      issue.board = newState; // Update the board field
     }
-    groupedAnnouncements[announcement.timestamp].push(announcement);
-  });
-
-  // Sort dates chronologically
-  let sortedDates = Object.keys(groupedAnnouncements).sort((a, b) => {
-    // @ts-ignore
-    return new Date(a) - new Date(b);
-  });
+  }
 </script>
 
-<div class="deadline-board">
+<div class="dashboard-container">
   <h2 class="board-title">Projects Dashboard</h2>
-  <TaskSearchBar tasks={tasks} bind:results={searchResults} />
-  <div class="scroll-wrap">
-    {#each sortedDates as timestamp, index}
-      {#if index !== 0}
-        <hr class="date-divider" />
-      {/if}
-      <h3 class="date-heading">{timestamp}</h3>
-      {#each groupedAnnouncements[timestamp] as announcement (announcement.id)}
-        <div
-          class="deadline"
-          onclick={() => handleDeadlineClick(announcement.id)}
-        >
-          <div class="avatar-container">
-            <div class="avatar">
-              <img src={announcement.avatar} alt="Project Pic" />
-            </div>
-          </div>
-          <div class="deadline-content">
-            <div class="left">
-              <p class="title">{announcement.title}</p>
-              <p class="description">{announcement.description}</p>
-              <p class="date">Due Date: {announcement.date}</p>
-            </div>
-            <div class="right">
-              <p class="priority">Priority: {announcement.priority}</p>
-              <p class="class">Project: {announcement.project}</p>
-            </div>
-          </div>
-        </div>
-      {/each}
-    {/each}
+  <TaskSearchBar tasks={issues} bind:results={searchResults} />
+
+  <div class="table-wrapper">
+    <table class="dashboard-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Due Date</th>
+          <th>Project</th>
+          <th>State</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each (searchResults.length > 0 ? searchResults : issues) as task}
+          <tr>
+            <td>{task.title}</td>
+            <td>{task.dueDate}</td>
+            <td>{task.group}</td>
+            <td>
+              <select
+                bind:value={task.board}
+                class="state-select"
+                on:change={(e) => updateTaskState(task, e.target.value)}
+              >
+                {#each states as state}
+                  <option value={state}>{state}</option>
+                {/each}
+              </select>
+            </td>
+            <td class="priority {task.priority.toLowerCase()}">{task.priority}</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
   </div>
 </div>
 
 <style>
-  .deadline-board {
+  .dashboard-container {
     max-height: calc(100vh - 7rem);
     flex: 1 1 100%;
-    background: var(--accent-color-two); /* Match Announcement background */
+    background: var(--accent-color-two);
     padding: 1rem;
     border-radius: 6px;
-    border: 1px solid #444; /* Match Announcement border */
-    color: #e0e0e0; /* Match Announcement text color */
+    border: 1px solid #444;
+    color: #e0e0e0;
     overflow: hidden;
-  }
-
-  .scroll-wrap {
-    padding-right: 1rem;
-    padding-left: 1rem;
-    height: calc(100vh - 11.4rem);
-    padding-bottom: 0;
-    overflow-y: auto;
   }
 
   .board-title {
     font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    margin-top: 0.8rem;
     text-align: center;
-    color: #e0e0e0; /* Match Announcement text color */
-    border-bottom: 1px solid #444; /* Match Announcement border */
+    color: #e0e0e0;
+    border-bottom: 1px solid #444;
     padding-bottom: 0.8rem;
   }
 
-  .deadline {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background-color: #2e2e2e; /* Match Announcement card background */
-    border-radius: 6px;
-    border: 1px solid #444; /* Match Announcement card border */
-    margin-bottom: 0.8rem;
-    transition: background-color 0.3s, transform 0.2s;
-    cursor: pointer;
+  .table-wrapper {
+    overflow-x: auto;
+    margin-top: 1rem;
   }
 
-  .deadline:hover {
-    background-color: #3a3a3a; /* Match Announcement hover background */
-    transform: scale(1.02);
-  }
-
-  .avatar-container {
-    margin-right: 1rem;
-  }
-  .right{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .date-divider {
-    border: 0;
-    height: 1px;
-    background: #444; /* Match Announcement divider */
-    margin: 1rem 0;
-  }
-
-  .date-heading {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: #e0e0e0; /* Match Announcement text color */
-  }
-
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 1px solid #444; /* Match Announcement avatar border */
-  }
-
-  .avatar img {
+  .dashboard-table {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #2e2e2e;
+    border-radius: 8px;
+    overflow: hidden;
   }
 
-  .deadline-content {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    color: #e0e0e0; /* Match Announcement text color */
-  }
-
-  .title {
-    font-size: 1rem;
+  .dashboard-table th {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
     font-weight: 600;
-    margin: 0 0 0.5rem;
-    color: #e0e0e0; /* Match Announcement text color */
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid #444444;
+    text-align: left;
+    border-right: 1px solid #444444; /* Add dividing line between columns */
   }
 
-  .description {
-    font-size: 0.875rem;
-    margin: 0 0 0.5rem;
-    color: var(--text-color-muted, #c0c0c0); /* Match Announcement muted text */
+  .dashboard-table th:last-child {
+    border-right: none; /* Remove dividing line for the last column */
   }
 
-  .date {
-    font-size: 0.875rem;
-    margin: 0;
-    color: var(--text-color-muted, #c0c0c0); /* Match Announcement muted text */
+  .dashboard-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #2e2e2e;
+    color: #d1d1d1;
+    border-right: 1px solid #444444; /* Add dividing line between columns */
+  }
+
+  .dashboard-table td:last-child {
+    border-right: none; /* Remove dividing line for the last column */
+  }
+
+  .dashboard-table tr:hover {
+    background-color: #2a2a2a;
+    transition: background-color 0.3s ease;
   }
 
   .priority {
-    font-size: 0.875rem;
-    margin: 0;
-    color: #ff6b6b; /* Highlight priority in red */
     font-weight: bold;
   }
 
-  .class {
+  .priority.high {
+    color: #ff6b6b; /* Red for high priority */
+  }
+
+  .priority.medium {
+    color: #ffa500; /* Orange for medium priority */
+  }
+
+  .priority.low {
+    color: #4caf50; /* Green for low priority */
+  }
+
+  .state-select {
+    padding: 0.2rem;
     font-size: 0.875rem;
-    margin: 0 0 0.5rem;
-    color: var(--text-color-muted, #c0c0c0); /* Match Announcement muted text */
+    border: 1px solid #444444;
+    border-radius: 4px;
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .state-select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
   }
 </style>

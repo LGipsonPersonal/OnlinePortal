@@ -39,7 +39,7 @@
 </script>
 
 <div class="search-bar-container">
-  <div class="multi-select">
+  <div class="search-bar">
     <input
       type="text"
       placeholder="Search tasks..."
@@ -47,11 +47,13 @@
       oninput={filterTasks}
       class="search-input"
     />
+    <div class="vertical-divider"></div>
     <select bind:value={selectedField} onchange={filterTasks} class="filter-dropdown">
       {#each searchFields as field}
         <option value={field.value}>{field.label}</option>
       {/each}
     </select>
+    <div class="vertical-divider"></div>
     <select bind:value={sortOrder} onchange={filterTasks} class="sort-dropdown">
       <option value="ascending">Due Date: Ascending</option>
       <option value="descending">Due Date: Descending</option>
@@ -71,7 +73,7 @@
     margin-bottom: 1rem;
   }
 
-  .multi-select {
+  .search-bar {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -88,12 +90,10 @@
   .sort-dropdown {
     padding: 0.5rem;
     font-size: 1rem;
-    border: 1px solid #444444;
-    border-radius: 4px;
-    background-color: #2e2e2e;
+    border: none; /* Remove individual borders */
+    background-color: transparent;
     color: #e0e0e0;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
     flex: 1;
   }
 
@@ -104,14 +104,20 @@
     cursor: pointer;
   }
 
-  .search-input:focus,
-  .filter-dropdown:focus,
-  .sort-dropdown:focus {
-    border-color: #4f46e5;
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
-  }
-
   .search-input {
     flex: 2; /* Make the search input larger than the dropdowns */
+  }
+
+  .vertical-divider {
+    width: 1px; /* Thin vertical line */
+    height: 1.5rem; /* Match the height of the parent container */
+    background-color: #444444; /* Divider color */
+    margin: 0 0.5rem; /* Spacing between elements */
+  }
+
+  .filter-dropdown:focus,
+  .sort-dropdown:focus {
+    border: none;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3); /* Subtle focus effect */
   }
 </style>

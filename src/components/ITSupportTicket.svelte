@@ -1,4 +1,5 @@
 <script>
+  // @ts-ignore
   import { selfOnly } from "$assets/utils.js";
   import { onMount, onDestroy } from 'svelte';
   import Tooltip from "./widgets/Tooltip.svelte";

@@ -4,7 +4,19 @@
   // @ts-ignore
   import { issues } from '$assets/store.svelte.js';
 
-  let boardGroups = $state(transformIssuesToBoardGroups(issues))
+  let boardGroups = $derived(transformIssuesToBoardGroups(issues))
+
+  let newIssueTitle = $state("");
+  let newIssueDescription = $state("");
+  let newBoardName = $state("");
+  let showAddBoardPopup = $state(false);
+  let showAddIssuePopup = $state(false);
+  let searchQuery = $state("");
+  let selectedGroup = $state(boardGroups[0]?.name || ""); // Default to the first group
+  let selectedIssue = $state(null);
+  let showIssueDetails = $state(false);
+  let dragIssueId = $state(null); // Store the ID of the dragged issue
+  let dragOverBoard = $state(null);
 
   function transformIssuesToBoardGroups(issues) {
   const groups = {};
@@ -27,18 +39,6 @@
 
   return Object.values(groups);
 }
-
-  let newIssueTitle = $state("");
-  let newIssueDescription = $state("");
-  let newBoardName = $state("");
-  let showAddBoardPopup = $state(false);
-  let showAddIssuePopup = $state(false);
-  let searchQuery = $state("");
-  let selectedGroup = $state(boardGroups[0]?.name || ""); // Default to the first group
-  let selectedIssue = $state(null);
-  let showIssueDetails = $state(false);
-  let dragOverBoard = $state(null);
-  let selectedBoardForIssue = $state("");
 
   // Utility function to calculate luminance and determine text color
   function getTextColorForBackground(backgroundColor) {
@@ -83,32 +83,22 @@
     }
   }
 
-  function handleDragStart(event, issue, sourceBoardName) {
-    event.dataTransfer.setData("issue", JSON.stringify(issue));
-    event.dataTransfer.setData("sourceBoard", sourceBoardName);
+  function handleDragStart(issueId) {
+    dragIssueId = issueId; // Store the dragged issue ID
   }
 
-  function handleDrop(event, targetBoardName) {
-    event.preventDefault();
-    const issue = JSON.parse(event.dataTransfer.getData("issue"));
-    const sourceBoardName = event.dataTransfer.getData("sourceBoard");
-
-    const group = boardGroups.find(group => group.name === selectedGroup);
-    const sourceBoard = group?.boards.find(board => board.name === sourceBoardName);
-    const targetBoard = group?.boards.find(board => board.name === targetBoardName);
-
-    if (sourceBoard) {
-      sourceBoard.issues = sourceBoard.issues.filter(i => i.id !== issue.id);
-    }
-    if (targetBoard) {
-      targetBoard.issues.push(issue);
+  function handleDrop(targetBoardName) {
+    const issue = issues.find((i) => i.id === dragIssueId); // Find the issue in the store
+    console.log(issue)
+    if (issue) {
+      issue.board = targetBoardName; // Update the board (state) of the issue
     }
 
+    dragIssueId = null; // Clear the dragged issue ID
     dragOverBoard = null;
   }
 
-  function allowDrop(event, boardName) {
-    event.preventDefault();
+  function allowDrop(boardName) {
     dragOverBoard = boardName;
   }
 
@@ -156,8 +146,8 @@
         {#each boardGroups.find(group => group.name === selectedGroup)?.boards as board}
           <div
             class="board {dragOverBoard === board.name ? 'drag-over' : ''}"
-            ondrop={(event) => handleDrop(event, board.name)}
-            ondragover={(event) => allowDrop(event, board.name)}
+            ondrop={() => handleDrop(board.name)}
+            ondragover={() => allowDrop(board.name)}
           >
             <h2>{board.name}</h2>
             <div class="issue-list">
@@ -165,7 +155,7 @@
                 <div
                   class="issue"
                   draggable="true"
-                  ondragstart={(event) => handleDragStart(event, issue, board.name)}
+                  ondragstart={() => handleDragStart(issue.id)}
                 >
                   <div class="issue-header">
                     <h3>{issue.title}</h3>
@@ -235,12 +225,12 @@
       placeholder="Issue Description"
       bind:value={newIssueDescription}
     ></textarea>
-    <select bind:value={selectedBoardForIssue}>
+    <!--<select bind:value={selectedBoardForIssue}>
       <option value="" disabled selected>Select a Board</option>
       {#each boardGroups.find(group => group.name === selectedGroup)?.boards as board}
         <option value={board.name}>{board.name}</option>
       {/each}
-    </select>
+    </select>-->
     <button onclick={() => addIssue(newIssueTitle, newIssueDescription, selectedBoardForIssue)}>Confirm</button>
 </div>
 {/snippet}

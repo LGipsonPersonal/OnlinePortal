@@ -15,6 +15,17 @@
       issue.board = newState; // Update the board field
     }
   }
+
+  // Function to get text color based on background color
+  function getTextColorForBackground(backgroundColor) {
+    const color = backgroundColor.substring(1); // Remove the '#' character
+    const rgb = parseInt(color, 16); // Convert hex to RGB
+    const r = (rgb >> 16) & 0xff;
+    const g = (rgb >> 8) & 0xff;
+    const b = (rgb >> 0) & 0xff;
+    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // Calculate luma
+    return luma > 128 ? "#000000" : "#ffffff"; // Return black or white based on luma
+  }
 </script>
 
 <div class="dashboard-container">
@@ -29,7 +40,7 @@
           <th>Due Date</th>
           <th>Project</th>
           <th>State</th>
-          <th>Priority</th>
+          <th>Tags</th>
         </tr>
       </thead>
       <tbody>
@@ -49,7 +60,18 @@
                 {/each}
               </select>
             </td>
-            <td class="priority {task.priority.toLowerCase()}">{task.priority}</td>
+            <td>
+              <div class="tags">
+                {#each task.tags as tag}
+                  <span
+                    class="tag"
+                    style="background-color: {tag.color}; color: {getTextColorForBackground(tag.color)}"
+                  >
+                    {tag.name}
+                  </span>
+                {/each}
+              </div>
+            </td>
           </tr>
         {/each}
       </tbody>
@@ -127,6 +149,21 @@
   .dashboard-table tr:hover {
     background-color: #2a2a2a;
     transition: background-color 0.3s ease;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #ffffff;
   }
 
   .priority {

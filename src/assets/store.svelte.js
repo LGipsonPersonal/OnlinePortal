@@ -412,9 +412,8 @@ export let issues = $state([
     originator: "User C",
     tags: [
       { name: "UI", color: "#4f46e5" },
-      { name: "High Priority", color: "#ff6b6b" },
+      { name: "High Priority", color: "#ff6b6b" }, // Priority as a tag
     ],
-    priority: "High",
     board: "Design",
     group: "UI/UX",
   },
@@ -427,8 +426,8 @@ export let issues = $state([
     tags: [
       { name: "Design", color: "#34d399" },
       { name: "Documentation", color: "#fbbf24" },
+      { name: "Medium Priority", color: "#ffa500" }, // Priority as a tag
     ],
-    priority: "Medium",
     board: "Design",
     group: "UI/UX",
   },
@@ -441,8 +440,8 @@ export let issues = $state([
     tags: [
       { name: "Feature", color: "#4f46e5" },
       { name: "UI", color: "#34d399" },
+      { name: "Low Priority", color: "#4caf50" }, // Priority as a tag
     ],
-    priority: "Low",
     board: "Development",
     group: "UI/UX",
   },
@@ -455,8 +454,8 @@ export let issues = $state([
     tags: [
       { name: "Testing", color: "#fbbf24" },
       { name: "UI", color: "#4f46e5" },
+      { name: "Low Priority", color: "#4caf50" }, // Priority as a tag
     ],
-    priority: "Low",
     board: "Testing",
     group: "UI/UX",
   },
@@ -469,8 +468,8 @@ export let issues = $state([
     tags: [
       { name: "AI", color: "#34d399" },
       { name: "Backend", color: "#fbbf24" },
+      { name: "High Priority", color: "#ff6b6b" }, // Priority as a tag
     ],
-    priority: "High",
     board: "Model Training",
     group: "AI Features",
   },
@@ -483,8 +482,8 @@ export let issues = $state([
     tags: [
       { name: "AI", color: "#34d399" },
       { name: "Feature", color: "#4f46e5" },
+      { name: "Medium Priority", color: "#ffa500" }, // Priority as a tag
     ],
-    priority: "Medium",
     board: "Feature Integration",
     group: "AI Features",
   },
@@ -497,8 +496,8 @@ export let issues = $state([
     tags: [
       { name: "Backend", color: "#fbbf24" },
       { name: "Security", color: "#ff6b6b" },
+      { name: "High Priority", color: "#ff6b6b" }, // Priority as a tag
     ],
-    priority: "High",
     board: "API Development",
     group: "Backend",
   },
@@ -511,8 +510,8 @@ export let issues = $state([
     tags: [
       { name: "Database", color: "#4f46e5" },
       { name: "Backend", color: "#fbbf24" },
+      { name: "Medium Priority", color: "#ffa500" }, // Priority as a tag
     ],
-    priority: "Medium",
     board: "Database Migration",
     group: "Backend",
   },

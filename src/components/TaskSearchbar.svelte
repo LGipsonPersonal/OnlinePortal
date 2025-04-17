@@ -1,6 +1,6 @@
 <script>
   let { tasks, results = $bindable() } = $props(); // Array of tasks to search and filter
-  
+
   let searchQuery = $state(""); // User's search input
   let selectedField = $state("name"); // Default search field
   let sortOrder = $state("ascending"); // Default sort order
@@ -39,22 +39,25 @@
 </script>
 
 <div class="search-bar-container">
-  <div class="search-bar">
-    <input
-      type="text"
-      placeholder="Search tasks..."
-      bind:value={searchQuery}
-      oninput={filterTasks}
-      class="search-input"
-    />
-    <div class="vertical-divider"></div>
-    <select bind:value={selectedField} onchange={filterTasks} class="filter-dropdown">
+  <!-- Search Section -->
+  <div class="search-section">
+    <select bind:value={selectedField} onchange={filterTasks} class="search-dropdown">
       {#each searchFields as field}
         <option value={field.value}>{field.label}</option>
       {/each}
     </select>
-    <div class="vertical-divider"></div>
-    <select bind:value={sortOrder} onchange={filterTasks} class="sort-dropdown">
+    <input
+      type="text"
+      placeholder="Search..."
+      bind:value={searchQuery}
+      oninput={filterTasks}
+      class="search-input"
+    />
+  </div>
+
+  <!-- Filter and Sort Section -->
+  <div class="filter-section">
+    <select bind:value={sortOrder} onchange={filterTasks} class="filter-dropdown">
       <option value="ascending">Due Date: Ascending</option>
       <option value="descending">Due Date: Descending</option>
     </select>
@@ -64,60 +67,50 @@
 <style>
   .search-bar-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background-color: #2e2e2e; /* Unified background color */
-    border-radius: 8px;
+    gap: 1rem;
+    padding: 0.5rem;
+    background-color: #2e2e2e;
+    border-radius: 6px;
     border: 1px solid #444444;
     margin-bottom: 1rem;
   }
 
-  .search-bar {
+  .search-section,
+  .filter-section {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    width: 100%;
-    max-width: 800px;
-    background-color: #1e1e1e; /* Unified background for the entire bar */
-    border-radius: 6px;
-    padding: 0.5rem;
-    border: 1px solid #444444;
   }
 
   .search-input,
-  .filter-dropdown,
-  .sort-dropdown {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: none; /* Remove individual borders */
-    background-color: transparent;
+  .search-dropdown,
+  .filter-dropdown {
+    padding: 0.4rem;
+    font-size: 0.85rem;
+    border: 1px solid #444444;
+    border-radius: 4px;
+    background-color: #1e1e1e;
     color: #e0e0e0;
     outline: none;
     flex: 1;
   }
 
-  .filter-dropdown,
-  .sort-dropdown {
+  .search-input {
+    flex: 2; /* Make the search input larger */
+  }
+
+  .search-dropdown,
+  .filter-dropdown {
     flex: 0 0 auto;
     width: auto;
     cursor: pointer;
   }
 
-  .search-input {
-    flex: 2; /* Make the search input larger than the dropdowns */
-  }
-
-  .vertical-divider {
-    width: 1px; /* Thin vertical line */
-    height: 1.5rem; /* Match the height of the parent container */
-    background-color: #444444; /* Divider color */
-    margin: 0 0.5rem; /* Spacing between elements */
-  }
-
-  .filter-dropdown:focus,
-  .sort-dropdown:focus {
-    border: none;
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3); /* Subtle focus effect */
+  .search-dropdown:focus,
+  .filter-dropdown:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
   }
 </style>

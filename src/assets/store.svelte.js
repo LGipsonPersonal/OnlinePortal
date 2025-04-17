@@ -406,7 +406,7 @@ export const projectUpcoming = [
 export let issues = $state([
   {
     id: "1",
-    title: "Redesign Homepage",
+    name: "Redesign Homepage",
     description: "Update the homepage layout for better usability.",
     dueDate: "2025-04-01",
     originator: "User C",
@@ -419,7 +419,7 @@ export let issues = $state([
   },
   {
     id: "2",
-    title: "Create Style Guide",
+    name: "Create Style Guide",
     description: "Develop a consistent style guide for the application.",
     dueDate: "2025-04-10",
     originator: "User F",
@@ -433,7 +433,7 @@ export let issues = $state([
   },
   {
     id: "3",
-    title: "Implement Dark Mode",
+    name: "Implement Dark Mode",
     description: "Add a dark mode toggle to the application.",
     dueDate: "2025-04-15",
     originator: "User G",
@@ -447,7 +447,7 @@ export let issues = $state([
   },
   {
     id: "4",
-    title: "Test Navigation Bar",
+    name: "Test Navigation Bar",
     description: "Ensure the navigation bar works on all screen sizes.",
     dueDate: "2025-04-20",
     originator: "User H",
@@ -461,13 +461,20 @@ export let issues = $state([
   },
   {
     id: "5",
-    title: "Train Recommendation Model",
+    name: "Train Recommendation Model",
     description: "Improve recommendation accuracy by 10%.",
     dueDate: "2025-05-15",
     originator: "User D",
     tags: [
-      { name: "AI", color: "#34d399" },
-      { name: "Backend", color: "#fbbf24" },
+      { name: "AI1", color: "#34d399" },
+      { name: "AI2", color: "#34d399" },
+      { name: "AI3", color: "#34d399" },
+      { name: "AI4", color: "#34d399" },
+      { name: "AI5", color: "#34d399" },
+      { name: "Backend1", color: "#fbbf24" },
+      { name: "Backend2", color: "#fbbf24" },
+      { name: "Backend3", color: "#fbbf24" },
+      { name: "Backend4", color: "#fbbf24" },
       { name: "High Priority", color: "#ff6b6b" }, // Priority as a tag
     ],
     board: "Model Training",
@@ -475,7 +482,7 @@ export let issues = $state([
   },
   {
     id: "6",
-    title: "Integrate Chatbot",
+    name: "Integrate Chatbot",
     description: "Add chatbot functionality to the support page.",
     dueDate: "2025-05-25",
     originator: "User J",
@@ -489,7 +496,7 @@ export let issues = $state([
   },
   {
     id: "7",
-    title: "Create Authentication API",
+    name: "Create Authentication API",
     description: "Develop a secure authentication API.",
     dueDate: "2025-03-30",
     originator: "User E",
@@ -503,7 +510,7 @@ export let issues = $state([
   },
   {
     id: "8",
-    title: "Migrate to PostgreSQL",
+    name: "Migrate to PostgreSQL",
     description: "Move the database from MySQL to PostgreSQL.",
     dueDate: "2025-04-10",
     originator: "User L",

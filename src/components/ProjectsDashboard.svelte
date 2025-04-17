@@ -46,7 +46,7 @@
       <tbody>
         {#each (searchResults.length > 0 ? searchResults : issues) as task}
           <tr>
-            <td>{task.title}</td>
+            <td>{task.name}</td>
             <td>{task.dueDate}</td>
             <td>{task.group}</td>
             <td>
@@ -126,7 +126,7 @@
     font-size: 0.75rem;
     padding: 0.75rem;
     border-bottom: 1px solid #444444;
-    text-align: left;
+    text-align: center;
     border-right: 1px solid #444444; /* Add dividing line between columns */
   }
 
@@ -136,10 +136,14 @@
 
   .dashboard-table td {
     padding: 0.75rem;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #2e2e2e;
     color: #d1d1d1;
     border-right: 1px solid #444444; /* Add dividing line between columns */
+    max-width: 200px; /* Set a maximum width for each cell */
+    word-wrap: break-word; /* Allow text to wrap within the cell */
+    word-break: break-word; /* Break long words if necessary */
+    white-space: normal; /* Allow text to wrap to the next line */
   }
 
   .dashboard-table td:last-child {
@@ -155,6 +159,7 @@
     display: flex;
     gap: 0.4rem;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .tag {

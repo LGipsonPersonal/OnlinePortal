@@ -26,6 +26,14 @@
       profileImage: "https://via.placeholder.com/40",
       phone: "(555) 555-5555",
       email: "alice.johnson@example.com"
+    },
+    {
+      id: 4,
+      name: "Bob Brown",
+      role: "Tester",
+      profileImage: "https://via.placeholder.com/40",
+      phone: "(555) 444-4444",
+      email: "bob.brown@example.com"
     }
   ]);
 
@@ -37,9 +45,9 @@
 
 <div class="people-of-contact">
   <h2 class="section-title">People of Contact</h2>
-  <div class="contact-list">
+  <div class="contact-grid">
     {#each peopleOfContact as person}
-      <div class="contact-item">
+      <div class="contact-card">
         <div class="avatar">
           <img src={person.profileImage} alt="User Avatar" />
         </div>
@@ -77,54 +85,53 @@
     padding-bottom: 0.5rem;
   }
 
-  .contact-list {
-    display: flex;
-    flex-direction: column;
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Two columns, responsive */
     gap: 1rem;
   }
 
-  .contact-item {
+  .contact-card {
     display: flex;
+    flex-direction: column;
     align-items: center;
     background-color: #2e2e2e; /* Darker background */
     padding: 1rem;
     border-radius: 8px;
     border: 1px solid #444444; /* Darker border */
     transition: background-color 0.2s;
+    text-align: center;
   }
 
-  .contact-item:hover {
+  .contact-card:hover {
     background-color: #3a3a3a;
   }
 
   .avatar {
-    flex: 0 0 auto;
-    display: flex;
-    margin-right: 1rem;
+    margin-bottom: 1rem;
   }
 
   .avatar img {
-    flex: 0 0 auto;
-    width: 40px !important;
-    height: 40px !important;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    border: 1px solid #444444;
+    border: 2px solid #444444;
     object-fit: cover; /* Ensures the image maintains its aspect ratio */
   }
 
   .contact-info {
-    flex: 1;
+    margin-bottom: 1rem;
   }
 
   .name {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
     margin: 0;
     color: #e0e0e0;
   }
 
   .role {
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     margin: 0.25rem 0;
     color: #8b949e; /* Muted text */
   }

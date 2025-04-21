@@ -152,256 +152,283 @@ export const tabs = [
         },
         team: "SEG"
     });
-
-    export let projects = [
-    {
-      name: 'Project X', 
-      tasks:["Task 1", "Task 2"]
-    }, 
-    {
-      name: 'Project Y', 
-      tasks:["Task 1", "Task 2"]
-    },{
-      name: 'Project Z', 
-      tasks:["Task 1", "Task 2"]
-    },
-    {
-      name: 'Project R', 
-      tasks:["Task 1", "Task 2", "Task 3"]
-    },
-    {
-      name: 'Leave', 
-      tasks:[ "Holiday", "Vacation", "Unpaid", "Sick"]
-    } 
-  ]
-  
-  export const documentCategories = [
-    {
-      category: "Insurance",
-      documents: [
-        "Health Insurance Policy",
-        "Car Insurance Policy"
-      ]
-    },
-    {
-      category: "Security Information",
-      documents: [
-        "Network Security Guidelines",
-        "Password Policy"
-      ]
-    },
-    {
-      category: "Retirement Account Information",
-      documents: [
-        "401(k) Plan Summary",
-        "Pension Fund Details"
-      ]
-    }
-  ];
-  
-  export const announcements = {
-    boardTitle: "What's happening at Company",
-    announcements: [
-        {
-            id: 1,
-            avatar: "avatar1.png",
-            author: "Alice Doe",
-            title: "Alice posted an announcement: \"New Feature Released!\"",
-            description: "We are excited to announce a new feature...",
-            date: "Feb 12, 2024",
-            timestamp: "2 hours ago",
-            postContent: `
-            <p>
-                Welcome to a deep dive into the minimal, modern aesthetics that define today's digital design trends. In this post, we explore how subtle color palettes and careful typography can create an immersive reading experience.
-            </p>
-            <blockquote>
-                "Design is not just what it looks like and feels like. Design is how it works." – Steve Jobs
-            </blockquote>
-            <p>
-                Whether you're a designer or just a lover of sleek interfaces, there's a lot to uncover about the art of simplicity. The approach here mirrors the clean style seen on platforms like ShadeCN, focusing on functionality, readability, and a dark theme that brings content to the forefront.
-            </p>
-            <img src="https://placehold.co/600x300/?text=Placeholder+Image" alt="Dark Aesthetic" class="post-image" />
-            <p>
-                Stay tuned for more insights on design, trends, and the creative process. Your journey into the elegant side of dark mode begins here.
-            </p>
-            <p>
-                Welcome to a deep dive into the minimal, modern aesthetics that define today's digital design trends. In this post, we explore how subtle color palettes and careful typography can create an immersive reading experience.
-            </p>
-            <blockquote>
-                "Design is not just what it looks like and feels like. Design is how it works." – Steve Jobs
-            </blockquote>
-            <p>
-                Whether you're a designer or just a lover of sleek interfaces, there's a lot to uncover about the art of simplicity. The approach here mirrors the clean style seen on platforms like ShadeCN, focusing on functionality, readability, and a dark theme that brings content to the forefront.
-            </p>
-            <img src="https://placehold.co/600x300/?text=Placeholder+Image" alt="Dark Aesthetic" class="post-image" />
-            <p>
-                Stay tuned for more insights on design, trends, and the creative process. Your journey into the elegant side of dark mode begins here.
-            </p>
-            `
-        },
-        {
-            id: 2,
+    export const documentCategories = [
+      {
+        category: "Insurance",
+        documents: [
+          "Health Insurance Policy",
+          "Car Insurance Policy"
+        ]
+      },
+      {
+        category: "Security Information",
+        documents: [
+          "Network Security Guidelines",
+          "Password Policy"
+        ]
+      },
+      {
+        category: "Retirement Account Information",
+        documents: [
+          "401(k) Plan Summary",
+          "Pension Fund Details"
+        ]
+      }
+    ];
+    
+    export const announcements = {
+      boardTitle: "What's happening at Company",
+      announcements: [
+          {
+              id: 1,
+              avatar: "avatar1.png",
+              author: "Alice Doe",
+              title: "Alice posted an announcement: \"New Feature Released!\"",
+              description: "We are excited to announce a new feature...",
+              date: "Feb 12, 2024",
+              timestamp: "2 hours ago",
+              postContent: `
+              <p>
+                  Welcome to a deep dive into the minimal, modern aesthetics that define today's digital design trends. In this post, we explore how subtle color palettes and careful typography can create an immersive reading experience.
+              </p>
+              <blockquote>
+                  "Design is not just what it looks like and feels like. Design is how it works." – Steve Jobs
+              </blockquote>
+              <p>
+                  Whether you're a designer or just a lover of sleek interfaces, there's a lot to uncover about the art of simplicity. The approach here mirrors the clean style seen on platforms like ShadeCN, focusing on functionality, readability, and a dark theme that brings content to the forefront.
+              </p>
+              <img src="https://placehold.co/600x300/?text=Placeholder+Image" alt="Dark Aesthetic" class="post-image" />
+              <p>
+                  Stay tuned for more insights on design, trends, and the creative process. Your journey into the elegant side of dark mode begins here.
+              </p>
+              <p>
+                  Welcome to a deep dive into the minimal, modern aesthetics that define today's digital design trends. In this post, we explore how subtle color palettes and careful typography can create an immersive reading experience.
+              </p>
+              <blockquote>
+                  "Design is not just what it looks like and feels like. Design is how it works." – Steve Jobs
+              </blockquote>
+              <p>
+                  Whether you're a designer or just a lover of sleek interfaces, there's a lot to uncover about the art of simplicity. The approach here mirrors the clean style seen on platforms like ShadeCN, focusing on functionality, readability, and a dark theme that brings content to the forefront.
+              </p>
+              <img src="https://placehold.co/600x300/?text=Placeholder+Image" alt="Dark Aesthetic" class="post-image" />
+              <p>
+                  Stay tuned for more insights on design, trends, and the creative process. Your journey into the elegant side of dark mode begins here.
+              </p>
+              `
+          },
+          {
+              id: 2,
+              avatar: "avatar2.png",
+              title: "Bob posted an announcement: \"Scheduled Maintenance\"",
+              description: "The system will be down for maintenance...",
+              timestamp: "1 day ago"
+          },
+          {
+              id: 3,
+              avatar: "avatar3.png",
+              title: "Carol posted an announcement: \"Weekly Update\"",
+              description: "Here is your weekly company update...",
+              timestamp: "3 days ago"
+          },
+          {
+            id: 4,
             avatar: "avatar2.png",
             title: "Bob posted an announcement: \"Scheduled Maintenance\"",
             description: "The system will be down for maintenance...",
             timestamp: "1 day ago"
         },
         {
-            id: 3,
+            id: 5,
             avatar: "avatar3.png",
             title: "Carol posted an announcement: \"Weekly Update\"",
             description: "Here is your weekly company update...",
             timestamp: "3 days ago"
+        }
+      ]
+  };
+  
+  export const events = {
+    boardTitle: "Upcoming Events",
+    announcements: [
+        {
+            id: 1,
+            avatar: "avatar1.png",
+            title: "Los Marcos, June 25th: Celebrate Another Gold Delivery!",
+            description: "With the final delivery of XYSR out the gate...",
+            timestamp: "2 hours ago"
         },
         {
-          id: 4,
-          avatar: "avatar2.png",
-          title: "Bob posted an announcement: \"Scheduled Maintenance\"",
-          description: "The system will be down for maintenance...",
-          timestamp: "1 day ago"
-      },
-      {
-          id: 5,
-          avatar: "avatar3.png",
-          title: "Carol posted an announcement: \"Weekly Update\"",
-          description: "Here is your weekly company update...",
-          timestamp: "3 days ago"
-      }
+            id: 2,
+            avatar: "avatar2.png",
+            title: "OKC Office, May 7th: Annual Chili Party!",
+            description: "Come by the office for our annual Chili party...",
+            timestamp: "1 day ago"
+        },
+        {
+            id: 3,
+            avatar: "avatar3.png",
+            title: "AMC - Penn State, Jan 19th: Movie Night!",
+            description: "Come watch a movie with us this Friday night...",
+            timestamp: "3 days ago"
+        }
     ]
-};
-
-export const events = {
-  boardTitle: "Upcoming Events",
-  announcements: [
-      {
-          id: 1,
-          avatar: "avatar1.png",
-          title: "Los Marcos, June 25th: Celebrate Another Gold Delivery!",
-          description: "With the final delivery of XYSR out the gate...",
-          timestamp: "2 hours ago"
-      },
-      {
+  };
+  
+  export const deadlines = {
+    boardTitle: " Your Upcoming Deadlines",
+    announcements: [
+        {
+            id: 1,
+            avatar: "avatar1.png",
+            title: "May 4, WATR Beta Delivery",
+            description: "Expected features shown at https://docs.google.com/...",
+            timestamp: "2 hours ago"
+        },
+        {
           id: 2,
           avatar: "avatar2.png",
-          title: "OKC Office, May 7th: Annual Chili Party!",
-          description: "Come by the office for our annual Chili party...",
-          timestamp: "1 day ago"
-      },
-      {
-          id: 3,
-          avatar: "avatar3.png",
-          title: "AMC - Penn State, Jan 19th: Movie Night!",
-          description: "Come watch a movie with us this Friday night...",
-          timestamp: "3 days ago"
-      }
-  ]
-};
-
-export const deadlines = {
-  boardTitle: " Your Upcoming Deadlines",
-  announcements: [
-      {
-          id: 1,
-          avatar: "avatar1.png",
-          title: "May 4, WATR Beta Delivery",
-          description: "Expected features shown at https://docs.google.com/...",
+          title: "Feb 8, 508 Compliance Report",
+          description: "Details and checklist shown at https://docs.google.com/...",
           timestamp: "2 hours ago"
       },
       {
-        id: 2,
+        id: 3,
         avatar: "avatar2.png",
         title: "Feb 8, 508 Compliance Report",
         description: "Details and checklist shown at https://docs.google.com/...",
         timestamp: "2 hours ago"
-    },
-    {
-      id: 3,
-      avatar: "avatar2.png",
-      title: "Feb 8, 508 Compliance Report",
-      description: "Details and checklist shown at https://docs.google.com/...",
-      timestamp: "2 hours ago"
-  }
-  ]
-};
-
-
-export const meetings= {
-  boardTitle: "Your Upcoming Meetings",
-  announcements: [
-      {
-          id: 1,
-          avatar: "avatar1.png",
-          title: "SYS Techincal Review Meeting",
-          description: "Link: https://meet.google.com/wka-nvbw-jwx?pli=1&ijlm=1737...",
+    }
+    ]
+  };
+  
+  
+  export const meetings= {
+    boardTitle: "Your Upcoming Meetings",
+    announcements: [
+        {
+            id: 1,
+            avatar: "avatar1.png",
+            title: "SYS Techincal Review Meeting",
+            description: "Link: https://meet.google.com/wka-nvbw-jwx?pli=1&ijlm=1737...",
+            timestamp: "2 hours ago"
+        },
+        {
+          id: 2,
+          avatar: "avatar2.png",
+          title: "SEG Summer intern interview",
+          description: "Link: https://meet.google.com/wka-nvbw-jwx?pli=1&ijl...",
           timestamp: "2 hours ago"
       },
       {
-        id: 2,
+        id: 3,
         avatar: "avatar2.png",
-        title: "SEG Summer intern interview",
+        title: "Standup",
         description: "Link: https://meet.google.com/wka-nvbw-jwx?pli=1&ijl...",
         timestamp: "2 hours ago"
+    }
+    ]
+  };
+  
+  export const projectUpcoming = [
+    {
+      id: 1,
+      avatar: "https://example.com/avatar1.png",
+      title: "Website Redesign",
+      description: "Update UI/UX for better user experience.",
+      timestamp: "Feb 18, 2025",
+      date: "Feb 25, 2025",
+      project: "Project X",
+      priority: "High"
+    },
+    {
+      id: 2,
+      avatar: "https://example.com/avatar2.png",
+      title: "Database Migration",
+      description: "Move database to cloud infrastructure.",
+      timestamp: "Feb 16, 2025",
+      date: "Mar 5, 2025",
+      project: "Project Y",
+      priority: "High"
     },
     {
       id: 3,
-      avatar: "avatar2.png",
-      title: "Standup",
-      description: "Link: https://meet.google.com/wka-nvbw-jwx?pli=1&ijl...",
-      timestamp: "2 hours ago"
-  }
-  ]
-};
+      avatar: "https://example.com/avatar3.png",
+      title: "Security Audit",
+      description: "Review and patch vulnerabilities.",
+      timestamp: "Feb 16, 2025",
+      date: "Mar 1, 2025",
+      project: "Project Z",
+      priority: "Low"
+    },
+    {
+      id: 4,
+      avatar: "https://example.com/avatar4.png",
+      title: "API Development",
+      description: "Build new REST API endpoints.",
+      timestamp: "Feb 15, 2025",
+      date: "Feb 14, 2025",
+      project: "Project R"
+    },
+    {
+      id: 5,
+      avatar: "https://example.com/avatar5.png",
+      title: "Marketing Campaign",
+      description: "Launch new product advertising campaign.",
+      timestamp: "Feb 14, 2025",
+      date: "Mar 10, 2025",
+      project: "Project X"
+    },
+  ];
 
-export const projectUpcoming = [
+  export let projects = [
   {
-    id: 1,
-    avatar: "https://example.com/avatar1.png",
-    title: "Website Redesign",
-    description: "Update UI/UX for better user experience.",
-    timestamp: "Feb 18, 2025",
-    date: "Feb 25, 2025",
-    project: "Project X",
-    priority: "High"
+    id: "1",
+    name: "Project X",
+    stateGroups: ["Design", "Development", "Testing"],
   },
   {
-    id: 2,
-    avatar: "https://example.com/avatar2.png",
-    title: "Database Migration",
-    description: "Move database to cloud infrastructure.",
-    timestamp: "Feb 16, 2025",
-    date: "Mar 5, 2025",
-    project: "Project Y",
-    priority: "High"
+    id: "2",
+    name: "Project Y",
+    stateGroups: ["Planning", "Execution"],
   },
   {
-    id: 3,
-    avatar: "https://example.com/avatar3.png",
-    title: "Security Audit",
-    description: "Review and patch vulnerabilities.",
-    timestamp: "Feb 16, 2025",
-    date: "Mar 1, 2025",
-    project: "Project Z",
-    priority: "Low"
-  },
-  {
-    id: 4,
-    avatar: "https://example.com/avatar4.png",
-    title: "API Development",
-    description: "Build new REST API endpoints.",
-    timestamp: "Feb 15, 2025",
-    date: "Feb 14, 2025",
-    project: "Project R"
-  },
-  {
-    id: 5,
-    avatar: "https://example.com/avatar5.png",
-    title: "Marketing Campaign",
-    description: "Launch new product advertising campaign.",
-    timestamp: "Feb 14, 2025",
-    date: "Mar 10, 2025",
-    project: "Project X"
+    id: "3",
+    name: "Project Z",
+    stateGroups: ["Review", "Database Migration"],
   },
 ];
+
+  export let stateGroups = [
+    {
+      name: "Design",
+      states: ["Wireframes", "Prototypes", "Final Design"],
+    },
+    {
+      name: "Development",
+      states: ["To Do", "In Progress", "Code Review", "Done"],
+    },
+    {
+      name: "Testing",
+      states: ["Test Cases", "In Testing", "Bug Fixing", "Completed"],
+    },
+    {
+      name: "Planning",
+      states: ["Ideas", "Research", "Approved"],
+    },
+    {
+      name: "Execution",
+      states: ["Assigned", "In Progress", "Completed"],
+    },
+    {
+      name: "Review",
+      states: ["Peer Review", "Final Approval"],
+    },
+    {
+      name: "Database Migration",
+      states: ["Migration Planned", "Migration In Progress", "Migration Completed"],
+    },
+  ];
+  
 
 export let issues = $state([
   {
@@ -414,7 +441,9 @@ export let issues = $state([
       { name: "UI", color: "#4f46e5" },
       { name: "High Priority", color: "#ff6b6b" }, // Priority as a tag
     ],
-    board: "Design",
+    state: "Wireframes",
+    stateGroup: "Design",
+    projectId: "1", // Project X
     group: "UI/UX",
   },
   {
@@ -428,7 +457,9 @@ export let issues = $state([
       { name: "Documentation", color: "#fbbf24" },
       { name: "Medium Priority", color: "#ffa500" }, // Priority as a tag
     ],
-    board: "Design",
+    state: "Prototypes",
+    stateGroup: "Design",
+    projectId: "1", // Project X
     group: "UI/UX",
   },
   {
@@ -442,7 +473,9 @@ export let issues = $state([
       { name: "UI", color: "#34d399" },
       { name: "Low Priority", color: "#4caf50" }, // Priority as a tag
     ],
-    board: "Development",
+    state: "To Do",
+    stateGroup: "Development",
+    projectId: "1", // Project X
     group: "UI/UX",
   },
   {
@@ -456,7 +489,9 @@ export let issues = $state([
       { name: "UI", color: "#4f46e5" },
       { name: "Low Priority", color: "#4caf50" }, // Priority as a tag
     ],
-    board: "Testing",
+    state: "Test Cases",
+    stateGroup: "Testing",
+    projectId: "1", // Project X
     group: "UI/UX",
   },
   {
@@ -477,7 +512,9 @@ export let issues = $state([
       { name: "Backend4", color: "#fbbf24" },
       { name: "High Priority", color: "#ff6b6b" }, // Priority as a tag
     ],
-    board: "Model Training",
+    state: "Ideas",
+    stateGroup: "Planning",
+    projectId: "2", // Project Y
     group: "AI Features",
   },
   {
@@ -491,7 +528,9 @@ export let issues = $state([
       { name: "Feature", color: "#4f46e5" },
       { name: "Medium Priority", color: "#ffa500" }, // Priority as a tag
     ],
-    board: "Feature Integration",
+    state: "Assigned",
+    stateGroup: "Execution",
+    projectId: "2", // Project Y
     group: "AI Features",
   },
   {
@@ -505,7 +544,9 @@ export let issues = $state([
       { name: "Security", color: "#ff6b6b" },
       { name: "High Priority", color: "#ff6b6b" }, // Priority as a tag
     ],
-    board: "API Development",
+    state: "Peer Review",
+    stateGroup: "Review",
+    projectId: "3", // Project Z
     group: "Backend",
   },
   {
@@ -519,7 +560,9 @@ export let issues = $state([
       { name: "Backend", color: "#fbbf24" },
       { name: "Medium Priority", color: "#ffa500" }, // Priority as a tag
     ],
-    board: "Database Migration",
+    state: "Migration Planned",
+    stateGroup: "Database Migration",
+    projectId: "3", // Project Z
     group: "Backend",
   },
 ]);

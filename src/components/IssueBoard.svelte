@@ -2,9 +2,32 @@
   import { onMount } from 'svelte';
   import Popup from './widgets/Popup.svelte';
   // @ts-ignore
-  import { issues } from '$assets/store.svelte.js';
+  import { issues, stateGroups } from '$assets/store.svelte.js';
 
-  let boardGroups = $derived(transformIssuesToBoardGroups(issues))
+  let boardGroups = $derived(() => {
+    const groups = {};
+
+    issues.forEach((issue) => {
+      const stateGroup = stateGroups.find((group) => group.name === issue.stateGroup);
+      if (!stateGroup) return;
+
+      if (!groups[stateGroup.name]) {
+        groups[stateGroup.name] = { name: stateGroup.name, boards: [] };
+      }
+
+      const group = groups[stateGroup.name];
+      let board = group.boards.find((b) => b.name === issue.state);
+
+      if (!board) {
+        board = { name: issue.state, issues: [] };
+        group.boards.push(board);
+      }
+
+      board.issues.push(issue);
+    });
+
+    return Object.values(groups);
+  });
 
   let newIssueTitle = $state("");
   let newIssueDescription = $state("");
@@ -17,28 +40,6 @@
   let showIssueDetails = $state(false);
   let dragIssueId = $state(null); // Store the ID of the dragged issue
   let dragOverBoard = $state(null);
-
-  function transformIssuesToBoardGroups(issues) {
-  const groups = {};
-
-  issues.forEach((issue) => {
-    if (!groups[issue.group]) {
-      groups[issue.group] = { name: issue.group, boards: [] };
-    }
-
-    const group = groups[issue.group];
-    let board = group.boards.find((b) => b.name === issue.board);
-
-    if (!board) {
-      board = { name: issue.board, issues: [] };
-      group.boards.push(board);
-    }
-
-    board.issues.push(issue);
-  });
-
-  return Object.values(groups);
-}
 
   // Utility function to calculate luminance and determine text color
   function getTextColorForBackground(backgroundColor) {

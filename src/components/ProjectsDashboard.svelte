@@ -1,18 +1,21 @@
 <script>
   import TaskSearchBar from "./TaskSearchbar.svelte";
   // Import the `issues` array from the store
-  import { issues } from "$assets/store.svelte.js";
+  import { issues, stateGroups, projects } from "$assets/store.svelte.js";
 
   let searchResults = $state([]);
 
-  // Extract unique states (boards) from the issues array
-  let states = $derived.by(() => [...new Set(issues.map((issue) => issue.board))]);
+  // Extract available states for an issue based on its stateGroup
+  function getAvailableStates(issue) {
+    const stateGroup = stateGroups.find((group) => group.name === issue.stateGroup);
+    return stateGroup ? stateGroup.states : [];
+  }
 
   // Function to update the state (board) of an issue
   function updateTaskState(task, newState) {
     const issue = issues.find((i) => i.id === task.id);
     if (issue) {
-      issue.board = newState; // Update the board field
+      issue.state = newState; // Update the state of the issue
     }
   }
 
@@ -48,14 +51,14 @@
           <tr>
             <td>{task.name}</td>
             <td>{task.dueDate}</td>
-            <td>{task.group}</td>
+            <td>{projects.find((project) => project.id === task.projectId).name}</td>
             <td>
               <select
-                bind:value={task.board}
+                bind:value={task.state}
                 class="state-select"
                 on:change={(e) => updateTaskState(task, e.target.value)}
               >
-                {#each states as state}
+                {#each getAvailableStates(task) as state}
                   <option value={state}>{state}</option>
                 {/each}
               </select>

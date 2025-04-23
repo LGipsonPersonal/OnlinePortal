@@ -489,8 +489,8 @@ export let issues = $state([
       { name: "UI", color: "#4f46e5" },
       { name: "Low Priority", color: "#4caf50" }, // Priority as a tag
     ],
-    state: "Test Cases",
-    stateGroup: "Testing",
+    state: "In Progress",
+    stateGroup: "Development",
     projectId: "1", // Project X
     group: "UI/UX",
   },

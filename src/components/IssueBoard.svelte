@@ -4,7 +4,7 @@
   // @ts-ignore
   import { issues, stateGroups } from '$assets/store.svelte.js';
 
-  let boardGroups = $derived(() => {
+  let boardGroups = $derived.by(() => {
     const groups = {};
 
     issues.forEach((issue) => {
@@ -29,6 +29,7 @@
     return Object.values(groups);
   });
 
+  $inspect(boardGroups);
   let newIssueTitle = $state("");
   let newIssueDescription = $state("");
   let newBoardName = $state("");
@@ -85,21 +86,22 @@
   }
 
   function handleDragStart(issueId) {
+    console.log("Drag started for issue ID:", issueId);
     dragIssueId = issueId; // Store the dragged issue ID
   }
 
   function handleDrop(targetBoardName) {
     const issue = issues.find((i) => i.id === dragIssueId); // Find the issue in the store
-    console.log(issue)
     if (issue) {
-      issue.board = targetBoardName; // Update the board (state) of the issue
+      issue.state = targetBoardName; // Update the board (state) of the issue
     }
 
-    dragIssueId = null; // Clear the dragged issue ID
+    dragIssueId = null;
     dragOverBoard = null;
   }
 
-  function allowDrop(boardName) {
+  function allowDrop(event, boardName) {
+    event.preventDefault(); // Allow the drop event to occur
     dragOverBoard = boardName;
   }
 
@@ -148,7 +150,7 @@
           <div
             class="board {dragOverBoard === board.name ? 'drag-over' : ''}"
             ondrop={() => handleDrop(board.name)}
-            ondragover={() => allowDrop(board.name)}
+            ondragover={(event) => allowDrop(event, board.name)}
           >
             <h2>{board.name}</h2>
             <div class="issue-list">

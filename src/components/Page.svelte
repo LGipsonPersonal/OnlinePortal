@@ -17,7 +17,7 @@
   import ItSupportTicket from "./ItSupportTicket.svelte";
   import Popup from "./widgets/Popup.svelte";
   // @ts-ignore
-  import { tabs, requests, docs, images, profile, projectUpcoming, events, projects, announcements, deadlines, meetings } from "$assets/store.svelte.js";
+  import { tabs, requests, docs, images, profile, projectUpcoming, events, projects, announcements, deadlines, meetings, issues, stateGroups } from "$assets/store.svelte.js";
   import Projectheader from "./Projectheader.svelte";
   import ProjectContacts from "./ProjectContacts.svelte";
   import ProjectTimeline from "./ProjectTimeline.svelte"
@@ -65,6 +65,25 @@ let currentTabs = $derived.by(() => {
 let projSubChoice = $state("Timeline");
 
 $inspect(projSubChoice)
+
+// Filter issues and stateGroups for the current project
+function getProjectData(projectKey) {
+    const projectId = projectKey.split("-")[1]; // Extract project ID from the key
+    const project = projects.find((project) => project.id === projectId);
+
+    if (!project) {
+      return { projectIssues: [], projectStateGroups: [] };
+    }
+
+    const projectIssues = issues.filter((issue) => issue.projectId === projectId);
+
+    // Find state groups that match the names in the project's stateGroups
+    const projectStateGroups = stateGroups.filter((group) =>
+      project.stateGroups.includes(group.name)
+    );
+
+    return { projectIssues, projectStateGroups };
+  }
 </script>
 
 
@@ -100,7 +119,7 @@ $inspect(projSubChoice)
       WIP
     {:else if choice === tabs[5].subtabs[0].key}
       <div class="time-off-page">
-        <ProjectsDashboard props={projectUpcoming}></ProjectsDashboard>
+        <ProjectsDashboard></ProjectsDashboard>
       </div>
     {:else if choice === tabs[6].key}
       <div class="time-off-page">
@@ -113,7 +132,10 @@ $inspect(projSubChoice)
         {#if choice === `${proj.key}-0`}
           <ProjectTimeline></ProjectTimeline>
         {:else if choice === `${proj.key}-1`}
-          <IssueBoard></IssueBoard>
+          <IssueBoard
+            issues={getProjectData(proj.key).projectIssues}
+            stateGroups={getProjectData(proj.key).projectStateGroups}
+          />
         {:else if choice === `${proj.key}-2`}
           <p>Resources</p>
         {:else if choice === `${proj.key}-3`}

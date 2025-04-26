@@ -2,34 +2,46 @@
   import { onMount } from 'svelte';
   import Popup from './widgets/Popup.svelte';
   // @ts-ignore
-  import { issues, stateGroups } from '$assets/store.svelte.js';
+  let { issues, stateGroups } = $props();
 
+  console.log("Issues:",  $state.snapshot(issues));
+  console.log("State Groups:", $state.snapshot(stateGroups));
   let boardGroups = $derived.by(() => {
     const groups = {};
 
-    issues.forEach((issue) => {
-      const stateGroup = stateGroups.find((group) => group.name === issue.stateGroup);
-      if (!stateGroup) return;
-
+    // Iterate through all stateGroups
+    stateGroups.forEach((stateGroup) => {
       if (!groups[stateGroup.name]) {
         groups[stateGroup.name] = { name: stateGroup.name, boards: [] };
       }
 
       const group = groups[stateGroup.name];
-      let board = group.boards.find((b) => b.name === issue.state);
 
-      if (!board) {
-        board = { name: issue.state, issues: [] };
-        group.boards.push(board);
+      // Add all states from the stateGroup to the boards
+      stateGroup.states.forEach((state) => {
+        let board = group.boards.find((b) => b.name === state);
+
+        if (!board) {
+          board = { name: state, issues: [] }; // Initialize empty board
+          group.boards.push(board);
+        }
+      });
+    });
+
+    // Assign issues to the appropriate boards
+    issues.forEach((issue) => {
+      const stateGroup = groups[issue.stateGroup];
+      if (!stateGroup) return;
+
+      const board = stateGroup.boards.find((b) => b.name === issue.state);
+      if (board) {
+        board.issues.push(issue);
       }
-
-      board.issues.push(issue);
     });
 
     return Object.values(groups);
   });
 
-  $inspect(boardGroups);
   let newIssueTitle = $state("");
   let newIssueDescription = $state("");
   let newBoardName = $state("");
@@ -42,51 +54,7 @@
   let dragIssueId = $state(null); // Store the ID of the dragged issue
   let dragOverBoard = $state(null);
 
-  // Utility function to calculate luminance and determine text color
-  function getTextColorForBackground(backgroundColor) {
-    const hex = backgroundColor.replace('#', '');
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-
-    // Calculate relative luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-    // Return white text for dark backgrounds, black text for light backgrounds
-    return luminance > 0.5 ? '#000000' : '#ffffff';
-  }
-
-  function addIssue(title, description, boardName) {
-    if (title.trim() && description.trim() && boardName.trim()) {
-      const group = boardGroups.find(group => group.name === selectedGroup);
-      const board = group?.boards.find(board => board.name === boardName);
-      if (board) {
-        board.issues.push({
-          id: "id" + Math.random().toString(16).slice(2),
-          title: title,
-          description: description,
-          dueDate: "2025-03-30",
-          originator: "User C",
-          tags: []
-        });
-      }
-      showAddIssuePopup = false;
-    }
-  }
-
-  function addBoard() {
-    if (newBoardName.trim()) {
-      const group = boardGroups.find(group => group.name === selectedGroup);
-      if (group) {
-        group.boards.push({ name: newBoardName, issues: [] });
-      }
-      newBoardName = "";
-      showAddBoardPopup = false;
-    }
-  }
-
   function handleDragStart(issueId) {
-    console.log("Drag started for issue ID:", issueId);
     dragIssueId = issueId; // Store the dragged issue ID
   }
 
@@ -109,7 +77,6 @@
     console.log("Searching for:", searchQuery);
   }
 
-
   function jumpToSettings() {
     console.log("Jumping to settings");
   }
@@ -122,11 +89,24 @@
   function closeIssueDetails() {
     showIssueDetails = false;
   }
+
+    function getTextColorForBackground(backgroundColor) {
+    const hex = backgroundColor.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    // Calculate relative luminance
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+    // Return white text for dark backgrounds, black text for light backgrounds
+    return luminance > 0.5 ? '#000000' : '#ffffff';
+  }
 </script>
 
 <div class="issue-board-container">
   <div class="top-bar">
-    <select class="groups-selection" bind:value={selectedGroup} >
+    <select class="groups-selection" bind:value={selectedGroup}>
       {#each boardGroups as group}
         <option value={group.name}>{group.name}</option>
       {/each}
@@ -140,13 +120,17 @@
     <button class="settings-button" onclick={jumpToSettings}>
       <i class="fas fa-cog"></i>
     </button>
-    <button class="standard-button" onclick={() => showAddIssuePopup = true}>Add Issue</button>
-    <button class="standard-button" onclick={() => showAddBoardPopup = true}>Add Board</button>
+    <button class="standard-button" onclick={() => (showAddIssuePopup = true)}>
+      Add Issue
+    </button>
+    <button class="standard-button" onclick={() => (showAddBoardPopup = true)}>
+      Add Board
+    </button>
   </div>
   <div class="main-content">
     <div class="boards">
       {#if selectedGroup}
-        {#each boardGroups.find(group => group.name === selectedGroup)?.boards as board}
+        {#each boardGroups.find((group) => group.name === selectedGroup)?.boards as board}
           <div
             class="board {dragOverBoard === board.name ? 'drag-over' : ''}"
             ondrop={() => handleDrop(board.name)}
@@ -154,38 +138,39 @@
           >
             <h2>{board.name}</h2>
             <div class="issue-list">
-              {#each board.issues as issue}
-                <div
-                  class="issue"
-                  draggable="true"
-                  ondragstart={() => handleDragStart(issue.id)}
-                >
-                  <div class="issue-header">
-                    <h3>{issue.title}</h3>
-                    <button
-                      class="ellipsis-button"
-                      onclick={() => selectIssue(issue)}
-                      aria-label="More options"
-                    >
-                      ...
-                    </button>
-                  </div>
-                  <p>{issue.description}</p>
-                  <div class="tags">
-                    {#each issue.tags as tag}
-                      <span
-                        class="tag"
-                        style="background-color: {tag.color}; color: {getTextColorForBackground(tag.color)}"
+              {#if board.issues.length > 0}
+                {#each board.issues as issue}
+                  <div
+                    class="issue"
+                    draggable="true"
+                    ondragstart={() => handleDragStart(issue.id)}
+                  >
+                    <div class="issue-header">
+                      <h3>{issue.name}</h3>
+                      <button
+                        class="ellipsis-button"
+                        onclick={() => selectIssue(issue)}
+                        aria-label="More options"
                       >
-                        {#if tag.count}
-                          <span class="tag-count">{tag.count}</span>
-                        {/if}
-                        {tag.name}
-                      </span>
-                    {/each}
+                        ...
+                      </button>
+                    </div>
+                    <p>{issue.description}</p>
+                    <div class="tags">
+                      {#each issue.tags as tag}
+                        <span
+                          class="tag"
+                          style="background-color: {tag.color}; color: {getTextColorForBackground(tag.color)}"
+                        >
+                          {tag.name}
+                        </span>
+                      {/each}
+                    </div>
                   </div>
-                </div>
-              {/each}
+                {/each}
+              {:else}
+                <p class="empty-board-message">No issues in this board</p>
+              {/if}
             </div>
           </div>
         {/each}
@@ -195,7 +180,7 @@
       <div class="issue-details">
         <button class="close-button" onclick={closeIssueDetails}>Close</button>
         <h2>Issue Details</h2>
-        <p><strong>Title:</strong> {selectedIssue.title}</p>
+        <p><strong>Title:</strong> {selectedIssue.name}</p>
         <p><strong>Description:</strong> {selectedIssue.description}</p>
         <p><strong>Due Date:</strong> {selectedIssue.dueDate}</p>
         <p><strong>Originator:</strong> {selectedIssue.originator}</p>
@@ -491,5 +476,12 @@
     color: #e0e0e0;
     border: 1px solid #444444;
     border-radius: 4px;
+  }
+
+  .empty-board-message {
+    font-size: 0.9rem;
+    color: #888888;
+    text-align: center;
+    margin-top: 1rem;
   }
 </style>

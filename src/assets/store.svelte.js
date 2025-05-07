@@ -43,26 +43,22 @@ export const tabs = [
         { name: "Project X", key: "5-1", subtabs: [
           { name: "Issue Board", key: "5-1-1" },
           { name: "Resources", key: "5-1-2" },
-          { name: "People of Contact", key: "5-1-3" },
-          { name: "Discussions", key: "5-1-4" }
+          { name: "People of Contact", key: "5-1-3" }
         ]},
         { name: "Project Y", key: "5-2", subtabs: [
           { name: "Issue Board", key: "5-2-1" },
           { name: "Resources", key: "5-2-2" },
-          { name: "People of Contact", key: "5-2-3" },
-          { name: "Discussions", key: "5-2-4" }
+          { name: "People of Contact", key: "5-2-3" }
         ]},
         { name: "Project Z", key: "5-3", subtabs: [
           { name: "Issue Board", key: "5-3-1" },
           { name: "Resources", key: "5-3-2" },
-          { name: "People of Contact", key: "5-3-3" },
-          { name: "Discussions", key: "5-3-4" }
+          { name: "People of Contact", key: "5-3-3" }
         ]},
         { name: "Project R", key: "5-4", subtabs: [
           { name: "Issue Board", key: "5-4-1" },
           { name: "Resources", key: "5-4-2" },
-          { name: "People of Contact", key: "5-4-3" },
-          { name: "Discussions", key: "5-4-4" }
+          { name: "People of Contact", key: "5-4-3" }
         ]}
       ],
     },
@@ -71,20 +67,7 @@ export const tabs = [
       key: '6',
       icon: 'headset',
       subtabs: [],
-    },
-    {
-      name: "Messages",
-      key: '7',
-      icon: 'message',
-      subtabs: [
-        { name: "Timesheet Reminder Bot", key: "7-0" },
-        { name: "Fitness Challenge Group", key: "7-1" },
-        { name: "SEG Group Message", key: "7-2" },
-        { name: "Timothy (HR)", key: "7-3" },
-        { name: "Connor", key: "7-4" },
-        { name: "Candy", key: "7-5" },
-      ],
-    },
+    }
   ];
   export const requests = [
     {
@@ -377,22 +360,27 @@ export const tabs = [
   ];
 
   export let projects = [
-  {
-    id: "1",
-    name: "Project X",
-    stateGroups: ["Design", "Development", "Testing"],
-  },
-  {
-    id: "2",
-    name: "Project Y",
-    stateGroups: ["Planning", "Execution"],
-  },
-  {
-    id: "3",
-    name: "Project Z",
-    stateGroups: ["Review", "Database Migration"],
-  },
-];
+    {
+      id: "1",
+      name: "Project X",
+      stateGroups: ["Design", "Development", "Testing"],
+    },
+    {
+      id: "2",
+      name: "Project Y",
+      stateGroups: ["Planning", "Execution"],
+    },
+    {
+      id: "3",
+      name: "Project Z",
+      stateGroups: ["Review", "Database Migration"],
+    },
+    {
+      id: "4",
+      name: "Project R",
+      stateGroups: ["Research", "Implementation", "Deployment"],
+    },
+  ];
 
   export let stateGroups = [
     {
@@ -422,6 +410,18 @@ export const tabs = [
     {
       name: "Database Migration",
       states: ["Migration Planned", "Migration In Progress", "Migration Completed"],
+    },
+    {
+      name: "Research",
+      states: ["Initial Research", "Feasibility Study", "Approved"],
+    },
+    {
+      name: "Implementation",
+      states: ["Setup", "Development", "Testing"],
+    },
+    {
+      name: "Deployment",
+      states: ["Staging", "Production", "Post-Deployment Review"],
     },
   ];
   
@@ -560,6 +560,51 @@ export let issues = $state([
     stateGroup: "Database Migration",
     projectId: "3", // Project Z
     group: "Backend",
+  },
+  {
+    id: "9",
+    name: "Conduct Feasibility Study",
+    description: "Analyze the feasibility of the new project idea.",
+    dueDate: "2025-05-01",
+    originator: "User K",
+    tags: [
+      { name: "Research", color: "#4f46e5" },
+      { name: "High Priority", color: "#ff6b6b" },
+    ],
+    state: "Feasibility Study",
+    stateGroup: "Research",
+    projectId: "4", // Project R
+    group: "Research Team",
+  },
+  {
+    id: "10",
+    name: "Setup Development Environment",
+    description: "Prepare the environment for development.",
+    dueDate: "2025-05-10",
+    originator: "User L",
+    tags: [
+      { name: "Setup", color: "#34d399" },
+      { name: "Medium Priority", color: "#ffa500" },
+    ],
+    state: "Setup",
+    stateGroup: "Implementation",
+    projectId: "4", // Project R
+    group: "Development Team",
+  },
+  {
+    id: "11",
+    name: "Deploy to Staging",
+    description: "Deploy the application to the staging environment.",
+    dueDate: "2025-05-20",
+    originator: "User M",
+    tags: [
+      { name: "Deployment", color: "#4f46e5" },
+      { name: "Low Priority", color: "#4caf50" },
+    ],
+    state: "Staging",
+    stateGroup: "Deployment",
+    projectId: "4", // Project R
+    group: "Operations Team",
   },
 ]);
 

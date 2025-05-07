@@ -23,7 +23,7 @@
   import ProjectTimeline from "./ProjectTimeline.svelte"
   import IssueBoard from "./IssueBoard.svelte";
   import Conversation from "./Conversation.svelte";
-    import ProjectsDashboard from "./ProjectsDashboard.svelte";
+  import ProjectsDashboard from "./ProjectsDashboard.svelte";
 
   setContext('MainPage', {updateChoice})
 
@@ -125,8 +125,6 @@ function getProjectData(projectKey) {
       <div class="time-off-page">
         <ItSupportTicket></ItSupportTicket>
       </div>
-    {:else if choice === tabs[7].subtabs[0].key}
-      <Conversation></Conversation>
     {/if}
     {#each tabs[5].subtabs as proj, i}
         {#if choice === `${proj.key}-0`}

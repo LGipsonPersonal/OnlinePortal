@@ -4,51 +4,32 @@
 
   // People of contact with team property
   let peopleOfContact = $state([
-    {
-      id: 1,
-      name: "John Doe",
-      role: "Project Manager",
-      profileImage: "https://via.placeholder.com/40",
-      phone: "(555) 123-4567",
-      email: "john.doe@example.com",
-      team: "Management",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      role: "Developer",
-      profileImage: "https://via.placeholder.com/40",
-      phone: "(555) 987-6543",
-      email: "jane.smith@example.com",
-      team: "Development",
-    },
-    {
-      id: 3,
-      name: "Alice Johnson",
-      role: "Designer",
-      profileImage: "https://via.placeholder.com/40",
-      phone: "(555) 555-5555",
-      email: "alice.johnson@example.com",
-      team: "Design",
-    },
-    {
-      id: 4,
-      name: "Bob Brown",
-      role: "Tester",
-      profileImage: "https://via.placeholder.com/40",
-      phone: "(555) 444-4444",
-      email: "bob.brown@example.com",
-      team: "Testing",
-    },
-    {
-      id: 5,
-      name: "John Deer",
-      role: "QA Engineer",
-      profileImage: "https://via.placeholder.com/40",
-      phone: "(555) 123-4567",
-      email: "john.deer@example.com",
-      team: "Management",
-    },
+    { id: 1, name: "John Doe", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "john.doe@example.com", team: "Management" },
+    { id: 2, name: "Jane Smith", role: "Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 987-6543", email: "jane.smith@example.com", team: "Development" },
+    { id: 3, name: "Alice Johnson", role: "Designer", profileImage: "https://via.placeholder.com/40", phone: "(555) 555-5555", email: "alice.johnson@example.com", team: "Design" },
+    { id: 4, name: "Bob Brown", role: "Tester", profileImage: "https://via.placeholder.com/40", phone: "(555) 444-4444", email: "bob.brown@example.com", team: "Testing" },
+    { id: 5, name: "John Deer", role: "QA Engineer", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "john.deer@example.com", team: "Management" },
+    { id: 6, name: "Emily Davis", role: "Backend Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 222-3333", email: "emily.davis@example.com", team: "Development" },
+    { id: 7, name: "Michael Scott", role: "Product Owner", profileImage: "https://via.placeholder.com/40", phone: "(555) 777-8888", email: "michael.scott@example.com", team: "Management" },
+    { id: 8, name: "Sarah Connor", role: "UX Designer", profileImage: "https://via.placeholder.com/40", phone: "(555) 666-7777", email: "sarah.connor@example.com", team: "Design" },
+    { id: 9, name: "Tom Hardy", role: "Frontend Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 999-0000", email: "tom.hardy@example.com", team: "Development" },
+    { id: 10, name: "Anna Bell", role: "Tester", profileImage: "https://via.placeholder.com/40", phone: "(555) 111-2222", email: "anna.bell@example.com", team: "Testing" },
+    { id: 11, name: "Chris Evans", role: "DevOps Engineer", profileImage: "https://via.placeholder.com/40", phone: "(555) 333-4444", email: "chris.evans@example.com", team: "Operations" },
+    { id: 12, name: "Jessica Alba", role: "Scrum Master", profileImage: "https://via.placeholder.com/40", phone: "(555) 555-6666", email: "jessica.alba@example.com", team: "Management" },
+    { id: 13, name: "Mark Ruffalo", role: "Database Administrator", profileImage: "https://via.placeholder.com/40", phone: "(555) 888-9999", email: "mark.ruffalo@example.com", team: "Operations" },
+    { id: 14, name: "Sophia Turner", role: "Graphic Designer", profileImage: "https://via.placeholder.com/40", phone: "(555) 444-5555", email: "sophia.turner@example.com", team: "Design" },
+    { id: 15, name: "Liam Neeson", role: "Security Analyst", profileImage: "https://via.placeholder.com/40", phone: "(555) 222-4444", email: "liam.neeson@example.com", team: "Security" },
+    { id: 16, name: "Emma Watson", role: "Content Strategist", profileImage: "https://via.placeholder.com/40", phone: "(555) 333-5555", email: "emma.watson@example.com", team: "Marketing" },
+    { id: 17, name: "Daniel Craig", role: "Automation Tester", profileImage: "https://via.placeholder.com/40", phone: "(555) 666-8888", email: "daniel.craig@example.com", team: "Testing" },
+    { id: 18, name: "Olivia Wilde", role: "SEO Specialist", profileImage: "https://via.placeholder.com/40", phone: "(555) 777-9999", email: "olivia.wilde@example.com", team: "Marketing" },
+    { id: 19, name: "Henry Cavill", role: "Cloud Architect", profileImage: "https://via.placeholder.com/40", phone: "(555) 000-1111", email: "henry.cavill@example.com", team: "Operations" },
+    { id: 20, name: "Scarlett Johansson", role: "Social Media Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 222-3333", email: "scarlett.johansson@example.com", team: "Marketing" },
+    { id: 21, name: "Tom Holland", role: "Junior Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 444-5555", email: "tom.holland@example.com", team: "Development" },
+    { id: 22, name: "Zendaya Coleman", role: "UI Designer", profileImage: "https://via.placeholder.com/40", phone: "(555) 666-7777", email: "zendaya.coleman@example.com", team: "Design" },
+    { id: 23, name: "Chris Hemsworth", role: "System Administrator", profileImage: "https://via.placeholder.com/40", phone: "(555) 888-9999", email: "chris.hemsworth@example.com", team: "Operations" },
+    { id: 24, name: "Natalie Portman", role: "Business Analyst", profileImage: "https://via.placeholder.com/40", phone: "(555) 000-2222", email: "natalie.portman@example.com", team: "Management" },
+    { id: 25, name: "Ryan Reynolds", role: "Performance Tester", profileImage: "https://via.placeholder.com/40", phone: "(555) 333-4444", email: "ryan.reynolds@example.com", team: "Testing" },
+    { id: 26, name: "Joe Dirt", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "joeDirt@example.com", team: "Management" },
   ]);
 
 
@@ -103,6 +84,8 @@
     border-radius: 8px;
     color: #e0e0e0; /* Light text */
     overflow: auto;
+    width: 100%;
+
   }
 
   .section-title {
@@ -116,7 +99,9 @@
   }
 
   .team {
-    
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scroll-behavior: smooth; /* Smooth scrolling */
+
   }
 
   .team-title {
@@ -131,10 +116,29 @@
   }
 
   .contact-grid {
+    flex:0;
     display: flex;
+    width: 800px;
     gap: 1rem;
     padding-left: 0.5rem;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scroll-behavior: smooth; /* Smooth scrolling */
+    white-space: nowrap; /* Prevent wrapping of cards */
   }
+
+  .contact-grid::-webkit-scrollbar {
+    height: 8px; /* Height of the horizontal scrollbar */
+  }
+
+  .contact-grid::-webkit-scrollbar-thumb {
+    background-color: #4f46e5; /* Purple scrollbar thumb */
+    border-radius: 4px;
+  }
+
+  .contact-grid::-webkit-scrollbar-track {
+    background-color: #2e2e2e; /* Darker background for the scrollbar track */
+  }
+
   .team-header {
     display: flex;
     justify-content: space-between;
@@ -144,10 +148,7 @@
     margin-bottom: 0.8rem;
   }
   .contact-card {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 100%;
-    max-width: 20rem;
+    flex: 0 0 18rem; /* Fixed width for each card */
     max-height: 12.4rem;
     align-items: center;
     background-color: #2e2e2e; /* Darker background */

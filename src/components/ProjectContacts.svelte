@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { slide } from 'svelte/transition';
 
   // People of contact with team property
   let peopleOfContact = $state([
@@ -77,19 +78,13 @@
         </span>
       </div>
       {#if openTeams[i]}
-        <div class="contact-grid">
+        <div class="contact-grid" transition:slide>
           {#each peopleOfContact.filter((person) => person.team === team) as person}
             <div class="contact-card">
-              <div class="avatar">
-                <img src={person.profileImage} alt="User Avatar" />
-              </div>
-              <div class="contact-info">
-                <p class="name">{person.name}</p>
-                <p class="role">{person.role}</p>
-                <a href={`tel:${person.phone}`} class="phone">{person.phone}</a>
-                <a href={`mailto:${person.email}`} class="email">{person.email}</a>
-              </div>
-              <button class="message-button">Send Message</button>
+              <p class="name">{person.name}</p>
+              <p class="role">{person.role}</p>
+              <a href={`tel:${person.phone}`} class="phone">{person.phone}</a>
+              <a href={`mailto:${person.email}`} class="email">{person.email}</a>
             </div>
           {/each}
         </div>
@@ -104,7 +99,6 @@
   }
 
   .people-of-contact {
-    background-color: #1e1e1e; /* Dark background */
     padding: 1rem;
     border-radius: 8px;
     color: #e0e0e0; /* Light text */
@@ -114,7 +108,7 @@
   .section-title {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     text-align: center;
     color: #ffffff;
     border-bottom: 2px solid #4f46e5; /* Purple border */
@@ -122,21 +116,24 @@
   }
 
   .team {
-    margin-bottom: 2rem;
+    
   }
 
   .team-title {
     font-size: 1.25rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin: 0;
     color: #ffffff;
     text-align: left;
     padding-bottom: 0.5rem;
+    padding-top: 1rem;
+  
   }
 
   .contact-grid {
     display: flex;
     gap: 1rem;
+    padding-left: 0.5rem;
   }
   .team-header {
     display: flex;
@@ -144,12 +141,14 @@
     align-items: center;
     cursor: pointer;
     border-bottom: 1px solid #4f46e5;
+    margin-bottom: 0.8rem;
   }
   .contact-card {
     display: flex;
     flex-direction: column;
     flex: 1 1 100%;
-    max-width: 25rem;
+    max-width: 20rem;
+    max-height: 12.4rem;
     align-items: center;
     background-color: #2e2e2e; /* Darker background */
     padding: 1rem;

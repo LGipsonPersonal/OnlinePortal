@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { slide } from 'svelte/transition';
 
-  // People of contact with team property
+  // --- Data ---
   let peopleOfContact = $state([
     { id: 1, name: "John Doe", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "john.doe@example.com", team: "Management" },
     { id: 2, name: "Jane Smith", role: "Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 987-6543", email: "jane.smith@example.com", team: "Development" },
@@ -32,190 +32,288 @@
     { id: 26, name: "Joe Dirt", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "joeDirt@example.com", team: "Management" },
   ]);
 
+  // --- State for UI ---
+  let searchTerm = $state('');
+  let selectedTeam = $state('All');
+  let selectedRole = $state('All');
+  let sortBy = $state('name'); // or 'role'
+  let sortDirection = $state('asc');
 
-  // Extract unique teams from peopleOfContact
-  let teams = [...new Set(peopleOfContact.map((person) => person.team))];
+  // Extract unique teams and roles
+  let teams = ['All', ...new Set(peopleOfContact.map((p) => p.team))];
+  let roles = ['All', ...new Set(peopleOfContact.map((p) => p.role))];
 
-  // State to track whether each team is expanded or collapsed
-  let openTeams = $state(Array.from({ length: teams.length }, () => true));
+  // Collapsible state
+  let openTeams = $state(Array.from({ length: teams.length - 1 }, () => false)); // -1 for 'All'
+
+  // --- Filtering, Searching, Sorting ---
+  function getFilteredContacts(team) {
+    let filtered = peopleOfContact;
+
+    if (selectedTeam !== 'All') {
+      filtered = filtered.filter(p => p.team === selectedTeam);
+    } else if (team !== 'All') {
+      filtered = filtered.filter(p => p.team === team);
+    }
+
+    if (selectedRole !== 'All') {
+      filtered = filtered.filter(p => p.role === selectedRole);
+    }
+
+    if (searchTerm.trim()) {
+      const term = searchTerm.trim().toLowerCase();
+      filtered = filtered.filter(
+        p =>
+          p.name.toLowerCase().includes(term) ||
+          p.role.toLowerCase().includes(term) ||
+          p.email.toLowerCase().includes(term)
+      );
+    }
+
+    filtered = filtered.slice().sort((a, b) => {
+      let valA = a[sortBy].toLowerCase();
+      let valB = b[sortBy].toLowerCase();
+      if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    return filtered;
+  }
 
   function toggleTeam(index) {
     openTeams[index] = !openTeams[index];
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
+  }
+
+  function setSort(field) {
+    if (sortBy === field) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortBy = field;
+      sortDirection = 'asc';
+    }
   }
 </script>
 
 <div class="people-of-contact">
   <h2 class="section-title">People of Contact</h2>
-  {#each teams as team, i}
-    <div class="team">
-      <div class="team-header" on:click={() => toggleTeam(i)}>
-        <h3 class="team-title">{team}</h3>
-        <span class="submenu-toggle">
-          {#if openTeams[i]}
-            <i class="fas fa-chevron-down"></i>
-          {:else}
-            <i class="fas fa-chevron-up"></i>
-          {/if}
-        </span>
-      </div>
-      {#if openTeams[i]}
-        <div class="contact-grid" transition:slide>
-          {#each peopleOfContact.filter((person) => person.team === team) as person}
-            <div class="contact-card">
-              <p class="name">{person.name}</p>
-              <p class="role">{person.role}</p>
-              <a href={`tel:${person.phone}`} class="phone">{person.phone}</a>
-              <a href={`mailto:${person.email}`} class="email">{person.email}</a>
+  <div class="controls">
+    <input
+      type="text"
+      placeholder="Search by name, role, or email"
+      bind:value={searchTerm}
+      class="search-input"
+    />
+    <select bind:value={selectedTeam} class="filter-select">
+      {#each teams as team}
+        <option value={team}>{team}</option>
+      {/each}
+    </select>
+    <select bind:value={selectedRole} class="filter-select">
+      {#each roles as role}
+        <option value={role}>{role}</option>
+      {/each}
+    </select>
+    <button class="sort-btn" on:click={() => setSort('name')}>
+      Sort by Name {sortBy === 'name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
+    </button>
+    <button class="sort-btn" on:click={() => setSort('role')}>
+      Sort by Role {sortBy === 'role' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
+    </button>
+  </div>
+  <div class="box">
+    {#each teams.slice(1) as team, i} <!-- skip 'All' -->
+      {#if selectedTeam === 'All' || selectedTeam === team}
+        <div class="team">
+          <div class="team-header" on:click={() => toggleTeam(i)}>
+            <h3 class="team-title">{team}</h3>
+            <div class="submenu-toggle">
+              {#if openTeams[i]}
+                <i class="fas fa-chevron-down"></i>
+              {:else}
+                <i class="fas fa-chevron-up"></i>
+              {/if}
             </div>
-          {/each}
+          </div>
+          {#if openTeams[i]}
+            <div class="contact-grid" transition:slide>
+              {#each getFilteredContacts(team) as person}
+                <div class="contact-card">
+                  <p class="name">{person.name}</p>
+                  <p class="role">{person.role}</p>
+                  <div class="contact-actions">
+                    <a href={`tel:${person.phone}`} class="icon-btn" title="Call">
+                      <i class="fas fa-phone"></i>
+                    </a>
+                    <button class="icon-btn" title="Copy phone" on:click={() => copyToClipboard(person.phone)}>
+                      <i class="fas fa-copy"></i>
+                    </button>
+                    <a href={`mailto:${person.email}`} class="icon-btn" title="Email">
+                      <i class="fas fa-envelope"></i>
+                    </a>
+                    <button class="icon-btn" title="Copy email" on:click={() => copyToClipboard(person.email)}>
+                      <i class="fas fa-copy"></i>
+                    </button>
+                  </div>
+                  <a href={`tel:${person.phone}`} class="phone">{person.phone}</a>
+                  <a href={`mailto:${person.email}`} class="email">{person.email}</a>
+                </div>
+              {/each}
+            </div>
+          {/if}
         </div>
       {/if}
-    </div>
-  {/each}
+    {/each}
+  </div>
 </div>
 
 <style>
-  * {
-    box-sizing: border-box;
-  }
-
-  .people-of-contact {
-    padding: 1rem;
-    border-radius: 8px;
-    color: #e0e0e0; /* Light text */
-    overflow: auto;
-    width: 100%;
-
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    text-align: center;
-    color: #ffffff;
-    border-bottom: 2px solid #4f46e5; /* Purple border */
-    padding-bottom: 0.5rem;
-  }
-
-  .team {
-    overflow-x: auto; /* Enable horizontal scrolling */
-    scroll-behavior: smooth; /* Smooth scrolling */
-
-  }
-
-  .team-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0;
-    color: #ffffff;
-    text-align: left;
-    padding-bottom: 0.5rem;
-    padding-top: 1rem;
-  
-  }
-
-  .contact-grid {
-    flex:0;
-    display: flex;
-    width: 800px;
-    gap: 1rem;
-    padding-left: 0.5rem;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    scroll-behavior: smooth; /* Smooth scrolling */
-    white-space: nowrap; /* Prevent wrapping of cards */
-  }
-
-  .contact-grid::-webkit-scrollbar {
-    height: 8px; /* Height of the horizontal scrollbar */
-  }
-
-  .contact-grid::-webkit-scrollbar-thumb {
-    background-color: #4f46e5; /* Purple scrollbar thumb */
-    border-radius: 4px;
-  }
-
-  .contact-grid::-webkit-scrollbar-track {
-    background-color: #2e2e2e; /* Darker background for the scrollbar track */
-  }
-
-  .team-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    border-bottom: 1px solid #4f46e5;
-    margin-bottom: 0.8rem;
-  }
-  .contact-card {
-    flex: 0 0 18rem; /* Fixed width for each card */
-    max-height: 12.4rem;
-    align-items: center;
-    background-color: #2e2e2e; /* Darker background */
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #444444; /* Darker border */
-    transition: background-color 0.2s;
-    text-align: center;
-  }
-
-  .contact-card:hover {
-    background-color: #3a3a3a;
-  }
-
-  .avatar {
-    margin-bottom: 1rem;
-  }
-
-  .avatar img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid #444444;
-    object-fit: cover; /* Ensures the image maintains its aspect ratio */
-  }
-
-  .contact-info {
-    margin-bottom: 1rem;
-  }
-
-  .name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0;
-    color: #e0e0e0;
-  }
-
-  .role {
-    font-size: 0.9rem;
-    margin: 0.25rem 0;
-    color: #8b949e; /* Muted text */
-  }
-
-  .phone,
-  .email {
-    font-size: 0.875rem;
-    color: #4f46e5; /* Purple text */
-    text-decoration: none;
-    display: block;
-  }
-
-  .phone:hover,
-  .email:hover {
-    text-decoration: underline;
-  }
-
-  .message-button {
-    padding: 0.5rem 1rem;
-    background-color: #4f46e5; /* Purple background */
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-
-  .message-button:hover {
-    background-color: #6a5acd; /* Lighter purple on hover */
-  }
+.people-of-contact {
+  padding: 1.5rem;
+  background-color: #f9f9fc;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: auto;
+}
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #2c3e50;
+}
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+.search-input {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #dfe6e9;
+  font-size: 1rem;
+  min-width: 220px;
+}
+.filter-select {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #dfe6e9;
+  font-size: 1rem;
+  background: #fff;
+}
+.sort-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #6366f1;
+  background: #fff;
+  color: #6366f1;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sort-btn:hover {
+  background: #6366f1;
+  color: #fff;
+}
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.team {
+  border: 1px solid #dfe6e9;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  background-color: #ecf0f1;
+  transition: background 0.2s ease-in-out;
+}
+.team-header:hover {
+  background-color: #dfe6e9;
+}
+.team-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0;
+  color: #34495e;
+}
+.submenu-toggle i {
+  font-size: 1rem;
+  color: #7f8c8d;
+  transition: transform 0.3s ease;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #fff;
+}
+.contact-card {
+  background-color: #f1f2f6;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+.contact-card:hover {
+  transform: translateY(-2px);
+}
+.name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: #2c3e50;
+}
+.role {
+  font-size: 0.9rem;
+  color: #636e72;
+  margin-bottom: 0.5rem;
+}
+.contact-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.icon-btn {
+  background: none;
+  border: none;
+  color: #6366f1;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.icon-btn:hover {
+  background: #e0e7ff;
+  color: #2c3e50;
+}
+.phone,
+.email {
+  display: block;
+  font-size: 0.85rem;
+  color: #0984e3;
+  text-decoration: none;
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+.phone:hover,
+.email:hover {
+  text-decoration: underline;
+}
 </style>

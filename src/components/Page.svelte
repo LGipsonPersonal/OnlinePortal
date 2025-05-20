@@ -8,7 +8,6 @@
   import TopBar from "./TopBar.svelte";
   import UploadDocs from "./UploadDocs.svelte";
   import RequestHistory from "./RequestHistory.svelte";
-  import UserProfile from "./UserProfile.svelte";
   import ViewDocuments from "./ViewDocuments.svelte";
   import Announcements from "./Announcements.svelte";
   import QuickTime from "./widgets/QuickTime.svelte";
@@ -24,6 +23,7 @@
   import IssueBoard from "./IssueBoard.svelte";
   import Conversation from "./Conversation.svelte";
   import ProjectsDashboard from "./ProjectsDashboard.svelte";
+    import Resources from "./Resources.svelte";
 
   setContext('MainPage', {updateChoice})
 
@@ -135,11 +135,10 @@ function getProjectData(projectKey) {
             stateGroups={getProjectData(proj.key).projectStateGroups}
           />
         {:else if choice === `${proj.key}-2`}
-          <p>Resources</p>
+          <Resources></Resources>
         {:else if choice === `${proj.key}-3`}
           <ProjectContacts></ProjectContacts>
-        {:else if choice === `${proj.key}-4`}
-          <p>Discussions</p>
+
         {/if}
     {/each}
   </div>

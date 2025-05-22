@@ -30,6 +30,7 @@
     { id: 24, name: "Natalie Portman", role: "Business Analyst", profileImage: "https://via.placeholder.com/40", phone: "(555) 000-2222", email: "natalie.portman@example.com", team: "Management" },
     { id: 25, name: "Ryan Reynolds", role: "Performance Tester", profileImage: "https://via.placeholder.com/40", phone: "(555) 333-4444", email: "ryan.reynolds@example.com", team: "Testing" },
     { id: 26, name: "Joe Dirt", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "joeDirt@example.com", team: "Management" },
+    { id: 27, name: "Joe Dirt 2", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "joeDirt@example.com", team: "Management" },
   ]);
 
   // --- State for UI ---
@@ -174,18 +175,25 @@
 <style>
 .people-of-contact {
   padding: 1.5rem;
-  background-color: #f9f9fc;
+  background-color: #18181b;
   font-family: 'Segoe UI', sans-serif;
-  overflow: auto;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(44, 62, 80, 0.10);
+  margin: 2rem;
+  color: #e0e0e0;
 }
+
 .section-title {
   font-size: 2rem;
   font-weight: 600;
   margin-top: 0;
   margin-bottom: 1rem;
   text-align: center;
-  color: #2c3e50;
+  color: #fff;
+  border-bottom: 2px solid #6366f1;
+  padding-bottom: 0.5rem;
 }
+
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -194,66 +202,76 @@
   align-items: center;
   justify-content: center;
 }
+
 .search-input {
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  border: 1px solid #dfe6e9;
+  border: 1px solid #35357a;
   font-size: 1rem;
   min-width: 220px;
+  background: #232336;
+  color: #e0e0e0;
 }
+
 .filter-select {
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  border: 1px solid #dfe6e9;
+  border: 1px solid #35357a;
   font-size: 1rem;
-  background: #fff;
+  background: #232336;
+  color: #e0e0e0;
 }
+
 .sort-btn {
   padding: 0.5rem 1rem;
   border-radius: 6px;
   border: 1px solid #6366f1;
-  background: #fff;
-  color: #6366f1;
+  background: #232336;
+  color: #a5b4fc;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 .sort-btn:hover {
   background: #6366f1;
   color: #fff;
 }
+
 .box {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
+
 .team {
-  border: 1px solid #dfe6e9;
+  border: 1px solid #35357a;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #fff;
+  background-color: #232336;
 }
+
 .team-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 1rem;
   cursor: pointer;
-  background-color: #ecf0f1;
+  background-color: #232336;
   transition: background 0.2s ease-in-out;
+  border-bottom: 1px solid #35357a;
 }
 .team-header:hover {
-  background-color: #dfe6e9;
+  background-color: #29294d;
 }
 .team-title {
   font-size: 1.25rem;
   font-weight: 500;
   margin: 0;
-  color: #34495e;
+  color: #fff;
 }
 .submenu-toggle i {
   font-size: 1rem;
-  color: #7f8c8d;
+  color: #a5b4fc;
   transition: transform 0.3s ease;
 }
 .contact-grid {
@@ -261,27 +279,46 @@
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
   padding: 1rem;
-  background-color: #fff;
+  background-color: #232336;
 }
+
+.contact-grid::-webkit-scrollbar {
+  height: 8px;
+}
+.contact-grid::-webkit-scrollbar-thumb {
+  background: #6366f1;
+  border-radius: 4px;
+}
+.contact-grid::-webkit-scrollbar-track {
+  background: #232336;
+}
+
 .contact-card {
-  background-color: #f1f2f6;
+  background-color: #2e2e2e;
   border-radius: 8px;
   padding: 1rem;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+  transition: transform 0.2s, background 0.2s;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid #35357a;
 }
 .contact-card:hover {
   transform: translateY(-2px);
+  background: #35357a;
 }
+
 .name {
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 0.25rem;
-  color: #2c3e50;
+  color: #fff;
 }
 .role {
   font-size: 0.9rem;
-  color: #636e72;
+  color: #a1a1aa;
   margin-bottom: 0.5rem;
 }
 .contact-actions {
@@ -297,17 +334,17 @@
   cursor: pointer;
   padding: 0.2rem;
   border-radius: 4px;
-  transition: background 0.15s;
+  transition: background 0.15s, color 0.15s;
 }
 .icon-btn:hover {
-  background: #e0e7ff;
-  color: #2c3e50;
+  background: #35357a;
+  color: #fff;
 }
 .phone,
 .email {
   display: block;
   font-size: 0.85rem;
-  color: #0984e3;
+  color: #a5b4fc;
   text-decoration: none;
   margin-bottom: 0.25rem;
   word-break: break-word;
@@ -315,5 +352,6 @@
 .phone:hover,
 .email:hover {
   text-decoration: underline;
+  color: #fff;
 }
 </style>

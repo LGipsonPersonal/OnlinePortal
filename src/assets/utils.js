@@ -25,4 +25,45 @@ export function selfOnly(fn) {
       }
     };
   }
+
+export function getFirstMonday(year) {
+  const jan1 = new Date(year, 0, 1);
+  const day = jan1.getDay();
+  const offset = (day === 0) ? 1 : (8 - day); // Sunday is 0, Monday is 1
+  return new Date(year, 0, 1 + offset);
+}
+
+export function getTwoWeekIntervals(year) {
+  const firstMonday = getFirstMonday(year);
+  const intervals = [];
+  let start = new Date(firstMonday);
+
+  while (start.getFullYear() === year || (start.getMonth() === 11 && start.getDate() > 17)) {
+    const end = new Date(start);
+    end.setDate(end.getDate() + 13); // 14-day interval
+
+    intervals.push({
+      start: new Date(start),
+      end: new Date(end),
+    });
+
+    start.setDate(start.getDate() + 14);
+  }
+
+  return intervals;
+}
+
+export function getTwoWeekIntervalForDate(date) {
+  const year = date.getFullYear();
+  const firstMonday = getFirstMonday(year);
+  const diffInDays = Math.floor((date - firstMonday) / (1000 * 60 * 60 * 24));
+
+  const intervalIndex = Math.floor(diffInDays / 14);
+  const start = new Date(firstMonday);
+  start.setDate(start.getDate() + intervalIndex * 14);
   
+  const end = new Date(start);
+  end.setDate(start.getDate() + 13);
+
+  return { start, end };
+}

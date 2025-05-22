@@ -147,8 +147,9 @@
     font-weight: 700;
     margin-bottom: 1.5rem;
     color: var(--text-color);
+    margin-top: 0;
     border-bottom: 2px solid var(--highlight-color-one);
-    padding-bottom: 1rem;
+    padding-bottom: 0.5rem;
   }
 
   .scroll-wrap {

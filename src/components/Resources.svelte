@@ -84,12 +84,12 @@
 <style>
   .resources-container {
     padding: 1.5rem;
-    background-color: #f9f9fc;
+    background-color: #18181b;
     font-family: 'Segoe UI', sans-serif;
     border-radius: 12px;
-    box-shadow: 0 1px 8px rgba(44, 62, 80, 0.06);
-    max-width: 1200px;
-    margin: 0 auto;
+    box-shadow: 0 1px 8px rgba(44, 62, 80, 0.10);
+    margin: 2rem;
+    color: #e0e0e0;
   }
 
   .section-title {
@@ -98,7 +98,7 @@
     margin-top: 0;
     margin-bottom: 1rem;
     text-align: center;
-    color: #2c3e50;
+    color: #fff;
     border-bottom: 2px solid #6366f1;
     padding-bottom: 0.5rem;
   }
@@ -110,10 +110,10 @@
   }
 
   .resource-group {
-    border: 1px solid #dfe6e9;
+    border: 1px solid #35357a;
     border-radius: 8px;
     overflow: hidden;
-    background-color: #fff;
+    background-color: #232336;
   }
 
   .group-header {
@@ -122,24 +122,24 @@
     align-items: center;
     padding: 0.75rem 1rem;
     cursor: pointer;
-    background-color: #ecf0f1;
+    background-color: #232336;
     transition: background 0.2s ease-in-out;
-    border-bottom: 1px solid #dfe6e9;
+    border-bottom: 1px solid #35357a;
   }
   .group-header:hover {
-    background-color: #dfe6e9;
+    background-color: #29294d;
   }
 
   .group-title {
     font-size: 1.25rem;
     font-weight: 500;
     margin: 0;
-    color: #34495e;
+    color: #fff;
   }
 
   .submenu-toggle i {
     font-size: 1rem;
-    color: #7f8c8d;
+    color: #a5b4fc;
     transition: transform 0.3s ease;
   }
 
@@ -148,7 +148,7 @@
     flex-direction: row;
     gap: 1rem;
     padding: 1rem;
-    background-color: #fff;
+    background-color: #232336;
     overflow-x: auto;
     scroll-behavior: smooth;
     max-width: 100%;
@@ -161,23 +161,25 @@
     border-radius: 4px;
   }
   .resource-grid::-webkit-scrollbar-track {
-    background: #f1f2f6;
+    background: #232336;
   }
 
   .resource-card {
-    background-color: #f1f2f6;
+    background-color: #2e2e2e;
     border-radius: 8px;
     padding: 1rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+    transition: transform 0.2s, background 0.2s;
     min-width: 220px;
     max-width: 260px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    border: 1px solid #35357a;
   }
   .resource-card:hover {
     transform: translateY(-2px);
+    background: #35357a;
   }
 
   .resource-icon {
@@ -190,20 +192,20 @@
     font-weight: 600;
     font-size: 1rem;
     margin-bottom: 0.25rem;
-    color: #2c3e50;
+    color: #fff;
   }
 
   .resource-link {
     display: block;
     font-size: 0.9rem;
-    color: #0984e3;
+    color: #a5b4fc;
     text-decoration: none;
     margin-bottom: 0.25rem;
     word-break: break-word;
     transition: color 0.15s;
   }
   .resource-link:hover {
-    color: #6366f1;
+    color: #fff;
     text-decoration: underline;
   }
 </style>

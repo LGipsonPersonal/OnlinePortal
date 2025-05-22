@@ -25,24 +25,21 @@
   // Get the current two-week interval
   let today = new Date();
   const currentDayIndex = today.getDay() - 1; // Adjust for weekday index (0-based)
-  let { start: weekStart, end: weekEnd } = getTwoWeekIntervalForDate(today);
+  let { start, end } = getTwoWeekIntervalForDate(today);
+  console.log(start, end)
 
 
   function updateWeekRange() {
-    const dayOfWeek = today.getDay();
-    const startOffset = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
-    weekStart.setDate(today.getDate() - startOffset);
-    weekEnd = new Date(weekStart);
-    weekEnd.setDate(weekStart.getDate() + 13); // 13 days to cover two weeks
+    // Always get the correct interval for 'today'
+    const { start: intervalStart, end: intervalEnd } = getTwoWeekIntervalForDate(today);
+    start = new Date(intervalStart);
+    end = new Date(intervalEnd);
 
-    // Adjust weekEnd to skip weekends
-    let daysAdded = 0;
     weekDays = [];
-    let currentDate = new Date(weekStart);
-    while (daysAdded < 10) {
-      if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+    let currentDate = new Date(start);
+    while (currentDate <= end) {
+      if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) { // Mon-Fri
         weekDays.push(currentDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }));
-        daysAdded++;
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -53,19 +50,19 @@
   };
 
   const previousWeek = () => {
-    weekStart.setDate(weekStart.getDate() - 14);
-    weekEnd.setDate(weekEnd.getDate() - 14);
+    start.setDate(start.getDate() - 14);
+    end.setDate(end.getDate() - 14);
     updateWeekDays();
   };
   const nextWeek = () => {
-    weekStart.setDate(weekStart.getDate() + 14);
-    weekEnd.setDate(weekEnd.getDate() + 14);
+    start.setDate(start.getDate() + 14);
+    end.setDate(end.getDate() + 14);
     updateWeekDays();
   };
   function updateWeekDays() {
     weekDays = [];
-    let current = new Date(weekStart);
-    while (current <= weekEnd) {
+    let current = new Date(start);
+    while (current <= end) {
       if (current.getDay() !== 0 && current.getDay() !== 6) {
         weekDays.push(current.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }));
       }
@@ -149,8 +146,9 @@
       Next Two Weeks <i class="fas fa-arrow-right"></i>
     </button>
   </div>
-  <p class="date-range">{formatDate(weekStart)} - {formatDate(weekEnd)}</p>
-
+  <p class="date-range">
+    {start.toLocaleDateString()} - {end.toLocaleDateString()}
+  </p>
   <div class="table-wrapper">
     <table class="project-table">
       <thead>

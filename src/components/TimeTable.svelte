@@ -24,51 +24,46 @@
 
   // Get the current two-week interval
   let today = new Date();
-  const currentDayIndex = today.getDay() - 1; // Adjust for weekday index (0-based)
   let { start, end } = getTwoWeekIntervalForDate(today);
   console.log(start, end)
 
+  let currentDayIndex = $state(today.getDay() - 1); // Adjust for weekday index (0-based)
 
   function updateWeekRange() {
-    // Always get the correct interval for 'today'
-    const { start: intervalStart, end: intervalEnd } = getTwoWeekIntervalForDate(today);
-    start = new Date(intervalStart);
-    end = new Date(intervalEnd);
-
     weekDays = [];
     let currentDate = new Date(start);
+    let idx = 0;
+    currentDayIndex = -1;
     while (currentDate <= end) {
       if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) { // Mon-Fri
         weekDays.push(currentDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }));
+        // Highlight current day if it's in this interval
+        if (
+          currentDate.getFullYear() === today.getFullYear() &&
+          currentDate.getMonth() === today.getMonth() &&
+          currentDate.getDate() === today.getDate()
+        ) {
+          currentDayIndex = idx;
+        }
+        idx++;
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
   }
 
-  const formatDate = (date) => {
-    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-  };
 
-  const previousWeek = () => {
+  function previousWeek() {
     start.setDate(start.getDate() - 14);
     end.setDate(end.getDate() - 14);
-    updateWeekDays();
-  };
-  const nextWeek = () => {
+    updateWeekRange();
+  }
+
+  function nextWeek() {
     start.setDate(start.getDate() + 14);
     end.setDate(end.getDate() + 14);
-    updateWeekDays();
-  };
-  function updateWeekDays() {
-    weekDays = [];
-    let current = new Date(start);
-    while (current <= end) {
-      if (current.getDay() !== 0 && current.getDay() !== 6) {
-        weekDays.push(current.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }));
-      }
-      current.setDate(current.getDate() + 1);
-    }
+    updateWeekRange();
   }
+
 
   let selectedDate = '';
   const submitTimesheet = () => {

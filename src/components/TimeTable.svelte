@@ -1,13 +1,13 @@
 <script>
   import Popup from './widgets/Popup.svelte';
-  import { getTwoWeekIntervalForDate } from '$assets/utils.js';
+  import { getTwoWeekIntervalForDate, toLocalDate } from '$assets/utils.js';
   // @ts-ignore
   import { tableData } from '$assets/store.svelte.js';
  
   let weekDays = $state([]);
-  let { projects, sheetRecords } = $props();
-
+  let { projects } = $props();
   console.log($state.snapshot(projects))
+
   let noteText = $state('');
   let takingNote = $state(false);
 
@@ -24,32 +24,23 @@
 
   // Get the current two-week interval
   let today = new Date();
-  let { start, end } = getTwoWeekIntervalForDate(today);
-  console.log(start, end)
+  let { start, end } = $state(getTwoWeekIntervalForDate(today));
 
-  let currentDayIndex = $state(today.getDay() - 1); // Adjust for weekday index (0-based)
 
-  function updateWeekRange() {
-    weekDays = [];
-    let currentDate = new Date(start);
-    let idx = 0;
-    currentDayIndex = -1;
-    while (currentDate <= end) {
-      if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) { // Mon-Fri
-        weekDays.push(currentDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }));
-        // Highlight current day if it's in this interval
-        if (
-          currentDate.getFullYear() === today.getFullYear() &&
-          currentDate.getMonth() === today.getMonth() &&
-          currentDate.getDate() === today.getDate()
-        ) {
-          currentDayIndex = idx;
-        }
-        idx++;
-      }
-      currentDate.setDate(currentDate.getDate() + 1);
+function updateWeekRange() {
+  weekDays = [];
+  let currentDate = new Date(start);
+  while (currentDate <= end) {
+    if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) { // Mon-Fri
+      // Store both the label and the YYYY-MM-DD value
+      weekDays.push({
+        label: currentDate.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }),
+        value: toLocalDate(currentDate)
+      });
     }
+    currentDate.setDate(currentDate.getDate() + 1);
   }
+}
 
 
   function previousWeek() {
@@ -65,13 +56,24 @@
   }
 
 
-  let selectedDate = '';
-  const submitTimesheet = () => {
-    console.log('Timesheet submitted:', tableData);
+  let selectedDate = $state(toLocalDate(today)); // Format YYYY-MM-DD
+  function submitTimesheet() {
   };
 
-  function handleDateChange() {
-    // Handle date change logic here
+  function handleDateChange(event) {
+    // Parse the selected date from the input (YYYY-MM-DD)
+    const picked = event?.target?.value || selectedDate;
+    const pickedDate = new Date(picked);
+
+    // Find the two-week interval for the picked date
+    const { start: newStart, end: newEnd } = getTwoWeekIntervalForDate(pickedDate);
+
+    // Update start and end
+    start = new Date(newStart);
+    end = new Date(newEnd);
+
+    // Update the weekDays array
+    updateWeekRange();
   }
 
   function addRow() {
@@ -92,7 +94,6 @@
 
   updateWeekRange();
 
-  console.log($state.snapshot(tableData))
 </script>
 
 {#snippet noteBox()}
@@ -133,7 +134,7 @@
     <input 
       class="calendar-input" 
       type="date" 
-      value={selectedDate} 
+      bind:value={selectedDate}
       onchange={handleDateChange} 
       aria-label="Select Date" 
     />
@@ -150,8 +151,8 @@
         <tr>
           <th>Projects</th>
           <th>Tasks</th>
-          {#each weekDays as day, i}
-            <th class={i === currentDayIndex ? 'current-day': ''}>{day}</th>
+          {#each weekDays as day}
+            <th class={day.value === selectedDate ? 'current-day' : ''}>{day.label}</th>
           {/each}
           <th>Totals</th>
         </tr>

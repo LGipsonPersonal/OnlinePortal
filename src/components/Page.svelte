@@ -105,7 +105,7 @@ function getProjectData(projectKey) {
         </div>
       </div>
     {:else if choice === tabs[1].key}
-      <TimeTable {projects}}></TimeTable>
+      <TimeTable></TimeTable>
     {:else if choice === tabs[2].key}
       <div class="time-off-page">
         <TimeOff></TimeOff>

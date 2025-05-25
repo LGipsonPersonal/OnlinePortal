@@ -110,33 +110,63 @@ input {
 }
 
 .scroll-wrap {
-    padding-right: 1rem;
-    padding-left: 1rem;
-    height: calc(100% - 3rem);
-    overflow-y: auto;
+    height: calc(100% - 4rem);
 }
-
 /* Title styling */
 .request-time-off .form-title {
-    font-size: 1.25rem;
+    font-size: 2rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
     margin-top: 0;
     text-align: center;
-    color: #e0e0e0; /* Light text */
-    border-bottom: 1px solid #444; /* Darker border */
-    padding-bottom: 0.8rem;
+    color: #fff;
+    border-bottom: 2px solid #6366f1;
+    padding-bottom: 0.5rem;
+}
+
+/* PTO Info Row */
+.request-time-off .pto-info-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.request-time-off .pto-info {
+    flex: 1;
+    text-align: center;
+    background-color: #232336;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #35357a;
+    color: #e0e0e0;
+}
+
+.request-time-off .pto-info label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #a1a1aa;
+}
+
+.request-time-off .pto-info p {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: #fff;
 }
 
 /* Flex row for Start Date and End Date */
 .request-time-off .form-row {
     display: flex;
     gap: 1.5rem;
+
 }
 /* Form groups */
 .request-time-off .form-group {
     margin-bottom: 1.5rem;
-    box-sizing: border-box; 
+    flex: 1;
+    min-width: 0;
 }
 
 /* Labels */
@@ -144,9 +174,8 @@ input {
     display: block;
     font-size: 1rem;
     font-weight: 500;
-    color: #8b949e; /* Muted text */
+    color: #a1a1aa;
     margin-bottom: 0.5rem;
-    text-wrap: nowrap;
 }
 
 /* Inputs, select, and textarea */
@@ -154,15 +183,15 @@ input {
 .request-time-off select,
 .request-time-off textarea {
     width: 100%;
-    padding: 1rem;
+    padding: 0.9rem;
     font-size: 1rem;
-    border: 1px solid #444; /* Darker border */
+    border: 1px solid #35357a;
     border-radius: 6px;
-    color: #e0e0e0; /* Light text */
-    background-color: #2e2e2e; /* Darker background */
+    color: #e0e0e0;
+    background-color: #232336;
     transition: border-color 0.3s, box-shadow 0.3s;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
-    box-sizing: border-box; /* Ensures input paddings are accounted for */ 
+    box-shadow: 0 1px 3px rgba(44, 62, 80, 0.08) inset;
+    box-sizing: border-box;
 }
 .request-time-off select,
 #start-date,
@@ -174,14 +203,8 @@ input {
 .request-time-off select:focus,
 .request-time-off textarea:focus {
     outline: none;
-    border-color: #58a6ff; /* Blue focus border */
-    box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.4);
-}
-/* Form groups in a row */
-.request-time-off .form-row .form-group {
-    flex: 1;
-    min-width: 0;
-    box-sizing: border-box; /* Prevents fields from exceeding their bounds */
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
 }
 /* Textarea specific styles */
 .request-time-off textarea {
@@ -195,59 +218,36 @@ input {
     padding: 0.9rem;
     font-size: 1rem;
     font-weight: 600;
-    color: #ffffff;
-    background-color: #238636; /* Green background */
+    color: #fff;
+    background-color: #6366f1;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
 }
-.request-time-off .pto-info-row {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.request-time-off .pto-info {
-    flex: 1;
-    text-align: center;
-    background-color: #2e2e2e; /* Darker background */
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid #444; /* Darker border */
-    color: #e0e0e0; /* Light text */
-}
-
-.request-time-off .pto-info label {
-    display: block;
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    color: #8b949e; /* Muted text */
-}
-
-.request-time-off .pto-info p {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0;
-    color: #e0e0e0; /* Light text */
-}
-/* Submit button hover effect */
 .request-time-off .submit-button:hover {
-    background-color: #2ea043; /* Lighter green on hover */
-    transform: scale(1.02);
+    background-color: #4f46e5;
+    transform: translateY(-2px) scale(1.01);
+}
+
+/* Password field */
+.request-time-off .password-field {
+    margin-bottom: 1.5rem;
 }
 
 /* Responsive styling: stack fields on small screens */
 /* Responsive styling: Small screens */
 @media (max-width: 760px) {
     .request-time-off {
-        padding: 1.5rem;
-        min-width:auto;
+        padding: 1rem;
+        min-width: auto;
+        max-width: 100vw;
     }
 
     .request-time-off .pto-info-row {
-        display: none;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     .request-time-off .form-row {

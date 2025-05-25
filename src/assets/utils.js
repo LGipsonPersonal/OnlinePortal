@@ -72,3 +72,35 @@ export function toLocalDate(date) {
   const pad = n => n.toString().padStart(2, '0');
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }
+
+/**
+ * Returns issues for a given project, grouped by stateGroup.
+ * @param {string} projectId - The project ID to filter by.
+ * @param {Array} issues - The issues array.
+ * @param {Array} stateGroups - The stateGroups array.
+ * @returns {Object} An object where keys are stateGroup names and values are arrays of issues.
+ */
+export function getProjectIssuesByStateGroup(projectId, issues, stateGroups) {
+  const grouped = {};
+
+  // Build empty groups based on stateGroups
+  stateGroups.forEach(group => {
+    grouped[group.name] = [];
+  });
+
+  // Assign issues to the correct group
+  issues.forEach(issue => {
+    if (issue.projectId === projectId && grouped.hasOwnProperty(issue.stateGroup)) {
+      grouped[issue.stateGroup].push(issue);
+    }
+  });
+
+  return grouped;
+}
+export function getProjectIssues(projectName, issues, projects) {
+  // Find the project by name
+  const project = projects.find(p => p.name === projectName);
+  if (!project) return [];
+  // Return issue names for that project
+  return issues.filter(issue => issue.projectId === project.id).map(issue => issue.name);
+}

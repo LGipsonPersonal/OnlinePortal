@@ -4,8 +4,7 @@
   // @ts-ignore
   let { issues, stateGroups } = $props();
 
-  console.log("Issues:",  $state.snapshot(issues));
-  console.log("State Groups:", $state.snapshot(stateGroups));
+
   let boardGroups = $derived.by(() => {
     const groups = {};
 

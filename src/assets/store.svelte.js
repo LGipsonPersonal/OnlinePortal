@@ -78,7 +78,6 @@ export const tabs = [
       duration: '4 hours', 
       status: 'Pending', 
       supervisor_note: '-', 
-      action: 'Cancel'
     },
     {
       id: 2, 
@@ -88,7 +87,6 @@ export const tabs = [
       duration: '4 hours', 
       status: 'Denied', 
       supervisor_note: 'Insufficient coverage.', 
-      action: 'Retry'
    },
    {
     id: 3, 
@@ -98,7 +96,15 @@ export const tabs = [
     duration: '4 hours', 
     status: 'Denied', 
     supervisor_note: 'Insufficient coverage.', 
-    action: 'Retry'
+ },
+ {
+    id: 4, 
+    request_date: '05/04/2024', 
+    start_date: '06/04/2024', 
+    end_date: '06/04/2024', 
+    duration: '4 hours', 
+    status: 'Approved', 
+    supervisor_note: 'Enjoy your time off!', 
  }
   ]
   
@@ -379,7 +385,7 @@ export const tabs = [
       id: "4",
       name: "Project R",
       stateGroups: ["Research", "Implementation", "Deployment"],
-    },
+    },6
   ];
 
   export let stateGroups = [

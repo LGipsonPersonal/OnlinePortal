@@ -1,9 +1,9 @@
 <script>
-  import TaskSearchBar from "./TaskSearchbar.svelte";
-  // Import the `issues` array from the store
   import { issues, stateGroups, projects } from "$assets/store.svelte.js";
 
+  let searchTerm = $state("");
   let searchResults = $state([]);
+  let searchType = $state("tasks");
 
   // Extract available states for an issue based on its stateGroup
   function getAvailableStates(issue) {
@@ -13,9 +13,11 @@
 
   // Function to update the state (board) of an issue
   function updateTaskState(task, newState) {
-    const issue = issues.find((i) => i.id === task.id);
-    if (issue) {
-      issue.state = newState; // Update the state of the issue
+    if (confirm(`Change state of "${task.name}" to "${newState}"?`)) {
+      const issue = issues.find((i) => i.id === task.id);
+      if (issue) {
+        issue.state = newState; // Update the state of the issue
+      }
     }
   }
 
@@ -29,25 +31,69 @@
     const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // Calculate luma
     return luma > 128 ? "#000000" : "#ffffff"; // Return black or white based on luma
   }
+
+  // Filter tasks based on the search term
+  function filterTasks() {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) {
+      searchResults = [];
+      return;
+    }
+    if (searchType === "tasks") {
+      searchResults = issues.filter(task =>
+        task.name.toLowerCase().includes(term)
+      );
+    } else if (searchType === "projects") {
+      searchResults = issues.filter(task =>
+        projects.find(p => p.id === task.projectId)?.name.toLowerCase().includes(term)
+      );
+    } else if (searchType === "tags") {
+      searchResults = issues.filter(task =>
+        task.tags.some(tag => tag.name.toLowerCase().includes(term))
+      );
+    }
+  }
 </script>
 
 <div class="dashboard-container">
   <h2 class="board-title">Projects Dashboard</h2>
-  <TaskSearchBar tasks={issues} bind:results={searchResults} />
+
+  <!-- Search Bar with Dropdown -->
+  <div class="searchbar-group">
+    <select
+      class="search-dropdown"
+      bind:value={searchType}
+      aria-label="Choose search type"
+    >
+      <option value="tasks">Tasks</option>
+      <option value="projects">Projects</option>
+      <option value="tags">Tags</option>
+    </select>
+    <input
+      class="search-bar"
+      type="text"
+      placeholder="Search…"
+      bind:value={searchTerm}
+      on:input={filterTasks}
+      aria-label="Search"
+      autocomplete="off"
+    />
+  </div>
 
   <div class="table-wrapper">
-    <table class="dashboard-table">
+    <table class="dashboard-table" aria-label="Project Issues Table">
+      <caption class="sr-only">Project Issues Table</caption>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Due Date</th>
-          <th>Project</th>
-          <th>State</th>
-          <th>Tags</th>
+          <th scope="col">Name</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Project</th>
+          <th scope="col">State</th>
+          <th scope="col">Tags</th>
         </tr>
       </thead>
       <tbody>
-        {#each (searchResults.length > 0 ? searchResults : issues) as task}
+        {#each (searchResults.length > 0 ? searchResults : issues) as task (task.id)}
           <tr>
             <td>{task.name}</td>
             <td>{task.dueDate}</td>
@@ -56,6 +102,7 @@
               <select
                 bind:value={task.state}
                 class="state-select"
+                aria-label="Change task state"
                 on:change={(e) => updateTaskState(task, e.target.value)}
               >
                 {#each getAvailableStates(task) as state}
@@ -69,8 +116,9 @@
                   <span
                     class="tag"
                     style="background-color: {tag.color}; color: {getTextColorForBackground(tag.color)}"
+                    title={tag.name}
                   >
-                    {tag.name}
+                    {tag.name.length > 16 ? tag.name.slice(0, 15) + "…" : tag.name}
                   </span>
                 {/each}
               </div>
@@ -102,6 +150,65 @@
     color: #e0e0e0;
     border-bottom: 1px solid #444;
     padding-bottom: 0.8rem;
+  }
+
+  .searchbar-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem;
+    gap: 0;
+  }
+
+  .search-dropdown {
+    border: 1px solid #444;
+    border-radius: 6px 0 0 6px;
+    background: #232336;
+    color: #e0e0e0;
+    font-size: 1rem;
+    padding: 0.6rem 0.8rem;
+    outline: none;
+    border-right: none;
+    height: 42px;
+    min-width: 110px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .search-dropdown:focus {
+    border-color: #4f46e5;
+    z-index: 2;
+  }
+
+  .search-bar {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.6rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0 6px 6px 0;
+    border-left: none;
+    height: 42px;
+    border: 1px solid #444;
+    background: #232336;
+    color: #e0e0e0;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-bar:focus {
+    border-color: #4f46e5;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
   }
 
   .table-wrapper {

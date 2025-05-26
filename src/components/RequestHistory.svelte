@@ -1,35 +1,86 @@
 <script>
   let { requests } = $props();
+  import Popup from "./widgets/Popup.svelte";
+
+  let popupActive = $state(false);
+  let selectedRequest = $state(null);
+
+  function handleRowClick(request) {
+    selectedRequest = request;
+    popupActive = true;
+  }
+
+  function cancelRequest(request) {
+    if (confirm('Are you sure you want to cancel this request?')) {
+      // Implement cancellation logic here
+      alert(`Request for ${request.start_date} - ${request.end_date} cancelled.`);
+    }
+  }
+
+  
+  function getStatusIcon(status) {
+    if (status === 'Approved') return '✔️';
+    if (status === 'Pending') return '⏳';
+    if (status === 'Denied') return '❌';
+    return '';
+  }
 </script>
 
-<div class="timeoff-container">
-  <div class="timeoff-header">
-    <div class="timeoff-column req-date">Request Date</div>
-    <div class="timeoff-column start-date">Start Date</div>
-    <div class="timeoff-column">End Date</div>
-    <div class="timeoff-column duration">Duration</div>
-    <div class="timeoff-column status">Status</div>
-    <div class="timeoff-column note">Supervisor's Note</div>
-    <div class="timeoff-column">Action</div>
+{#snippet renderRequestDetails(request) }
+    <article class="request-details-popup">
+      <header>
+        <h2>Time Off Request Details</h2>
+      </header>
+      <section>
+        <p><strong>Request Date:</strong> {request.request_date}</p>
+        <p><strong>Start Date:</strong> {request.start_date}</p>
+        <p><strong>End Date:</strong> {request.end_date}</p>
+        <p><strong>Duration:</strong> {request.duration}</p>
+        <p><strong>Status:</strong> {request.status}</p>
+        <p><strong>Supervisor's Note:</strong></p>
+        <div class="popup-note">{request.supervisor_note || "—"}</div>
+      </section>
+    </article>
+{/snippet}
+
+<div class="timeoff-container" role="table" aria-label="Request History Table">
+  <Popup
+    popupContent={renderRequestDetails}
+    bind:active={popupActive}
+    popupData={selectedRequest}
+  />
+  <div class="timeoff-header" role="row">
+    <div class="timeoff-column req-date" role="columnheader">Request Date</div>
+    <div class="timeoff-column start-date" role="columnheader">Start Date</div>
+    <div class="timeoff-column" role="columnheader">End Date</div>
+    <div class="timeoff-column duration" role="columnheader">Duration</div>
+    <div class="timeoff-column status" role="columnheader">Status</div>
+    <div class="timeoff-column note" role="columnheader">Supervisor's Note</div>
   </div>
   {#each requests as request, i (request.id)}
-    <div class="timeoff-row {request.status.toLowerCase()}">
+    <div
+      class="timeoff-row {request.status.toLowerCase()}"
+      role="row"
+      tabindex="0"
+      onclick={() => handleRowClick(request)}
+      onkeydown={(e) => e.key === 'Enter' && handleRowClick(request)}
+      aria-label="View request details"
+    >
       <div class="timeoff-request-date">{request.request_date}</div>
       <div class="timeoff-start-date">{request.start_date}</div>
       <div class="timeoff-end-date">{request.end_date}</div>
       <div class="timeoff-duration">{request.duration}</div>
-      <div class="timeoff-status">{request.status}</div>
-      <div class="timeoff-supervisor-note">{request.supervisor_note}</div>
-      <div class="timeoff-action">
-        {#if request.action === 'Cancel'}
-          <button class="cancel-button">Cancel</button>
-        {:else}
-          <span>{request.action}</span>
-        {/if}
+      <div class="timeoff-status">
+        <span class="status-icon" aria-hidden="true">{getStatusIcon(request.status)}</span>
+        {request.status}
+      </div>
+      <div class="timeoff-supervisor-note" title={request.supervisor_note}>
+        {request.supervisor_note && request.supervisor_note.length > 30
+          ? request.supervisor_note.slice(0, 30) + '…'
+          : request.supervisor_note}
       </div>
     </div>
   {/each}
-  <!-- Placeholder for future requests -->
   <div class="timeoff-placeholder">
     <p>End of Request History</p>
   </div>
@@ -66,7 +117,7 @@
       font-family: 'Inter', sans-serif;
       z-index: 4;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr;
       background-color: var(--accent-color-one);
       color: #ffffff;
       font-weight: 600;
@@ -77,11 +128,13 @@
 
     .timeoff-row {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 2fr;
       padding: 1rem;
       border-bottom: 1px solid #2e2e2e;
       background-color: #2a2a2a;
       color: #d4d4d4;
+      transition: background-color 0.3s, transform 0.2s;
+      cursor: pointer;
     }
   
     .timeoff-column {
@@ -131,15 +184,19 @@
       font-weight: 600;
       color: #f0f0f0;
       background-color: #3b3b3b;
-      border: 1px solid #444;
+      border: 1px solid #6366f1;
       border-radius: 4px;
       cursor: pointer;
-      transition: background-color 0.2s, border-color 0.2s;
+      transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 1px 4px rgba(44,62,80,0.08);
     }
   
-    .cancel-button:hover {
-      background-color: #4a4a4a;
-      border-color: #555;
+    .cancel-button:hover, .cancel-button:focus {
+      background-color: #4f46e5;
+      border-color: #483d8b;
+      color: #fff;
+      transform: scale(1.04);
+      outline: none;
     }
   
     .cancel-button:disabled {
@@ -232,6 +289,31 @@
     padding: 0.25rem 0.5rem;
   }
 }
+.request-details-popup {
+  color: #e0e0e0;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+}
+.request-details-popup header {
+  border-bottom: 1px solid #444;
+  margin-bottom: 1rem;
+}
+.request-details-popup h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  color: #fff;
+}
+.request-details-popup section p {
+  margin: 0.5rem 0;
+}
+.popup-note {
+  background: #232336;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  color: #c0c0c0;
+  word-break: break-word;
+}
   </style>
-  
-  
+
+

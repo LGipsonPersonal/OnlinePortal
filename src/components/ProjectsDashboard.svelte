@@ -72,7 +72,7 @@
     <input
       class="search-bar"
       type="text"
-      placeholder="Search…"
+      placeholder={`Search ${searchType}…`}
       bind:value={searchTerm}
       on:input={filterTasks}
       aria-label="Search"
@@ -184,7 +184,6 @@
     width: 100%;
     box-sizing: border-box;
     padding: 0.6rem 1rem;
-    margin-bottom: 1rem;
     border-radius: 0 6px 6px 0;
     border-left: none;
     height: 42px;

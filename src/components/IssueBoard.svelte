@@ -1,6 +1,4 @@
 <script>
-  import { onMount } from 'svelte';
-  import Popup from './widgets/Popup.svelte';
   // @ts-ignore
   let { issues, stateGroups } = $props();
 
@@ -41,31 +39,37 @@
     return Object.values(groups);
   });
 
-  let newIssueTitle = $state("");
-  let newIssueDescription = $state("");
-  let newBoardName = $state("");
-  let showAddBoardPopup = $state(false);
-  let showAddIssuePopup = $state(false);
   let searchQuery = $state("");
   let selectedGroup = $state(boardGroups[0]?.name || ""); // Default to the first group
   let selectedIssue = $state(null);
   let showIssueDetails = $state(false);
   let dragIssueId = $state(null); // Store the ID of the dragged issue
   let dragOverBoard = $state(null);
+  let showAddIssuePopup = $state(false);
+  let addIssueBoard = $state(null);
+
+  let newIssue = $state({
+    name: "",
+    description: "",
+    dueDate: "",
+    originator: "",
+    tags: "",
+  });
 
   function handleDragStart(issueId) {
     dragIssueId = issueId; // Store the dragged issue ID
   }
 
   function handleDrop(targetBoardName) {
-    const issue = issues.find((i) => i.id === dragIssueId); // Find the issue in the store
-    if (issue) {
-      issue.state = targetBoardName; // Update the board (state) of the issue
+    const index = issues.findIndex((i) => i.id === dragIssueId);
+    if (index !== -1) {
+      issues[index] = { ...issues[index], state: targetBoardName };
+      issues = [...issues]; // Force reactivity
     }
-
     dragIssueId = null;
     dragOverBoard = null;
   }
+
 
   function allowDrop(event, boardName) {
     event.preventDefault(); // Allow the drop event to occur
@@ -74,10 +78,6 @@
 
   function searchIssues() {
     console.log("Searching for:", searchQuery);
-  }
-
-  function jumpToSettings() {
-    console.log("Jumping to settings");
   }
 
   function selectIssue(issue) {
@@ -89,7 +89,7 @@
     showIssueDetails = false;
   }
 
-    function getTextColorForBackground(backgroundColor) {
+  function getTextColorForBackground(backgroundColor) {
     const hex = backgroundColor.replace('#', '');
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
@@ -100,6 +100,47 @@
 
     // Return white text for dark backgrounds, black text for light backgrounds
     return luminance > 0.5 ? '#000000' : '#ffffff';
+  }
+
+  function submitNewIssue() {
+    // Basic validation
+    if (!newIssue.name || !newIssue.description) {
+      alert("Title and Description are required.");
+      return;
+    }
+
+    // Create a new issue object
+    const issue = {
+      id: Date.now(), // Simple ID generation
+      name: newIssue.name,
+      description: newIssue.description,
+      dueDate: newIssue.dueDate,
+      originator: newIssue.originator,
+      tags: newIssue.tags.split(",").map(tag => tag.trim()), // Split tags by comma
+      state: addIssueBoard.name, // Set initial state to the board it's added to
+      stateGroup: selectedGroup, // Set the state group
+    };
+
+    // Add the new issue to the issues array
+    issues = [...issues, issue];
+
+    // Reset the new issue form
+    newIssue = {
+      name: "",
+      description: "",
+      dueDate: "",
+      originator: "",
+      tags: "",
+    };
+
+    // Close the popup
+    showAddIssuePopup = false;
+    addIssueBoard = null;
+  }
+
+  function closeAddIssuePopup() {
+    showAddIssuePopup = false;
+    addIssueBoard = null;
   }
 </script>
 
@@ -116,15 +157,7 @@
       bind:value={searchQuery}
       oninput={searchIssues}
     />
-    <button class="settings-button" onclick={jumpToSettings}>
-      <i class="fas fa-cog"></i>
-    </button>
-    <button class="standard-button" onclick={() => (showAddIssuePopup = true)}>
-      Add Issue
-    </button>
-    <button class="standard-button" onclick={() => (showAddBoardPopup = true)}>
-      Add Board
-    </button>
+
   </div>
   <div class="main-content">
     <div class="boards">
@@ -134,18 +167,33 @@
             class="board {dragOverBoard === board.name ? 'drag-over' : ''}"
             ondrop={() => handleDrop(board.name)}
             ondragover={(event) => allowDrop(event, board.name)}
+            role="region"
+            aria-label={`Board: ${board.name}`}
           >
-            <h2>{board.name}</h2>
+            <h2>
+              {board.name} ({board.issues.length})
+              <button
+                class="add-issue-btn"
+                title="Add new issue"
+                onclick={() => { addIssueBoard = board; showAddIssuePopup = true; }}
+                aria-label="Add new issue"
+              >＋</button>
+            </h2>
             <div class="issue-list">
               {#if board.issues.length > 0}
-                {#each board.issues as issue}
+                {#each board.issues as issue (issue.id)}
                   <div
-                    class="issue"
+                    class="issue {dragIssueId === issue.id ? 'dragging' : ''}"
                     draggable="true"
                     ondragstart={() => handleDragStart(issue.id)}
+                    ondragend={() => (dragIssueId = null)}
+                    role="listitem"
+                    aria-label={`Issue: ${issue.name}`}
                   >
                     <div class="issue-header">
-                      <h3>{issue.name}</h3>
+                      <!-- Issue title with tooltip -->
+                      <h3 title={issue.name}>{issue.name}</h3>
+
                       <button
                         class="ellipsis-button"
                         onclick={() => selectIssue(issue)}
@@ -154,12 +202,15 @@
                         ...
                       </button>
                     </div>
-                    <p>{issue.description}</p>
+                    <!-- Description with tooltip (if you truncate in CSS or JS) -->
+                    <p title={issue.description}>{issue.description}</p>
                     <div class="tags">
                       {#each issue.tags as tag}
+                        <!-- Tag with tooltip -->
                         <span
                           class="tag"
                           style="background-color: {tag.color}; color: {getTextColorForBackground(tag.color)}"
+                          title={tag.name}
                         >
                           {tag.name}
                         </span>
@@ -185,52 +236,43 @@
         <p><strong>Originator:</strong> {selectedIssue.originator}</p>
       </div>
     {/if}
+    {#if showAddIssuePopup}
+      <div class="popup-overlay">
+        <div class="popup-content">
+          <h3>Add New Issue to "{addIssueBoard.name}"</h3>
+          <input
+            placeholder="Title"
+            bind:value={newIssue.name}
+            required
+          />
+          <textarea
+            placeholder="Description"
+            bind:value={newIssue.description}
+            rows="3"
+          ></textarea>
+          <input
+            type="date"
+            placeholder="Due Date"
+            bind:value={newIssue.dueDate}
+          />
+          <input
+            placeholder="Originator"
+            bind:value={newIssue.originator}
+          />
+          <input
+            placeholder="Tags (comma separated)"
+            bind:value={newIssue.tags}
+          />
+          <div class="popup-actions">
+            <button onclick={submitNewIssue}>Add Issue</button>
+            <button onclick={closeAddIssuePopup} class="cancel-btn">Cancel</button>
+          </div>
+        </div>
+      </div>
+    {/if}
   </div>
 </div>
 
-{#snippet boardDialog()}
-<div class="popup-content">
-    <h2>Add New Board</h2>
-    <input
-      type="text"
-      placeholder="Board Name"
-      bind:value={newBoardName}
-    />
-    <button onclick={addBoard}>Confirm</button>
-  </div>
-{/snippet}
-
-{#snippet issueDialog()}
-<div class="popup-content">
-    <h2>Add New Issue</h2>
-    <input
-      type="text"
-      placeholder="Issue Title"
-      bind:value={newIssueTitle}
-    />
-    <textarea
-      placeholder="Issue Description"
-      bind:value={newIssueDescription}
-    ></textarea>
-    <!--<select bind:value={selectedBoardForIssue}>
-      <option value="" disabled selected>Select a Board</option>
-      {#each boardGroups.find(group => group.name === selectedGroup)?.boards as board}
-        <option value={board.name}>{board.name}</option>
-      {/each}
-    </select>-->
-    <button onclick={() => addIssue(newIssueTitle, newIssueDescription, selectedBoardForIssue)}>Confirm</button>
-</div>
-{/snippet}
-
-{#if showAddBoardPopup}
-  <Popup popupContent={boardDialog} bind:active={showAddBoardPopup} popupData="">
-  </Popup>
-{/if}
-
-{#if showAddIssuePopup}
-  <Popup popupContent={issueDialog} bind:active={showAddIssuePopup} popupData="">
-  </Popup>
-{/if}
 
 <style>
   * {
@@ -306,6 +348,15 @@
   .board.drag-over {
     border: 2px dashed #4f46e5;
   }
+  .board.drag-over .issue-list::before {
+    content: "Drop here";
+    color: #4f46e5;
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    margin: 0.5rem 0;
+}
+
   .board h2 {
     font-size: 1.2rem;
     margin-top: 0;
@@ -317,10 +368,17 @@
     border-radius: 6px; /* Slightly smaller rounded corners */
     border: 1px solid #555555; /* Subtle border for definition */
     cursor: grab;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    transition: background-color 0.3s, transform 0.2s ease, box-shadow 0.2s;
     font-size: 0.85rem; /* Slightly smaller font size for readability */
     color: #f0f0f0; /* Light text color for better contrast */
   }
+
+  .issue.dragging {
+  transform: scale(1.05);
+  opacity: 0.5;
+  border: 2px dashed #4f46e5;
+  background-color: #232336;
+}
 
   .issue:hover {
     background-color: #4a4a4a; /* Slightly lighter background on hover */
@@ -425,41 +483,65 @@
     background-color: #6a5acd;
   }
 
-  .popup-content {
-    background-color: #1e1e1e;
-    padding: 1rem;
-    border-radius: 4px;
-    border: 1px solid #444444;
-    color: #e0e0e0;
-  }
+  .popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(30,30,30,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
 
-  .popup-content input,
-  .popup-content textarea {
-    width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    border: 1px solid #444444;
-    border-radius: 4px;
-    background-color: #2e2e2e;
-    color: #e0e0e0;
-  }
+.popup-content {
+  background: #232336;
+  color: #e0e0e0;
+  border-radius: 8px;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 320px;
+  max-width: 95vw;
+  box-shadow: 0 4px 24px rgba(44,62,80,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
 
-  .popup-content button {
-    width: 100%;
-    padding: 0.5rem;
-    background-color: #4f46e5;
-    color: #ffffff;
+.popup-content input,
+.popup-content textarea {
+  background: #18181b;
+  color: #e0e0e0;
+  border: 1px solid #35357a;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.popup-actions .cancel-btn {
+  background: #444;
+}
+
+.add-issue-btn {
+  background: none;
     border: none;
-    border-radius: 4px;
+    color: #ffffff;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: background-color 0.2s;
-  }
+    padding: 0;
+    margin: 0;
+    transition: color 0.2s;
+}
 
-  .popup-content button:hover {
-    background-color: #6a5acd;
-  }
+.add-issue-btn:hover {
+  background: #6a5acd;
+}
 
-  .groups-selection {
+.groups-selection {
     flex: 0 0 150px;
     padding: 0.5rem;
     background-color: #2e2e2e;
@@ -482,5 +564,33 @@
     color: #888888;
     text-align: center;
     margin-top: 1rem;
+  }
+
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .cancel-btn {
+    background-color: #888888;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: 0.5rem;
+    transition: background-color 0.2s;
+  }
+
+  .cancel-btn:hover {
+    background-color: #aaaaaa;
   }
 </style>

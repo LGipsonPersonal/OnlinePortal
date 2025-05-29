@@ -119,10 +119,10 @@
         <option value={role}>{role}</option>
       {/each}
     </select>
-    <button class="sort-btn" on:click={() => setSort('name')}>
+    <button class="sort-btn" onclick={() => setSort('name')}>
       Sort by Name {sortBy === 'name' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
     </button>
-    <button class="sort-btn" on:click={() => setSort('role')}>
+    <button class="sort-btn" onclick={() => setSort('role')}>
       Sort by Role {sortBy === 'role' ? (sortDirection === 'asc' ? '▲' : '▼') : ''}
     </button>
   </div>
@@ -130,7 +130,7 @@
     {#each teams.slice(1) as team, i} <!-- skip 'All' -->
       {#if selectedTeam === 'All' || selectedTeam === team}
         <div class="team">
-          <div class="team-header" on:click={() => toggleTeam(i)}>
+          <div class="team-header" onclick={() => toggleTeam(i)}>
             <h3 class="team-title">{team}</h3>
             <div class="submenu-toggle">
               {#if openTeams[i]}
@@ -150,13 +150,13 @@
                     <a href={`tel:${person.phone}`} class="icon-btn" title="Call">
                       <i class="fas fa-phone"></i>
                     </a>
-                    <button class="icon-btn" title="Copy phone" on:click={() => copyToClipboard(person.phone)}>
+                    <button class="icon-btn" title="Copy phone" onclick={() => copyToClipboard(person.phone)}>
                       <i class="fas fa-copy"></i>
                     </button>
                     <a href={`mailto:${person.email}`} class="icon-btn" title="Email">
                       <i class="fas fa-envelope"></i>
                     </a>
-                    <button class="icon-btn" title="Copy email" on:click={() => copyToClipboard(person.email)}>
+                    <button class="icon-btn" title="Copy email" onclick={() => copyToClipboard(person.email)}>
                       <i class="fas fa-copy"></i>
                     </button>
                   </div>
@@ -181,6 +181,7 @@
   box-shadow: 0 1px 8px rgba(44, 62, 80, 0.10);
   margin: 2rem;
   color: #e0e0e0;
+  overflow: auto;
 }
 
 .section-title {

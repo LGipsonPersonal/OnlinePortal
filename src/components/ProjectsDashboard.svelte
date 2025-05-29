@@ -74,7 +74,7 @@
       type="text"
       placeholder={`Search ${searchType}…`}
       bind:value={searchTerm}
-      on:input={filterTasks}
+      oninput={filterTasks}
       aria-label="Search"
       autocomplete="off"
     />
@@ -103,7 +103,7 @@
                 bind:value={task.state}
                 class="state-select"
                 aria-label="Change task state"
-                on:change={(e) => updateTaskState(task, e.target.value)}
+                onchange={(e) => updateTaskState(task, e.target.value)}
               >
                 {#each getAvailableStates(task) as state}
                   <option value={state}>{state}</option>
@@ -166,11 +166,10 @@
     background: #232336;
     color: #e0e0e0;
     font-size: 1rem;
-    padding: 0.6rem 0.8rem;
+    padding: 0.6rem;
     outline: none;
     border-right: none;
     height: 42px;
-    min-width: 110px;
     cursor: pointer;
     transition: border-color 0.2s;
   }

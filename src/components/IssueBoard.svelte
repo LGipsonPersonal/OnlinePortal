@@ -142,6 +142,29 @@
     showAddIssuePopup = false;
     addIssueBoard = null;
   }
+
+  // Track which board's menu is open
+  let openBoardMenu = $state(null);
+
+  function toggleBoardMenu(boardName) {
+    openBoardMenu = openBoardMenu === boardName ? null : boardName;
+  }
+
+  function closeBoardMenu() {
+    openBoardMenu = null;
+  }
+
+  // Optional: Close menu when clicking outside
+  function handleDocumentClick(event) {
+    if (!event.target.closest('.board-menu') && !event.target.closest('.board-menu-btn')) {
+      closeBoardMenu();
+    }
+  }
+
+  // Listen for clicks outside the menu
+  if (typeof window !== "undefined") {
+    window.addEventListener('click', handleDocumentClick);
+  }
 </script>
 
 <div class="issue-board-container">
@@ -165,20 +188,41 @@
         {#each boardGroups.find((group) => group.name === selectedGroup)?.boards as board}
           <div
             class="board {dragOverBoard === board.name ? 'drag-over' : ''}"
-            ondrop={() => handleDrop(board.name)}
+            ondrop={() =>  handleDrop(board.name)}
             ondragover={(event) => allowDrop(event, board.name)}
             role="region"
             aria-label={`Board: ${board.name}`}
           >
+          <div class="section-header">
             <h2>
-              {board.name} ({board.issues.length})
-              <button
-                class="add-issue-btn"
-                title="Add new issue"
-                onclick={() => { addIssueBoard = board; showAddIssuePopup = true; }}
-                aria-label="Add new issue"
-              >＋</button>
+              {board.name} <span class="tag-count">({board.issues.length})</span> 
             </h2>
+            <div style="display: flex; gap: 0.2em;">
+            <button
+              class="add-issue-btn"
+              title="Add new issue"
+              onclick={() => { addIssueBoard = board; showAddIssuePopup = true; }}
+              aria-label="Add new issue"
+            >＋</button>
+            <button
+              class="board-menu-btn"
+              aria-label="Board options"
+              onclick={() => toggleBoardMenu(board.name)}
+              tabindex="0"
+            >...</button>
+            {#if openBoardMenu === board.name}
+              <div class="board-menu" tabindex="0">
+                <ul>
+                  <li><button tabindex="0">Rename Board</button></li>
+                  <li><button tabindex="0">Archive Board</button></li>
+                  <li><button tabindex="0">Move Board Left</button></li>
+                  <li><button tabindex="0">Move Board Right</button></li>
+                  <li><button tabindex="0">Board Settings</button></li>
+                </ul>
+              </div>
+            {/if}
+            </div>
+            </div> 
             <div class="issue-list">
               {#if board.issues.length > 0}
                 {#each board.issues as issue (issue.id)}
@@ -417,12 +461,14 @@
     font-weight: bold; /* Bold text for tags */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for tags */
   }
-
-  .tag-count {
-    margin-right: 0.2rem; /* Reduced spacing between count and tag name */
-    font-size: 0.75rem; /* Match font size with the tag */
-    font-weight: bold; /* Bold text for the count */
+  .section-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 0.2rem;
+    padding-top:0.2rem;
   }
+
 
   .issue-list {
     display: flex;
@@ -528,17 +574,20 @@
 
 .add-issue-btn {
   background: none;
-    border: none;
-    color: #ffffff;
-    font-size: 1.2rem;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    transition: color 0.2s;
+  border: none;
+  color: #b0b0b0;
+  
+  font-weight: bold;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  outline: none;
 }
 
-.add-issue-btn:hover {
-  background: #6a5acd;
+.add-issue-btn:hover,
+.add-issue-btn:focus {
+  background: #2a2a2a;
+  color: #fff;
 }
 
 .groups-selection {
@@ -592,5 +641,68 @@
 
   .cancel-btn:hover {
     background-color: #aaaaaa;
+  }
+
+  .board-menu-btn {
+    background: none;
+    border: none;
+    color: #b0b0b0;
+    font-size: 1.3em;
+    width: 1.8em;
+    height: 1.8em;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    margin-left: 0.2em;
+    outline: none;
+  }
+  .board-menu-btn:hover,
+  .board-menu-btn:focus {
+    background: #2a2a2a;
+    color: #fff;
+  }
+  .board-menu {
+    position: absolute;
+    margin-top: 2.2em;
+    right: 0;
+    background: #232336;
+    color: #e0e0e0;
+    border: 1px solid #35357a;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(44,62,80,0.18);
+    z-index: 10;
+    min-width: 160px;
+    padding: 0.5em 0;
+  }
+  .board-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .board-menu li {
+    margin: 0;
+    padding: 0;
+  }
+  .board-menu button {
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    width: 100%;
+    text-align: left;
+    padding: 0.7em 1.2em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .board-menu button:hover,
+  .board-menu button:focus {
+    background: #35357a;
+    color: #fff;
+  }
+  .section-header {
+    position: relative;
   }
 </style>

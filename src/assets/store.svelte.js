@@ -388,7 +388,7 @@ export const tabs = [
     },6
   ];
 
-  export let stateGroups = [
+  export let stateGroups = $state([
     {
       name: "Design",
       states: ["Wireframes", "Prototypes", "Final Design"],
@@ -429,7 +429,7 @@ export const tabs = [
       name: "Deployment",
       states: ["Staging", "Production", "Post-Deployment Review"],
     },
-  ];
+  ]);
   
 
 export let issues = $state([

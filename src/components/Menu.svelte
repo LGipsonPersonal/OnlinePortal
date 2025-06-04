@@ -23,7 +23,6 @@
    * @param {string} key
    */
   function selectChoice(key) {
-    console.log(key);
     choice = key;
     MainPage.updateChoice(choice);
   }

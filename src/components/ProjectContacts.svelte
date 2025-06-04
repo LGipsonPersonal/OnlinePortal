@@ -277,7 +277,7 @@
 }
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 1rem;
   padding: 1rem;
   background-color: #232336;
@@ -300,7 +300,6 @@
   padding: 1rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
   transition: transform 0.2s, background 0.2s;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;

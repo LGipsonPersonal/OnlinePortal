@@ -430,7 +430,11 @@ export const tabs = [
       states: ["Staging", "Production", "Post-Deployment Review"],
     },
   ]);
-  
+
+export function getNewIssueId() {
+  const lastIssue = issues[issues.length - 1];
+  return lastIssue ? (parseInt(lastIssue.id) + 1).toString() : "1";
+}
 
 export let issues = $state([
   {
@@ -446,7 +450,6 @@ export let issues = $state([
     state: "Wireframes",
     stateGroup: "Design",
     projectId: "1", // Project X
-    group: "UI/UX",
   },
   {
     id: "2",
@@ -462,7 +465,6 @@ export let issues = $state([
     state: "Prototypes",
     stateGroup: "Design",
     projectId: "1", // Project X
-    group: "UI/UX",
   },
   {
     id: "3",
@@ -478,7 +480,6 @@ export let issues = $state([
     state: "To Do",
     stateGroup: "Development",
     projectId: "1", // Project X
-    group: "UI/UX",
   },
   {
     id: "4",
@@ -494,7 +495,6 @@ export let issues = $state([
     state: "In Progress",
     stateGroup: "Development",
     projectId: "1", // Project X
-    group: "UI/UX",
   },
   {
     id: "5",
@@ -517,7 +517,6 @@ export let issues = $state([
     state: "Ideas",
     stateGroup: "Planning",
     projectId: "2", // Project Y
-    group: "AI Features",
   },
   {
     id: "6",
@@ -533,7 +532,6 @@ export let issues = $state([
     state: "Assigned",
     stateGroup: "Execution",
     projectId: "2", // Project Y
-    group: "AI Features",
   },
   {
     id: "7",
@@ -549,7 +547,6 @@ export let issues = $state([
     state: "Peer Review",
     stateGroup: "Review",
     projectId: "3", // Project Z
-    group: "Backend",
   },
   {
     id: "8",
@@ -565,7 +562,6 @@ export let issues = $state([
     state: "Migration Planned",
     stateGroup: "Database Migration",
     projectId: "3", // Project Z
-    group: "Backend",
   },
   {
     id: "9",
@@ -580,7 +576,6 @@ export let issues = $state([
     state: "Feasibility Study",
     stateGroup: "Research",
     projectId: "4", // Project R
-    group: "Research Team",
   },
   {
     id: "10",
@@ -595,7 +590,6 @@ export let issues = $state([
     state: "Setup",
     stateGroup: "Implementation",
     projectId: "4", // Project R
-    group: "Development Team",
   },
   {
     id: "11",
@@ -610,7 +604,6 @@ export let issues = $state([
     state: "Staging",
     stateGroup: "Deployment",
     projectId: "4", // Project R
-    group: "Operations Team",
   },
 ]);
 

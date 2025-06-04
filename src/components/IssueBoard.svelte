@@ -1,8 +1,9 @@
 <script>
   // @ts-ignore
-  let { issues, stateGroups } = $props();
+  let { issues, stateGroups, projectId } = $props();
+  import { getNewIssueId } from "$assets/store.svelte.js";
 
-
+  console.log($state.snapshot(projectId))
   let boardGroups = $derived.by(() => {
     const groups = {};
 
@@ -46,7 +47,7 @@
   let dragIssueId = $state(null); // Store the ID of the dragged issue
   let dragOverBoard = $state(null);
   let showAddIssuePopup = $state(false);
-  let addIssueBoard = $state(null);
+  let addIssueBoard = '';
 
   let newIssue = $state({
     name: "",
@@ -109,16 +110,43 @@
       return;
     }
 
+    // Generate a deterministic color from a tag name
+    function colorFromString(str) {
+      // Simple hash function
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      // Generate color
+      let color = "#";
+      for (let i = 0; i < 3; i++) {
+        const value = (hash >> (i * 8)) & 0xff;
+        color += ("00" + value.toString(16)).slice(-2);
+      }
+      return color;
+    }
+
+    // Parse tags as objects with name and generated color
+    const tags = newIssue.tags
+      .split(",")
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0)
+      .map(name => ({
+        name,
+        color: colorFromString(name)
+      }));
+
     // Create a new issue object
     const issue = {
-      id: Date.now(), // Simple ID generation
+      id: getNewIssueId(), // Simple ID generation
       name: newIssue.name,
       description: newIssue.description,
       dueDate: newIssue.dueDate,
       originator: newIssue.originator,
-      tags: newIssue.tags.split(",").map(tag => tag.trim()), // Split tags by comma
-      state: addIssueBoard.name, // Set initial state to the board it's added to
-      stateGroup: selectedGroup, // Set the state group
+      tags, // Use the new tags array
+      state: addIssueBoard, // Set initial state to the board it's added to
+      stateGroup: selectedGroup, // Set the state group,
+      projectId
     };
 
     // Add the new issue to the issues array
@@ -133,14 +161,12 @@
       tags: "",
     };
 
-    // Close the popup
-    showAddIssuePopup = false;
-    addIssueBoard = null;
+    closeAddIssuePopup();
   }
 
   function closeAddIssuePopup() {
     showAddIssuePopup = false;
-    addIssueBoard = null;
+    addIssueBoard = '';
   }
 
   // Track which board's menu is open
@@ -164,6 +190,47 @@
   // Listen for clicks outside the menu
   if (typeof window !== "undefined") {
     window.addEventListener('click', handleDocumentClick);
+  }
+
+
+  function moveBoardLeft(boardName) {
+    const group = stateGroups.find(g => g.name === selectedGroup);
+    if (!group) {
+      window.alert("Group not found");
+      closeBoardMenu(); 
+      return;
+    }
+    const boardIndex = group.states.findIndex(b => b === boardName);
+    if (boardIndex === -1 || boardIndex === 0) { // Can't move first board left
+      window.alert("Can't move the board to the left");
+      closeBoardMenu();
+      return;
+    }
+    // Swap with the previous board to the left
+    const prevBoardName = group.states[boardIndex - 1];
+    group.states[boardIndex] = prevBoardName;
+    group.states[boardIndex - 1] = boardName;
+    closeBoardMenu(); // Close the menu after moving
+  }
+
+  function moveBoardRight(boardName) {
+    const group = stateGroups.find(g => g.name === selectedGroup);
+    if (!group) {
+      window.alert("Group not found");
+      closeBoardMenu(); 
+      return;
+    }
+    const boardIndex = group.states.findIndex(b => b === boardName);
+    if (boardIndex === -1 || boardIndex === group.states.length - 1)  { // Can't move last board right
+      window.alert("Can't move the board to the right");
+      closeBoardMenu();
+      return;
+    }
+    // Swap with the next board to the right
+    const nextBoardName = group.states[boardIndex + 1];
+    group.states[boardIndex] = nextBoardName;
+    group.states[boardIndex + 1] = boardName;
+    closeBoardMenu(); // Close the menu after moving
   }
 </script>
 
@@ -198,12 +265,7 @@
               {board.name} <span class="tag-count">({board.issues.length})</span> 
             </h2>
             <div style="display: flex; gap: 0.2em;">
-            <button
-              class="add-issue-btn"
-              title="Add new issue"
-              onclick={() => { addIssueBoard = board; showAddIssuePopup = true; }}
-              aria-label="Add new issue"
-            >＋</button>
+
             <button
               class="board-menu-btn"
               aria-label="Board options"
@@ -211,13 +273,17 @@
               tabindex="0"
             >...</button>
             {#if openBoardMenu === board.name}
-              <div class="board-menu" tabindex="0">
+              <div class="board-menu">
                 <ul>
                   <li><button tabindex="0">Rename Board</button></li>
+                  <li><button tabindex="0" onclick={() => {
+                    showAddIssuePopup = true;
+                    addIssueBoard = board.name; // Set the board for the new issue
+                    }}>Add Issue</button></li>
                   <li><button tabindex="0">Archive Board</button></li>
-                  <li><button tabindex="0">Move Board Left</button></li>
-                  <li><button tabindex="0">Move Board Right</button></li>
-                  <li><button tabindex="0">Board Settings</button></li>
+                  <li><button tabindex="0" onclick={() => moveBoardLeft(board.name)}>Move Board Left</button></li>
+                  <li><button tabindex="0" onclick={() => moveBoardRight(board.name)}>Move Board Right</button></li>
+                  <li><button tabindex="0">Protect Board</button></li>
                 </ul>
               </div>
             {/if}
@@ -235,9 +301,7 @@
                     aria-label={`Issue: ${issue.name}`}
                   >
                     <div class="issue-header">
-                      <!-- Issue title with tooltip -->
                       <h3 title={issue.name}>{issue.name}</h3>
-
                       <button
                         class="ellipsis-button"
                         onclick={() => selectIssue(issue)}
@@ -246,7 +310,6 @@
                         ...
                       </button>
                     </div>
-                    <!-- Description with tooltip (if you truncate in CSS or JS) -->
                     <p title={issue.description}>{issue.description}</p>
                     <div class="tags">
                       {#each issue.tags as tag}
@@ -283,7 +346,7 @@
     {#if showAddIssuePopup}
       <div class="popup-overlay">
         <div class="popup-content">
-          <h3>Add New Issue to "{addIssueBoard.name}"</h3>
+          <h3>Add New Issue to "{addIssueBoard}"</h3>
           <input
             placeholder="Title"
             bind:value={newIssue.name}

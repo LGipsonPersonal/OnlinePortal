@@ -133,6 +133,7 @@ function getProjectData(projectKey) {
           <IssueBoard
             issues={getProjectData(proj.key).projectIssues}
             stateGroups={getProjectData(proj.key).projectStateGroups}
+            projectId={proj.key.split("-")[1]}
           />
         {:else if choice === `${proj.key}-2`}
           <Resources></Resources>

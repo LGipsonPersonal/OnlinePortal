@@ -12,4 +12,15 @@ export default defineConfig({
       $assets: path.resolve(__dirname, "./src/assets")
     },
   },
+  server: {
+    proxy: {
+      // Proxy API requests to the backend
+      '/api': {
+        target: 'http://localhost:8090',
+        changeOrigin: true,
+        secure: false,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
+  }
 })

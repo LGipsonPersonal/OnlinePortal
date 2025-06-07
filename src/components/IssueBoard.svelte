@@ -3,7 +3,9 @@
   let { issues, stateGroups, projectId } = $props();
   import { getNewIssueId } from "$assets/store.svelte.js";
 
-  console.log($state.snapshot(projectId))
+  let renamingBoard = $state(null); // board.name being renamed, or null
+  let renameValue = $state("");     // current value of the input
+
   let boardGroups = $derived.by(() => {
     const groups = {};
 
@@ -186,6 +188,7 @@
       closeBoardMenu();
     }
   }
+  
 
   // Listen for clicks outside the menu
   if (typeof window !== "undefined") {
@@ -232,6 +235,26 @@
     group.states[boardIndex + 1] = boardName;
     closeBoardMenu(); // Close the menu after moving
   }
+
+  function finishRenameBoard(board) {
+    const group = stateGroups.find(g => g.name === selectedGroup);
+    if (!group) return;
+    const idx = group.states.findIndex(n => n === board.name);
+    if (idx !== -1 && renameValue.trim() && renameValue !== board.name) {
+      // Update the state name in the group
+      group.states[idx] = renameValue.trim();
+      // Also update the board object name
+      board.name = renameValue.trim();
+      // Update all issues in this board to use the new state name
+      issues = issues.map(issue =>
+        issue.stateGroup === selectedGroup && issue.state === board.name
+          ? { ...issue, state: renameValue.trim() }
+          : issue
+      );
+    }
+    renamingBoard = null;
+    renameValue = "";
+  }
 </script>
 
 <div class="issue-board-container">
@@ -261,9 +284,19 @@
             aria-label={`Board: ${board.name}`}
           >
           <div class="section-header">
-            <h2>
-              {board.name} <span class="tag-count">({board.issues.length})</span> 
-            </h2>
+            {#if renamingBoard === board.name}
+              <input
+                class="rename-board-input"
+                bind:value={renameValue}
+                onblur={() => finishRenameBoard(board)}
+                onkeydown={(e) => e.key === 'Enter' && finishRenameBoard(board)}
+                autofocus
+              />
+            {:else}
+              <h2>
+                {board.name} <span class="tag-count">({board.issues.length})</span>
+              </h2>
+            {/if}
             <div style="display: flex; gap: 0.2em;">
 
             <button
@@ -275,7 +308,13 @@
             {#if openBoardMenu === board.name}
               <div class="board-menu">
                 <ul>
-                  <li><button tabindex="0">Rename Board</button></li>
+                  <li>
+                    <button tabindex="0" onclick={() => {
+                      renamingBoard = board.name;
+                      renameValue = board.name;
+                      closeBoardMenu();
+                    }}>Rename Board</button>
+                  </li>
                   <li><button tabindex="0" onclick={() => {
                     showAddIssuePopup = true;
                     addIssueBoard = board.name; // Set the board for the new issue
@@ -423,6 +462,16 @@
     cursor: pointer;
     transition: background-color 0.2s;
   }
+  .rename-board-input {
+  font-size: 1.2rem;
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  border: 1px solid #6366f1;
+  background: #232336;
+  color: #e0e0e0;
+  width: 70%;
+  margin-right: 0.5em;
+}
   .settings-button {
     background: none; 
     border: none;

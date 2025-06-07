@@ -23,7 +23,12 @@
   import IssueBoard from "./IssueBoard.svelte";
   import Conversation from "./Conversation.svelte";
   import ProjectsDashboard from "./ProjectsDashboard.svelte";
-    import Resources from "./Resources.svelte";
+  import Resources from "./Resources.svelte";
+
+  // Example: src/assets/utils.js or any Svelte component
+fetch('/api/')
+  .then(res => res.text())
+  .then(data => console.log(data)); // Should log "Hello World!!!!"
 
   setContext('MainPage', {updateChoice})
 

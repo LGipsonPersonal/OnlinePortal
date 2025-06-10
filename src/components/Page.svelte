@@ -25,8 +25,8 @@
   import ProjectsDashboard from "./ProjectsDashboard.svelte";
   import Resources from "./Resources.svelte";
 
-  // Example: src/assets/utils.js or any Svelte component
-fetch('/api/')
+  
+fetch('/api')
   .then(res => res.text())
   .then(data => console.log(data)); // Should log "Hello World!!!!"
 
@@ -44,7 +44,18 @@ fetch('/api/')
     choice = event.state.choice
   }
 
- 
+ import { projectContacts, projectResources } from "$assets/store.svelte.js";
+
+function getProjectContacts(projectKey) {
+  const projectId = projectKey.split("-")[1];
+  return projectContacts.find(p => p.projectId === projectId)?.people ?? [];
+}
+
+function getProjectResources(projectKey) {
+  const projectId = projectKey.split("-")[1];
+  return projectResources.find(p => p.projectId === projectId)?.groups ?? [];
+}
+
   let choice = $state('0');
   history.pushState( {choice}, '', `/${choice}`)
 
@@ -141,9 +152,9 @@ function getProjectData(projectKey) {
             projectId={proj.key.split("-")[1]}
           />
         {:else if choice === `${proj.key}-2`}
-          <Resources></Resources>
+          <Resources resourceGroups={getProjectResources(proj.key)}></Resources>
         {:else if choice === `${proj.key}-3`}
-          <ProjectContacts></ProjectContacts>
+          <ProjectContacts peopleOfContact={getProjectContacts(proj.key)} ></ProjectContacts>
 
         {/if}
     {/each}

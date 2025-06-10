@@ -1,7 +1,7 @@
 <script>
   import { slide } from 'svelte/transition';
 
-  // Example resource data
+  /* Example resource data
   let resourceGroups = [
     {
       group: "Documentation",
@@ -26,7 +26,8 @@
       ]
     }
   ];
-
+  */
+  let { resourceGroups } = $props();
   let openGroups = $state(Array.from({ length: resourceGroups.length }, () => true));
 
   function toggleGroup(idx) {

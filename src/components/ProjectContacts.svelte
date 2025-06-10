@@ -1,8 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { slide } from 'svelte/transition';
-
-  // --- Data ---
+  /* --- Data ---
   let peopleOfContact = $state([
     { id: 1, name: "John Doe", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "john.doe@example.com", team: "Management" },
     { id: 2, name: "Jane Smith", role: "Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 987-6543", email: "jane.smith@example.com", team: "Development" },
@@ -32,6 +31,8 @@
     { id: 26, name: "Joe Dirt", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "joeDirt@example.com", team: "Management" },
     { id: 27, name: "Joe Dirt 2", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "joeDirt@example.com", team: "Management" },
   ]);
+  */
+  let { peopleOfContact } = $props();
 
   // --- State for UI ---
   let searchTerm = $state('');

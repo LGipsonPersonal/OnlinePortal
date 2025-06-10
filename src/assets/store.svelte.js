@@ -606,6 +606,116 @@ export let issues = $state([
     projectId: "4", // Project R
   },
 ]);
+export const projectContacts = [
+  {
+    projectId: "1",
+    people: [
+      { id: 1, name: "John Doe", role: "Project Manager", profileImage: "https://via.placeholder.com/40", phone: "(555) 123-4567", email: "john.doe@example.com", team: "Management" },
+      { id: 2, name: "Jane Smith", role: "Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 987-6543", email: "jane.smith@example.com", team: "Development" },
+      { id: 3, name: "Bob Lee", role: "QA Tester", profileImage: "https://via.placeholder.com/40", phone: "(555) 456-7890", email: "bob.lee@example.com", team: "QA" }
+    ]
+  },
+  {
+    projectId: "2",
+    people: [
+      { id: 1, name: "Alice Johnson", role: "Designer", profileImage: "https://via.placeholder.com/40", phone: "(555) 555-5555", email: "alice.johnson@example.com", team: "Design" },
+      { id: 2, name: "Tom Carter", role: "Frontend Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 333-4444", email: "tom.carter@example.com", team: "Development" }
+    ]
+  },
+  {
+    projectId: "3",
+    people: [
+      { id: 1, name: "Rita Patel", role: "Data Analyst", profileImage: "https://via.placeholder.com/40", phone: "(555) 222-3333", email: "rita.patel@example.com", team: "Analytics" },
+      { id: 2, name: "Sam Green", role: "Scrum Master", profileImage: "https://via.placeholder.com/40", phone: "(555) 111-2222", email: "sam.green@example.com", team: "Management" }
+    ]
+  },
+  {
+    projectId: "4",
+    people: [
+      { id: 1, name: "Mona Lee", role: "UX Researcher", profileImage: "https://via.placeholder.com/40", phone: "(555) 777-8888", email: "mona.lee@example.com", team: "Design" },
+      { id: 2, name: "Chris Nolan", role: "Backend Developer", profileImage: "https://via.placeholder.com/40", phone: "(555) 666-7777", email: "chris.nolan@example.com", team: "Development" },
+      { id: 3, name: "Laura Kim", role: "DevOps Engineer", profileImage: "https://via.placeholder.com/40", phone: "(555) 444-9999", email: "laura.kim@example.com", team: "Infrastructure" }
+    ]
+  }
+];
+
+
+export const projectResources = [
+  {
+    projectId: "1",
+    groups: [
+      {
+        group: "Documentation",
+        resources: [
+          { name: "API Reference", type: "website", url: "https://api.example.com" },
+          { name: "Project Wiki", type: "website", url: "https://docs.example.com/project1" }
+        ]
+      },
+      {
+        group: "Design",
+        resources: [
+          { name: "Figma Board", type: "website", url: "https://figma.com/file/project1" }
+        ]
+      }
+    ]
+  },
+  {
+    projectId: "2",
+    groups: [
+      {
+        group: "Development",
+        resources: [
+          { name: "GitHub Repo", type: "website", url: "https://github.com/example/project2" },
+          { name: "CI/CD Dashboard", type: "website", url: "https://ci.example.com/project2" }
+        ]
+      },
+      {
+        group: "Testing",
+        resources: [
+          { name: "TestRail", type: "website", url: "https://testrail.example.com/project2" }
+        ]
+      }
+    ]
+  },
+  {
+    projectId: "3",
+    groups: [
+      {
+        group: "Analytics",
+        resources: [
+          { name: "Kibana Dashboard", type: "website", url: "https://kibana.example.com/project3" },
+          { name: "Data Source", type: "website", url: "https://datasource.example.com" }
+        ]
+      },
+      {
+        group: "Reports",
+        resources: [
+          { name: "Monthly Summary", type: "download", url: "https://docs.example.com/monthly-report.pdf" }
+        ]
+      }
+    ]
+  },
+  {
+    projectId: "4",
+    groups: [
+      {
+        group: "UX Research",
+        resources: [
+          { name: "User Feedback", type: "website", url: "https://sheets.example.com/user-feedback" },
+          { name: "Heatmaps", type: "download", url: "https://hotjar.com/project4" }
+        ]
+      },
+      {
+        group: "Infrastructure",
+        resources: [
+          { name: "AWS Console", type: "website", url: "https://console.aws.amazon.com" },
+          { name: "Terraform Scripts", type: "download", url: "https://github.com/example/project4-infra" }
+        ]
+      }
+    ]
+  }
+];
+
 
 
 

@@ -255,6 +255,45 @@
     renamingBoard = null;
     renameValue = "";
   }
+
+  // Track which board is being dragged and which is being hovered over
+  let draggingBoardName = $state(null);
+  let dragOverBoardName = $state(null);
+
+  // Drag events for boards (only on section-header)
+  function handleBoardDragStart(boardName, event) {
+    // Prevent board drag if an issue is being dragged
+    if (dragIssueId) {
+      event.preventDefault();
+      return;
+    }
+    draggingBoardName = boardName;
+  }
+
+  function handleBoardDragOver(boardName, event) {
+    event.preventDefault();
+    dragOverBoardName = boardName;
+  }
+
+  function handleBoardDrop(boardName) {
+    if (
+      draggingBoardName &&
+      draggingBoardName !== boardName
+    ) {
+      const group = stateGroups.find(g => g.name === selectedGroup);
+      if (group) {
+        const oldOrder = [...group.states];
+        const fromIdx = oldOrder.indexOf(draggingBoardName);
+        const toIdx = oldOrder.indexOf(boardName);
+        if (fromIdx !== -1 && toIdx !== -1) {
+          oldOrder.splice(toIdx, 0, oldOrder.splice(fromIdx, 1)[0]);
+          group.states = oldOrder;
+        }
+      }
+    }
+    draggingBoardName = null;
+    dragOverBoardName = null;
+  }
 </script>
 
 <div class="issue-board-container">
@@ -277,13 +316,28 @@
       {#if selectedGroup}
         {#each boardGroups.find((group) => group.name === selectedGroup)?.boards as board}
           <div
-            class="board {dragOverBoard === board.name ? 'drag-over' : ''}"
-            ondrop={() =>  handleDrop(board.name)}
-            ondragover={(event) => allowDrop(event, board.name)}
+            class="board {dragOverBoardName === board.name ? 'drag-over' : ''}"
+            ondragover={(event) => {
+              // Always allow drop for both issues and boards
+              event.preventDefault();
+              dragOverBoardName = board.name;
+            }}
+            ondrop={() => {
+              if (dragIssueId) {
+                handleDrop(board.name); // Move issue to this board
+              } else if (draggingBoardName) {
+                handleBoardDrop(board.name); // Reorder boards
+              }
+            }}
             role="region"
             aria-label={`Board: ${board.name}`}
           >
-          <div class="section-header">
+          <div
+            class="section-header"
+            draggable="true"
+            ondragstart={(e) => handleBoardDragStart(board.name, e)}
+            ondragend={() => { draggingBoardName = null; dragOverBoardName = null; }}
+          >
             {#if renamingBoard === board.name}
               <input
                 class="rename-board-input"
@@ -335,7 +389,10 @@
                     class="issue {dragIssueId === issue.id ? 'dragging' : ''}"
                     draggable="true"
                     ondragstart={() => handleDragStart(issue.id)}
-                    ondragend={() => (dragIssueId = null)}
+                    ondragend={() => {
+                      dragIssueId = null;
+                      dragOverBoardName = '';
+                      }}
                     role="listitem"
                     aria-label={`Issue: ${issue.name}`}
                   >
